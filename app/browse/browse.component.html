@@ -9,6 +9,9 @@
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
+    <ActionItem (tap)="logout()">
+        <Button text="Logout" class="action-item"></Button>
+      </ActionItem> 
     <Label class="action-bar-title" text="Browse"></Label>
 </ActionBar>
 
