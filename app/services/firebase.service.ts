@@ -31,7 +31,23 @@ export class FirebaseService {
           }
       )
   }
-
+  
+  login_google(user: User){
+    return firebase.login({
+      type: firebase.LoginType.GOOGLE,
+      // Optional 
+      googleOptions: {
+        hostedDomain: "mygsuitedomain.com"
+      }
+    }).then(
+        function (result) {
+          JSON.stringify(result);
+        },
+        function (errorMessage) {
+          console.log(errorMessage);
+        }
+    );
+  }
   login(user: User) {
     return firebase.login({
       type: firebase.LoginType.PASSWORD,
