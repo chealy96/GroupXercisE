@@ -31,6 +31,41 @@ export class FirebaseService {
           }
       )
   }
+  
+  login_google(user: User){
+    return firebase.login({
+      type: firebase.LoginType.GOOGLE,
+      // Optional 
+       googleOptions: {
+         hostedDomain: "mygsuitedomain.com"
+       }
+    }).then(
+        function (result) {
+      //   BackendService.token = result.uid;
+         
+         return JSON.stringify(result);
+
+        },
+        function (errorMessage) {
+          console.log(errorMessage);
+        }
+    );
+  }
+
+  getToken(){
+   return  firebase.getAuthToken({
+      // default false, not recommended to set to true by Firebase but exposed for {N} devs nonetheless :)
+      forceRefresh: true
+    }).then(
+        function (token) {
+          BackendService.token = token;
+          console.log("Auth token retrieved: " + token);
+        },
+        function (errorMessage) {
+          console.log("Auth token retrieval error: " + errorMessage);
+        }
+    );
+  }
 
   login(user: User) {
     return firebase.login({

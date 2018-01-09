@@ -6,7 +6,7 @@
     "crash_reporting": true,
     "storage": true,
     "facebook_auth": false,
-    "google_auth": false,
+    "google_auth": true,
     "admob": false,
     "invites": false
 }

@@ -34,6 +34,8 @@ export class LoginComponent {
     }
   }
 
+  
+
   login() {
      this.firebaseService.login(this.user)
       .then(() => {
@@ -46,6 +48,17 @@ export class LoginComponent {
       });
   }
 
+  signInWithGoogle() {
+    this.firebaseService.login_google(this.user)
+    .then(() => {
+      this.isAuthenticating = false;
+      this.routerExtensions.navigate(["/"], { clearHistory: true } );
+   //this.firebaseService.getToken();
+    })
+    .catch((message:any) => {
+      this.isAuthenticating = false;
+    });
+  }
   signUp() {
     this.firebaseService.register(this.user)
       .then(() => {
