@@ -36,6 +36,18 @@ export class LoginComponent {
 
   
 
+  signInWithFacebook() {
+    return this.firebaseService.login_facebook(this.user)
+    .then(() => {
+      this.isAuthenticating = false;
+      this.routerExtensions.navigate(["/"], { clearHistory: true } );
+
+    })
+    .catch((message:any) => {
+      this.isAuthenticating = false;
+    });
+  }
+  
   login() {
      this.firebaseService.login(this.user)
       .then(() => {

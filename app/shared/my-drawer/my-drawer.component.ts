@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import {User} from '../models/user.model';
+//import {User} from '../models/user.model';
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.
 * Add new data objects that you want to display in the drawer here in the form of properties.
@@ -10,7 +10,7 @@ import {User} from '../models/user.model';
     templateUrl: "./my-drawer.component.html",
     styleUrls: ["./my-drawer.component.css"]
 })
-
+   let username : string = this.user.username;
 export class MyDrawerComponent implements OnInit {
     /* ***********************************************************
     * The "selectedPage" is a component input property.

@@ -36,9 +36,28 @@ export class FirebaseService {
     return firebase.login({
       type: firebase.LoginType.GOOGLE,
       // Optional 
-       googleOptions: {
-         hostedDomain: "mygsuitedomain.com"
-       }
+    //  googleOptions: {
+    //    hostedDomain: "mygsuitedomain.com"
+    //  }
+    }).then(
+        function (result) {
+         // BackendService.token = result.uid;
+          JSON.stringify(result);
+        },
+        function (errorMessage) {
+          console.log(errorMessage);
+        }
+    );
+  }
+
+  login_facebook(user: User){
+    return firebase.login({
+      type: firebase.LoginType.FACEBOOK,
+      // Optional
+      facebookOptions: {
+        // defaults to ['public_profile', 'email']
+        scope: ['public_profile', 'email']
+      }
     }).then(
         function (result) {
       //   BackendService.token = result.uid;

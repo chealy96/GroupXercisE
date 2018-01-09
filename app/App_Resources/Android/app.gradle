@@ -4,7 +4,14 @@
 //dependencies {
 //	compile 'com.android.support:recyclerview-v7:+'
 //}
-
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+}
 android {  
   defaultConfig {  
     generatedDensities = []
@@ -13,4 +20,6 @@ android {
   aaptOptions {  
     additionalParameters "--no-version-vectors"  
   }  
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
 } 
