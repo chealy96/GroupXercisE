@@ -40,9 +40,12 @@ export class FirebaseService {
     //    hostedDomain: "mygsuitedomain.com"
     //  }
     }).then(
-        function (result) {
+        function (result:any) {
          // BackendService.token = result.uid;
-          JSON.stringify(result);
+         
+         
+           console.log(result);
+           return   JSON.stringify(result);;
         },
         function (errorMessage) {
           console.log(errorMessage);
@@ -59,11 +62,9 @@ export class FirebaseService {
         scope: ['public_profile', 'email']
       }
     }).then(
-        function (result) {
+        function (result:any) {
       //   BackendService.token = result.uid;
-         
          return JSON.stringify(result);
-
         },
         function (errorMessage) {
           console.log(errorMessage);
@@ -77,13 +78,52 @@ export class FirebaseService {
       forceRefresh: true
     }).then(
         function (token) {
-          BackendService.token = token;
           console.log("Auth token retrieved: " + token);
         },
         function (errorMessage) {
           console.log("Auth token retrieval error: " + errorMessage);
         }
     );
+  }
+
+  updateUserData(user) {
+    // update user data to firestore on login
+   return firebase.update("/users/"+user.uid+"",
+     {
+      password: user.password,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL
+    }).then(
+      function (result:any) {
+     
+        console.log("added user profile: "+ result.displayName);
+      },
+      function (errorMessage) {
+        console.log(errorMessage);
+      }
+    );
+  }
+
+  addNewUserData(user) {
+    // Sets new user data to firestore on login
+   // console.log("update user profile:"  +user.uid);
+    return firebase.push(`/users`,
+     {
+      UID: user.uid,
+      password: user.password,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      provideId: user.providerid
+    }).then(
+      function (result:any) {
+        console.log("update user profile: "+ user.displayName);
+      },
+      function (errorMessage) {
+        console.log(errorMessage);
+      }
+  );
   }
 
   login(user: User) {

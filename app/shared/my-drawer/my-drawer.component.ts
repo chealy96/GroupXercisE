@@ -10,7 +10,7 @@ import { Component, Input, OnInit } from "@angular/core";
     templateUrl: "./my-drawer.component.html",
     styleUrls: ["./my-drawer.component.css"]
 })
-   let username : string = this.user.username;
+
 export class MyDrawerComponent implements OnInit {
     /* ***********************************************************
     * The "selectedPage" is a component input property.
