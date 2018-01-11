@@ -9,6 +9,7 @@ import { AppComponent } from "./app.component";
 import { LoginModule } from "./login/login.module";
 import { HomeModule } from "./home/home.module";
 import { BrowseModule } from "./browse/browse.module";
+import { SharedModule } from "./shared/shared.module";
 
 import { BackendService, FirebaseService} from "./services";
 @NgModule({
@@ -22,7 +23,8 @@ import { BackendService, FirebaseService} from "./services";
         NativeScriptRouterModule.forRoot(appRoutes),
         LoginModule,
         HomeModule,
-        BrowseModule
+        BrowseModule,
+        SharedModule
         
     ],
     declarations: [
