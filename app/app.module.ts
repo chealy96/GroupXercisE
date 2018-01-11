@@ -10,6 +10,7 @@ import { LoginModule } from "./login/login.module";
 import { HomeModule } from "./home/home.module";
 import { BrowseModule } from "./browse/browse.module";
 import { SharedModule } from "./shared/shared.module";
+import { WorkoutModule } from "./workout/workout.module";
 
 import { BackendService, FirebaseService} from "./services";
 @NgModule({
@@ -24,8 +25,8 @@ import { BackendService, FirebaseService} from "./services";
         LoginModule,
         HomeModule,
         BrowseModule,
-        SharedModule
-        
+        SharedModule,
+        WorkoutModule
     ],
     declarations: [
         AppComponent
