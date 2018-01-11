@@ -4,7 +4,7 @@ import {User} from '../models/user.model';
 import {FirebaseService} from '../services';
 import {prompt} from "ui/dialogs";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
-
+import firebase = require("nativescript-plugin-firebase");
 @Component({
   moduleId: module.id,
   selector: 'gf-login',
@@ -12,6 +12,7 @@ import { RouterExtensions } from 'nativescript-angular/router/router-extensions'
 })
 export class LoginComponent {
   user: User;
+  hold: any[string];
   isLoggingIn = true;
   isAuthenticating = false;
 
@@ -38,8 +39,19 @@ export class LoginComponent {
 
   signInWithFacebook() {
     return this.firebaseService.login_facebook(this.user)
-    .then(() => {
+    .then((result: any) => {
+      this.hold =  JSON.parse(result);
       this.isAuthenticating = false;
+      this.user.uid = this.hold.uid;
+      this.user.displayName = this.hold.name;
+      this.user.email = this.hold.email;
+      this.user.providerid = this.hold.providers[1].id;
+      this.user.photoURL = this.hold.profileImageURL;
+      if(this.check(this.user) != null){
+        this.firebaseService.addNewUserData(this.user);
+     }else{
+       this.firebaseService.updateUserData(this.user);
+      }
       this.routerExtensions.navigate(["/"], { clearHistory: true } );
 
     })
@@ -50,8 +62,19 @@ export class LoginComponent {
   
   login() {
      this.firebaseService.login(this.user)
-      .then(() => {
+      .then((result: any) => {
+        this.hold =  JSON.parse(result);
         this.isAuthenticating = false;
+        this.user.uid = this.hold.uid;
+        this.user.displayName = this.hold.name;
+        this.user.email = this.hold.email;
+        this.user.providerid = this.hold.providers[1].id;
+        this.user.photoURL = this.hold.profileImageURL;
+        if(this.check(this.user) != null){
+          this.firebaseService.addNewUserData(this.user);
+       }else{
+         this.firebaseService.updateUserData(this.user);
+       }
         this.routerExtensions.navigate(["/"], { clearHistory: true } );
 
       })
@@ -62,8 +85,22 @@ export class LoginComponent {
 
   signInWithGoogle() {
     this.firebaseService.login_google(this.user)
-    .then(() => {
+    .then((result: any) => {
+      this.hold =  JSON.parse(result);
       this.isAuthenticating = false;
+      this.user.uid = this.hold.uid;
+      this.user.displayName = this.hold.name;
+      this.user.email = this.hold.email;
+      this.user.providerid = this.hold.providers[1].id;
+      this.user.photoURL = this.hold.profileImageURL;
+      if(this.check(this.user) != null){
+    console.log("HEEEEEEEEEEEEER "+   this.user);
+
+
+        this.firebaseService.addNewUserData(this.user);
+      }else{
+       this.firebaseService.updateUserData(this.user);
+      }
       this.routerExtensions.navigate(["/"], { clearHistory: true } );
    //this.firebaseService.getToken();
     })
@@ -71,10 +108,12 @@ export class LoginComponent {
       this.isAuthenticating = false;
     });
   }
+
   signUp() {
     this.firebaseService.register(this.user)
-      .then(() => {
+      .then((result: any) => {
         this.isAuthenticating = false;
+        this.firebaseService.addNewUserData(result);
         this.toggleDisplay();
       })
       .catch((message:any) => {
@@ -82,7 +121,37 @@ export class LoginComponent {
         this.isAuthenticating = false;
       });
   }
+  
+  check(user){
+    let profile = null;
+    let onQueryEvent = function(user) {
+      // note that the query returns 1 match at a time
+      // in the order specified in the query
+      if (!user.error) {
+          console.log("Event type: " + user.type);
+          console.log("Key: " + user.email);
+          console.log("Value: " + user.uid);
+      }
+    };
 
+    firebase.query(onQueryEvent, "/users/"+user.uid+"",
+        {       singleEvent: true,
+                orderBy: {
+                type: firebase.QueryOrderByType.CHILD,
+                value: 'since' // mandatory when type is 'child'
+        },
+        }).then(function(result) {
+          
+          profile = true;
+          console.log(JSON.stringify(result));
+        },
+        function (errorMessage) {
+          console.log(errorMessage);
+        }
+        );
+        return profile;
+    }
+    
   forgotPassword() {
 
     prompt({
@@ -106,4 +175,6 @@ export class LoginComponent {
 toggleDisplay() {
     this.isLoggingIn = !this.isLoggingIn;
   }
+
+  
 }

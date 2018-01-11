@@ -1,21 +1,22 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { SharedModule } from "../shared/shared.module";
-import { FeaturedRoutingModule } from "./featured-routing.module";
-import { FeaturedComponent } from "./featured.component";
+import { WorkoutdRoutingModule } from "./workout-routing.module";
+import { WorkoutComponent } from "./workout.component";
 
 @NgModule({
     imports: [
         NativeScriptModule,
-        FeaturedRoutingModule,
+        NativeScriptFormsModule,
+        WorkoutdRoutingModule,
         SharedModule
     ],
     declarations: [
-        FeaturedComponent
+        WorkoutComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class FeaturedModule { }
+export class WorkoutModule { }

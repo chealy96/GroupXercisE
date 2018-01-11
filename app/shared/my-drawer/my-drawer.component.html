@@ -4,9 +4,9 @@ Feel free to customize layouts and components to change how your app drawer look
 -->
 <GridLayout rows="auto, *" class="sidedrawer sidedrawer-left">
     <StackLayout row="0" class="sidedrawer-header">
-        <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
-        <Label class="sidedrawer-header-brand" text="User Name"></Label>
-        <Label class="footnote" text="username@mail.com"></Label>
+        <Image class="sidedrawer-header-image fa" src={{profilePhoto}}></Image>
+        <Label class="sidedrawer-header-brand" text={{name}}></Label>
+        <Label class="footnote" text={{email}}></Label>
     </StackLayout>
 
     <ScrollView row="1">
@@ -17,7 +17,7 @@ Feel free to customize layouts and components to change how your app drawer look
             </MyDrawerItem>
             <MyDrawerItem title="Search" route="/search" icon="&#xf002;" [isSelected]="isPageSelected('Search')">
             </MyDrawerItem>
-            <MyDrawerItem title="Featured" route="/featured" icon="&#xf005;" [isSelected]="isPageSelected('Featured')">
+            <MyDrawerItem title="Workout" route="/workout" icon="&#xf005;" [isSelected]="isPageSelected('Workout')">
             </MyDrawerItem>
 
             <StackLayout class="hr-light"></StackLayout>
