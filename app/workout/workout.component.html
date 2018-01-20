@@ -34,7 +34,42 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     Use the tkMainContent directive to display the content of the page when you have an app drawer.
     -->
     <GridLayout class="page page-content" tkMainContent>
-        <Label class="page-icon fa" text="&#xf005;"></Label>
-        <Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
+      
+        
+<ScrollView>
+
+    <StackLayout>
+  <!--  <Label class="gold card" textWrap="true" [text]="message$ | async"></Label> -->
+    <Label class="h2 header" style="text-align: center " text="Create Exercise"></Label>
+    <StackLayout class="card">     
+        <GridLayout columns="2*,1*" class="form">
+            <TextField class="input input-border" hint="Name" col="0" #exercise [(ngModel)]="name"></TextField>
+            <Button class="btn btn-primary" col="1" text="Save" (tap)="add()"></Button>
+        </GridLayout>
+        <GridLayout columns="1*,1*,1*" class="form">
+            <TextField class="input input-border" hint="Reps" col="0" #exercise [(ngModel)]="reps"></TextField>
+            <TextField class="input input-border" hint="Sets" col="1" #exercise [(ngModel)]="sets"></TextField>
+            <TextField class="input input-border" hint="Time" col="2" #exercise [(ngModel)]="time"></TextField>
+        </GridLayout>
+        <GridLayout columns="1*" class="form">
+            <TextField class="input input-border" hint="Description" col="0" #exercise [(ngModel)]="description"></TextField>
+        </GridLayout>
+    </StackLayout>
+    <Label class="h2 header" text="Exercise List" style="text-align: center "></Label>
+    <StackLayout class="card">
+        <ListView [items]="exercises$ | async"  height="300">
+            <ng-template let-item="item">                  
+                <GridLayout columns="auto,*,auto">
+                    <Image class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="item.imagepath.length>0 ? item.imagepath : '~/assets/camera.png'"></Image>
+                    <Label class="m-5"  (tap)="viewDetail(item.id)" col="1" [text]='item.name'></Label>
+                 
+                    <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]="'~/assets/trash.png'"></Image>
+                </GridLayout>                 
+            </ng-template>
+        </ListView>
+    </StackLayout>
+
+    </StackLayout>
+    </ScrollView>
     </GridLayout>
 </RadSideDrawer>

@@ -9,11 +9,9 @@ import { RouterModule } from "@angular/router";
 import { AuthGuard } from "../auth-guard.service";
 
 const WorkoutRoutes: Routes = [
-    { path: "", component: WorkoutComponent, canActivate: [AuthGuard]  }
+    { path: "", component: WorkoutComponent, canActivate: [AuthGuard]  },
+    { path: "list-detail", loadChildren: "./list-detail/list-detail.module#ListDetailModule" }
 ];
 export const WorkoutdRoutingModule: ModuleWithProviders = RouterModule.forChild(WorkoutRoutes);
-// @NgModule({
-//     imports: [NativeScriptRouterModule.forChild(WorkoutRoutes)],
-//     exports: [NativeScriptRouterModule]
-// })
+
 

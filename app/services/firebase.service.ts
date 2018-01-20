@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 //import {UtilsService} from './utils.service';
 import 'rxjs/add/operator/share';
+import {Exercise} from "../models/exercises.model";
 
 @Injectable()
 export class FirebaseService {
@@ -16,7 +17,7 @@ export class FirebaseService {
     
   //items: BehaviorSubject<Array<Gift>> = new BehaviorSubject([]);
   
- // private _allItems: Array<Gift> = [];
+ private _allItems: Array<Exercise> = [];
   
   register(user: User) {
     return firebase.createUser({
@@ -155,10 +156,10 @@ export class FirebaseService {
         }
     ).catch(this.handleErrors);
   }
- /*
-  getMyWishList(): Observable<any> {
+
+  getExerciseList(): Observable<any> {
     return new Observable((observer: any) => {
-      let path = 'Gifts';
+      let path = 'exercises';
       
         let onValueEvent = (snapshot: any) => {
           this.ngZone.run(() => {
@@ -170,12 +171,12 @@ export class FirebaseService {
         firebase.addValueEventListener(onValueEvent, `/${path}`);
     }).share();              
   }
-
- getMyGift(id: string): Observable<any> {
+ 
+ getMyExeercise(id: string): Observable<any> {
     return new Observable((observer: any) => {
       observer.next(this._allItems.filter(s => s.id === id)[0]);
     }).share();
-  }*/
+  }
 
   getMyMessage(): Observable<any>{
     return new Observable((observer:any) => {
@@ -198,7 +199,7 @@ export class FirebaseService {
   }).share();
 }
 
- /*   
+  
 
   handleSnapshot(data: any) {
     //empty array, then refill and filter
@@ -210,37 +211,46 @@ export class FirebaseService {
           this._allItems.push(result);
         }        
       }
-      this.publishUpdates();
+   //   this.publishUpdates();
     }
     return this._allItems;
   }
 
-   publishUpdates() {
-    // here, we sort must emit a *new* value (immutability!)
-    this._allItems.sort(function(a, b){
-        if(a.date < b.date) return -1;
-        if(a.date > b.date) return 1;
-      return 0;
-    })
-    this.items.next([...this._allItems]);
-   }*/
+  //  publishUpdates() {
+  //   // here, we sort must emit a *new* value (immutability!)
+  //   this._allItems.sort(function(a, b){
+  //       if(a.date < b.date) return -1;
+  //       if(a.date > b.date) return 1;
+  //     return 0;
+  //   })
+  //   this.items.next([...this._allItems]);
+  //  }
 
-  add(gift: string) {   
+  add(exercise: Exercise) {   
     return firebase.push(
-        "/Gifts",
-        { "name": gift, "UID": BackendService.token, "date": 0 - Date.now(), "imagepath": ""}
+        "/exercises",
+        { "name": exercise.name, 
+          "reps": exercise.reps, 
+          "sets": exercise.sets, 
+       
+          "time": exercise.time,
+          "description": exercise.description, 
+          "UID": BackendService.token,
+          "date": 0 - Date.now(),
+          "imagepath":""
+        }
       ).then(
         function (result:any) {
-          return 'Gift added to your wishlist!';
+          return 'Exercise added to yourExercise list!';
         },
         function (errorMessage:any) {
           console.log(errorMessage);
         }); 
   }
-/*
-  editGift(id:string, description: string, imagepath: string){
-    this.publishUpdates();
-    return firebase.update("/Gifts/"+id+"",{
+
+  editExercise(id:string, description: string, imagepath: string){
+  //  this.publishUpdates();
+    return firebase.update("/exercises/"+id+"",{
         description: description, 
         imagepath: imagepath})
       .then(
@@ -252,8 +262,8 @@ export class FirebaseService {
         });  
   }
   editDescription(id:string, description: string){
-    this.publishUpdates();
-    return firebase.update("/Gifts/"+id+"",{
+   // this.publishUpdates();
+    return firebase.update("/exercises/"+id+"",{
         description: description})
       .then(
         function (result:any) {
@@ -263,11 +273,8 @@ export class FirebaseService {
           console.log(errorMessage);
         });  
   }
-  delete(gift: Gift) {
-    return firebase.remove("/Gifts/"+gift.id+"")
-      .catch(this.handleErrors);
-  }
-  
+ 
+  /*
   uploadFile(localPath: string, file?: any): Promise<any> {
       let filename = this.utils.getFilename(localPath);
       let remotePath = `${filename}`;   
@@ -280,7 +287,10 @@ export class FirebaseService {
         }
       });
   }*/
-
+  delete(exercise: Exercise) {
+    return firebase.remove("/exercises/"+exercise.id+"")
+      .catch(this.handleErrors);
+  }
   getDownloadUrl(remoteFilePath: string): Promise<any> {
       return firebase.getDownloadUrl({
         remoteFullPath: remoteFilePath})

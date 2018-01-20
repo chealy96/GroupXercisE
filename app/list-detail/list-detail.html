@@ -1,0 +1,17 @@
+<ActionBar class="action-bar" title="{{name}}"></ActionBar>
+    <ScrollView>
+        <StackLayout #exercise class="card form">  
+            <Label class="h2" [text]="name"></Label>
+            <Label class="h2" [text]="reps"></Label> 
+            <Label class="h2" [text]="sets"></Label>
+            <Label class="h2" [text]="description"></Label>   
+            <Image *ngIf="imagepath" width="100" height="100" [src]="imagepath"></Image>                    
+            <Label class="m-t-5" text="Which is like this..."></Label>
+           <TextField hint="Tell more about this gift!" [text]="description" class="m-t-10 input input-border" [(ngModel)]="description"></TextField>
+            <Image [src]="image"></Image>
+            <GridLayout columns="*,*">
+                <Button col="0" class="btn gold" text="Photo" (tap)="takePhoto()"></Button>
+                <Button col="1" class="btn btn-primary" text="Save" (tap)="editGift(id)"></Button>
+            </GridLayout> 
+        </StackLayout>
+    </ScrollView>
