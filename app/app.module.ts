@@ -12,8 +12,9 @@ import { BrowseModule } from "./browse/browse.module";
 import { SharedModule } from "./shared/shared.module";
 import { WorkoutModule } from "./workout/workout.module";
 import { ListDetailModule } from "./list-detail/list-detail.module";
+import { SearchModule } from "./search/search.module";
 
-import { BackendService, FirebaseService} from "./services";
+import { BackendService, FirebaseService, RequestsProvider} from "./services";
 @NgModule({
     bootstrap: [
         AppComponent
@@ -28,7 +29,8 @@ import { BackendService, FirebaseService} from "./services";
         BrowseModule,
         SharedModule,
         WorkoutModule,
-        ListDetailModule 
+        ListDetailModule,
+        SearchModule 
     ],
     declarations: [
         AppComponent
@@ -37,7 +39,8 @@ import { BackendService, FirebaseService} from "./services";
         { provide: NgModuleFactoryLoader, useClass: NSModuleFactoryLoader },
         authProviders,
         BackendService,
-        FirebaseService
+        FirebaseService,
+        RequestsProvider
     ],
     schemas: [
         NO_ERRORS_SCHEMA

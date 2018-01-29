@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {User} from '../models/user.model';
 import {FirebaseService} from '../services';
@@ -15,17 +15,17 @@ export class LoginComponent {
   hold: any[string];
   isLoggingIn = true;
   isAuthenticating = false;
-
+  res = null;
   
   constructor(private firebaseService: FirebaseService,
-              private routerExtensions: RouterExtensions
+              private routerExtensions: RouterExtensions,
+              private ngZone: NgZone
             ) {
               this.user = new User();
            //   this.user.email = "user@nativescript.org";
             //  this.user.password = "password";
             }
 
- 
  submit() {
     this.isAuthenticating = true;
     if (this.isLoggingIn) {
@@ -34,8 +34,6 @@ export class LoginComponent {
       this.signUp();
     }
   }
-
-  
 
   signInWithFacebook() {
     return this.firebaseService.login_facebook(this.user)
@@ -47,11 +45,13 @@ export class LoginComponent {
       this.user.email = this.hold.email;
       this.user.providerid = this.hold.providers[1].id;
       this.user.photoURL = this.hold.profileImageURL;
-      if(this.check(this.user) != null){
+    
+      let res = this.check(this.user).then((res: User)=> {
+      if( res == null){
         this.firebaseService.addNewUserData(this.user);
-     }else{
-       this.firebaseService.updateUserData(this.user);
-      }
+     }
+    });
+     
       this.routerExtensions.navigate(["/"], { clearHistory: true } );
 
     })
@@ -66,15 +66,16 @@ export class LoginComponent {
         this.hold =  JSON.parse(result);
         this.isAuthenticating = false;
         this.user.uid = this.hold.uid;
-        this.user.displayName = this.hold.name;
+        this.user.displayName = this.hold.email;
         this.user.email = this.hold.email;
         this.user.providerid = this.hold.providers[1].id;
         this.user.photoURL = this.hold.profileImageURL;
-        if(this.check(this.user) != null){
-          this.firebaseService.addNewUserData(this.user);
-       }else{
-         this.firebaseService.updateUserData(this.user);
-       }
+        this.check(this.user).then((res: User)=> {
+          if(res == null){
+            this.firebaseService.addNewUserData(this.user);
+          }
+        });
+        
         this.routerExtensions.navigate(["/"], { clearHistory: true } );
 
       })
@@ -93,16 +94,14 @@ export class LoginComponent {
       this.user.email = this.hold.email;
       this.user.providerid = this.hold.providers[1].id;
       this.user.photoURL = this.hold.profileImageURL;
-      if(this.check(this.user) != null){
-    console.log("HEEEEEEEEEEEEER "+   this.user);
-
-
+      
+     let res = this.check(this.user).then((res: User)=> {
+      if( res == null){
         this.firebaseService.addNewUserData(this.user);
-      }else{
-       this.firebaseService.updateUserData(this.user);
-      }
+     }
+    });
       this.routerExtensions.navigate(["/"], { clearHistory: true } );
-   //this.firebaseService.getToken();
+  
     })
     .catch((message:any) => {
       this.isAuthenticating = false;
@@ -112,8 +111,7 @@ export class LoginComponent {
   signUp() {
     this.firebaseService.register(this.user)
       .then((result: any) => {
-        this.isAuthenticating = false;
-        this.firebaseService.addNewUserData(result);
+      this.isAuthenticating = false;
         this.toggleDisplay();
       })
       .catch((message:any) => {
@@ -123,34 +121,43 @@ export class LoginComponent {
   }
   
   check(user){
-    let profile = null;
     let onQueryEvent = function(user) {
-      // note that the query returns 1 match at a time
-      // in the order specified in the query
+     
       if (!user.error) {
           console.log("Event type: " + user.type);
-          console.log("Key: " + user.email);
-          console.log("Value: " + user.uid);
+          console.log("Key: " + user.key);
+          console.log("Value: " + +JSON.stringify(user.value));
       }
     };
+   
+    var promise = new Promise((resolve, reject) => {
+      firebase.query(onQueryEvent, "/users/",
+      {       singleEvent: true,
+              orderBy: {
+              type: firebase.QueryOrderByType.CHILD,
+              value: 'UID' // mandatory when type is 'child'
+      },
+      }).then((snapshot) => {
+            let userdata = snapshot.value;
+            let temparr: any = null;
 
-    firebase.query(onQueryEvent, "/users/"+user.uid+"",
-        {       singleEvent: true,
-                orderBy: {
-                type: firebase.QueryOrderByType.CHILD,
-                value: 'since' // mandatory when type is 'child'
-        },
-        }).then(function(result) {
-          
-          profile = true;
-          console.log(JSON.stringify(result));
-        },
-        function (errorMessage) {
-          console.log(errorMessage);
-        }
-        );
-        return profile;
-    }
+              for (var key in userdata) {
+                if(userdata[key].UID == user.uid){
+                       temparr = (userdata[key]);
+                }   
+              }
+              resolve(temparr);
+              console.log(JSON.stringify(temparr));
+          },
+          function (errorMessage) {
+            console.log(errorMessage);
+            reject(errorMessage);
+          });
+    })
+   
+    return promise;
+  }
+    
     
   forgotPassword() {
 

@@ -11,7 +11,7 @@
     </ActionItem>
     <ActionItem (tap)="logout()">
         <Button text="Logout" class="action-item"></Button>
-      </ActionItem> 
+    </ActionItem> 
     <Label class="action-bar-title" text="Browse"></Label>
 </ActionBar>
 
@@ -27,14 +27,40 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     Use the tkDrawerContent directive to display the content of the app drawer on this page.
     -->
     <StackLayout tkDrawerContent>
-        <MyDrawer [selectedPage]="'Browse'"></MyDrawer>
+        <MyDrawer [selectedPage]="'Search'"></MyDrawer>
     </StackLayout>
     
     <!--
     Use the tkMainContent directive to display the content of the page when you have an app drawer.
-    -->
+   
+-->
     <GridLayout class="page page-content" tkMainContent>
-        <Label class="page-icon fa" text="&#xf1ea;"></Label>
-        <Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
+        <ScrollView>
+
+            <StackLayout>
+          <!--  <Label class="gold card" textWrap="true" [text]="message$ | async"></Label> -->
+            <Label class="h2 header" style="text-align: center " text="Search for Users"></Label>
+            <StackLayout class="">     
+                <GridLayout  class="form">
+                    <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
+                    <SearchBar row="0" hint="Search"  (textChange)="searchuser($event)" (clear)="onClear($event)" (submit)="searchuser($event)"></SearchBar>
+                </GridLayout>    
+            </StackLayout>
+            <Label class="h2 header" text="User List" style="text-align: center "></Label>
+            <StackLayout class="">
+                <ListView row="1" [items]="filteredusers" class="list-group" height="400">
+                    <ng-template let-item="item">
+                        <GridLayout class="item list-group-item" columns="auto,*,auto">
+                            <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
+                            <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
+                           <!-- <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]=""></Image>-->
+                           <Button  class="m-5" class="btn btn-primary btn-active" col="2" horizontalAlignment="right" id="button" text="Add" (tap)="sendreq(item)"></Button>
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
+            </StackLayout>
+        
+            </StackLayout>
+            </ScrollView>
     </GridLayout>
 </RadSideDrawer>

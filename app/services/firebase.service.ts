@@ -16,7 +16,7 @@ export class FirebaseService {
   ){}
     
   //items: BehaviorSubject<Array<Gift>> = new BehaviorSubject([]);
-  
+
  private _allItems: Array<Exercise> = [];
   
   register(user: User) {
@@ -87,24 +87,24 @@ export class FirebaseService {
     );
   }
 
-  updateUserData(user) {
-    // update user data to firestore on login
-   return firebase.update("/users/"+user.uid+"",
-     {
-      password: user.password,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL
-    }).then(
-      function (result:any) {
+  // updateUserData(user) {
+  //   // update user data to firestore on login
+  //  return firebase.update("/users/"+user.uid+"",
+  //    {
+      
+  //     email: user.email,
+  //     displayName: user.displayName,
+  //     photoURL: user.photoURL
+  //   }).then(
+  //     function (result:any) {
      
-        console.log("added user profile: "+ result.displayName);
-      },
-      function (errorMessage) {
-        console.log(errorMessage);
-      }
-    );
-  }
+  //       console.log("added user profile: "+ result.displayName);
+  //     },
+  //     function (errorMessage) {
+  //       console.log(errorMessage);
+  //     }
+  //   );
+  // }
 
   addNewUserData(user) {
     // Sets new user data to firestore on login
@@ -112,7 +112,6 @@ export class FirebaseService {
     return firebase.push(`/users`,
      {
       UID: user.uid,
-      password: user.password,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
@@ -143,6 +142,17 @@ export class FirebaseService {
   logout(){
     BackendService.token = "";
     firebase.logout();    
+  }
+
+  getUserId(){
+    return firebase.getCurrentUser().then( (snapshot) => {
+      snapshot.uid;
+  });
+  // this.profile = JSON.stringify(firebase.getCurrentUser());
+
+  //       this.holder = JSON.parse(this.profile);
+  //       this.profile = this.holder.__zone_symbol__value;
+  //       return this.profile;
   }
   
   resetPassword(email) {
@@ -307,4 +317,38 @@ export class FirebaseService {
     console.log(JSON.stringify(error));
     return Promise.reject(error.message);
   }
+
+  getallusers() {
+    let onQueryEvent = function(user) {
+      // note that the query returns 1 match at a time
+      // in the order specified in the query
+      if (!user.error) {
+          console.log("Event type: " + user.type);
+          console.log("Key: " + user.email);
+          console.log("Value: " + user.uid);
+      }
+    };
+    var promise = new Promise((resolve, reject) => {
+      firebase.query(onQueryEvent, "/users/",
+      {       singleEvent: true,
+              orderBy: {
+              type: firebase.QueryOrderByType.CHILD,
+              value: 'UID' // mandatory when type is 'child'
+      },
+      }).then(((snapshot) => {
+        let userdata = snapshot.value;
+        let temparr = [];
+        for (var key in userdata) {
+          temparr.push(userdata[key]);
+        }
+        resolve(temparr);
+      }),
+      function (errorMessage) {
+        console.log(errorMessage);
+        reject(errorMessage);
+      })
+    })
+    return promise;
+  }
+
 }

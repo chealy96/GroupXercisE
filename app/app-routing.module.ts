@@ -11,7 +11,7 @@ export const authProviders = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
     { path: "home", loadChildren: "./home/home.module#HomeModule" },
     { path: "browse", loadChildren: "./browse/browse.module#BrowseModule" },
-   // { path: "search", loadChildren: "./search/search.module#SearchModule" },
+    { path: "search", loadChildren: "./search/search.module#SearchModule" },
     { path: "workout", loadChildren: "./workout/workout.module#WorkoutModule" },
    // { path: "settings", loadChildren: "./settings/settings.module#SettingsModule" }
 ];

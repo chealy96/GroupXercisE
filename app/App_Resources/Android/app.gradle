@@ -2,7 +2,8 @@
 
 // Uncomment to add recyclerview-v7 dependency
 //dependencies {
-//	compile 'com.android.support:recyclerview-v7:+'
+	//compile 'com.android.support:recyclerview-v7:+'
+ 
 //}
 allprojects {
     repositories {
@@ -22,4 +23,5 @@ android {
   }  
   compileSdkVersion 26
   buildToolsVersion "26.0.1"
+ //apply plugin: "com.google.gms.google-services"
 } 
