@@ -36,11 +36,11 @@ export class RequestsProvider {
     return promise;  
   }
 //.(this.userservice.getUserId())
-  getmyrequests() {
+  getmyrequests(){
     let allmyrequests;
-    var myrequests = [];
+    var myrequests: Object[] =[];
     this.firereq.on('value', (snapshot) => {
-      allmyrequests = snapshot.val();
+      allmyrequests = snapshot.val;
       myrequests = [];
       for (var i in allmyrequests) {
         myrequests.push(allmyrequests[i].sender);
@@ -56,9 +56,9 @@ export class RequestsProvider {
           }
       //  this.events.publish('gotrequests');
       })
-
-  })
-}  
+    })
+    return myrequests;
+  }  
 
 
 public doWebGetCurrentUser() {
