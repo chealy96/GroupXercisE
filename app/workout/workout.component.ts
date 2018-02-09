@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
-import { FirebaseService } from '../services';
+import { ExerciseService, FirebaseService } from '../services';
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { Router } from '@angular/router';
 import { Exercise } from "../models/exercises.model";
@@ -27,6 +27,7 @@ export class WorkoutComponent implements OnInit {
     public exercises$: Observable<any>;
     public message$: Observable<any>;
     constructor(private routerExtensions: RouterExtensions,
+                private exerciseService: ExerciseService,
                 private firebaseService: FirebaseService,
                 private router: Router
         ) {}S
@@ -36,7 +37,7 @@ export class WorkoutComponent implements OnInit {
     private _sideDrawerTransition: DrawerTransitionBase;
 
     ngOnInit(): void {
-        this.exercises$ = <any>this.firebaseService.getExerciseList();
+        this.exercises$ = <any>this.exerciseService.getExerciseList();
         this._sideDrawerTransition = new SlideInOnTopTransition();
     }
 
@@ -52,7 +53,7 @@ export class WorkoutComponent implements OnInit {
         this.UID);
 
         let myExercise:Exercise = this.exercise;
-        this.firebaseService.add(myExercise).then((message:any) => {
+        this.exerciseService.add(myExercise).then((message:any) => {
         this.name = ""
         this.description = "",
          this.reps = "",
@@ -65,7 +66,7 @@ export class WorkoutComponent implements OnInit {
      }
    
      delete(exercise: Exercise) {
-       this.firebaseService.delete(exercise)
+       this.exerciseService.delete(exercise)
          .catch(() => {
            alert("An error occurred while deleting an item from your list.");
          });

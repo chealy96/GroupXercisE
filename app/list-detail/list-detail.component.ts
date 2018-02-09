@@ -1,7 +1,7 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Router, ActivatedRoute} from '@angular/router';
-import { FirebaseService } from "../services";
+import { ExerciseService } from "../services";
 import {Exercise} from "../models";
 import * as enums from 'ui/enums';
 import * as imageSource from 'image-source';
@@ -36,7 +36,7 @@ export class ListDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private ngZone: NgZone,
-        private firebaseService: FirebaseService,
+        private exerciseService: ExerciseService,
       //  private utilsService: UtilsService
     ) {}
 
@@ -44,7 +44,7 @@ export class ListDetailComponent implements OnInit {
   // camera.requestPermissions();
    this.sub = this.route.params.subscribe((params: any) => {
       this.id = params['id'];
-      this.firebaseService.getMyExeercise(this.id).subscribe((exercise) => {
+      this.exerciseService.getMyExeercise(this.id).subscribe((exercise) => {
         this.ngZone.run(() => {
           for (let prop in exercise) {
             //props

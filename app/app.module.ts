@@ -14,7 +14,7 @@ import { WorkoutModule } from "./workout/workout.module";
 import { ListDetailModule } from "./list-detail/list-detail.module";
 import { SearchModule } from "./search/search.module";
 
-import { BackendService, FirebaseService, RequestsProvider} from "./services";
+import { BackendService, FirebaseService, RequestsProvider, ExerciseService,} from "./services";
 @NgModule({
     bootstrap: [
         AppComponent
@@ -40,7 +40,8 @@ import { BackendService, FirebaseService, RequestsProvider} from "./services";
         authProviders,
         BackendService,
         FirebaseService,
-        RequestsProvider
+        RequestsProvider,
+        ExerciseService,
     ],
     schemas: [
         NO_ERRORS_SCHEMA

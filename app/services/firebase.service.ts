@@ -15,10 +15,7 @@ export class FirebaseService {
   //  private utils: UtilsService
   ){}
     
-  //items: BehaviorSubject<Array<Gift>> = new BehaviorSubject([]);
 
- private _allItems: Array<Exercise> = [];
-  
   register(user: User) {
     return firebase.createUser({
       email: user.email,
@@ -42,9 +39,6 @@ export class FirebaseService {
     //  }
     }).then(
         function (result:any) {
-         // BackendService.token = result.uid;
-         
-         
            console.log(result);
            return   JSON.stringify(result);;
         },
@@ -64,7 +58,6 @@ export class FirebaseService {
       }
     }).then(
         function (result:any) {
-      //   BackendService.token = result.uid;
          return JSON.stringify(result);
         },
         function (errorMessage) {
@@ -87,24 +80,6 @@ export class FirebaseService {
     );
   }
 
-  // updateUserData(user) {
-  //   // update user data to firestore on login
-  //  return firebase.update("/users/"+user.uid+"",
-  //    {
-      
-  //     email: user.email,
-  //     displayName: user.displayName,
-  //     photoURL: user.photoURL
-  //   }).then(
-  //     function (result:any) {
-     
-  //       console.log("added user profile: "+ result.displayName);
-  //     },
-  //     function (errorMessage) {
-  //       console.log(errorMessage);
-  //     }
-  //   );
-  // }
 
   addNewUserData(user) {
     // Sets new user data to firestore on login
@@ -147,12 +122,7 @@ export class FirebaseService {
   getUserId(){
     return firebase.getCurrentUser().then( (snapshot) => {
       snapshot.uid;
-  });
-  // this.profile = JSON.stringify(firebase.getCurrentUser());
-
-  //       this.holder = JSON.parse(this.profile);
-  //       this.profile = this.holder.__zone_symbol__value;
-  //       return this.profile;
+    });
   }
   
   resetPassword(email) {
@@ -167,151 +137,7 @@ export class FirebaseService {
     ).catch(this.handleErrors);
   }
 
-  getExerciseList(): Observable<any> {
-    return new Observable((observer: any) => {
-      let path = 'exercises';
-      
-        let onValueEvent = (snapshot: any) => {
-          this.ngZone.run(() => {
-            let results = this.handleSnapshot(snapshot.value);
-            console.log(JSON.stringify(results))
-             observer.next(results);
-          });
-        };
-        firebase.addValueEventListener(onValueEvent, `/${path}`);
-    }).share();              
-  }
- 
- getMyExeercise(id: string): Observable<any> {
-    return new Observable((observer: any) => {
-      observer.next(this._allItems.filter(s => s.id === id)[0]);
-    }).share();
-  }
 
-  getMyMessage(): Observable<any>{
-    return new Observable((observer:any) => {
-      firebase.getRemoteConfig({
-      developerMode: false, // play with this boolean to get more frequent updates during development
-      cacheExpirationSeconds: 300, // 10 minutes, default is 12 hours.. set to a lower value during dev
-      properties: [{
-      key: "message",
-      default: "Happy Holidays!"
-    }]
-  }).then(
-        function (result) {
-          console.log("Fetched at " + result.lastFetch + (result.throttled ? " (throttled)" : ""));
-          for (let entry in result.properties) 
-            { 
-              observer.next(result.properties[entry]);
-            }
-        }
-    );
-  }).share();
-}
-
-  
-
-  handleSnapshot(data: any) {
-    //empty array, then refill and filter
-    this._allItems = [];
-    if (data) {
-      for (let id in data) {        
-        let result = (<any>Object).assign({id: id}, data[id]);
-        if(BackendService.token === result.UID){
-          this._allItems.push(result);
-        }        
-      }
-   //   this.publishUpdates();
-    }
-    return this._allItems;
-  }
-
-  //  publishUpdates() {
-  //   // here, we sort must emit a *new* value (immutability!)
-  //   this._allItems.sort(function(a, b){
-  //       if(a.date < b.date) return -1;
-  //       if(a.date > b.date) return 1;
-  //     return 0;
-  //   })
-  //   this.items.next([...this._allItems]);
-  //  }
-
-  add(exercise: Exercise) {   
-    return firebase.push(
-        "/exercises",
-        { "name": exercise.name, 
-          "reps": exercise.reps, 
-          "sets": exercise.sets, 
-       
-          "time": exercise.time,
-          "description": exercise.description, 
-          "UID": BackendService.token,
-          "date": 0 - Date.now(),
-          "imagepath":""
-        }
-      ).then(
-        function (result:any) {
-          return 'Exercise added to yourExercise list!';
-        },
-        function (errorMessage:any) {
-          console.log(errorMessage);
-        }); 
-  }
-
-  editExercise(id:string, description: string, imagepath: string){
-  //  this.publishUpdates();
-    return firebase.update("/exercises/"+id+"",{
-        description: description, 
-        imagepath: imagepath})
-      .then(
-        function (result:any) {
-          return 'You have successfully edited this gift!';
-        },
-        function (errorMessage:any) {
-          console.log(errorMessage);
-        });  
-  }
-  editDescription(id:string, description: string){
-   // this.publishUpdates();
-    return firebase.update("/exercises/"+id+"",{
-        description: description})
-      .then(
-        function (result:any) {
-          return 'You have successfully edited the description!';
-        },
-        function (errorMessage:any) {
-          console.log(errorMessage);
-        });  
-  }
- 
-  /*
-  uploadFile(localPath: string, file?: any): Promise<any> {
-      let filename = this.utils.getFilename(localPath);
-      let remotePath = `${filename}`;   
-      return firebase.uploadFile({
-        remoteFullPath: remotePath,
-        localFullPath: localPath,
-        onProgress: function(status) {
-            console.log("Uploaded fraction: " + status.fractionCompleted);
-            console.log("Percentage complete: " + status.percentageCompleted);
-        }
-      });
-  }*/
-  delete(exercise: Exercise) {
-    return firebase.remove("/exercises/"+exercise.id+"")
-      .catch(this.handleErrors);
-  }
-  getDownloadUrl(remoteFilePath: string): Promise<any> {
-      return firebase.getDownloadUrl({
-        remoteFullPath: remoteFilePath})
-      .then(
-        function (url:string) {
-          return url;
-        },
-        function (errorMessage:any) {
-          console.log(errorMessage);
-        });
-}
 
   handleErrors(error) {
     console.log(JSON.stringify(error));
@@ -320,8 +146,6 @@ export class FirebaseService {
 
   getallusers() {
     let onQueryEvent = function(user) {
-      // note that the query returns 1 match at a time
-      // in the order specified in the query
       if (!user.error) {
           console.log("Event type: " + user.type);
           console.log("Key: " + user.email);
