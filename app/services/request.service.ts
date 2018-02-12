@@ -1,9 +1,11 @@
-import { Injectable, EventEmitter  } from '@angular/core';
+import { Injectable, EventEmitter , NgZone } from '@angular/core';
 import {connreq} from '../models/request.model';
 import {User} from '../models/user.model';
 import {FirebaseService} from '../services';
 import firebase = require("nativescript-plugin-firebase");
 import firebaseWebApi = require("nativescript-plugin-firebase/app");
+import { BackendService } from "./backend.service";
+import {Observable} from 'rxjs/Observable';
 /*
   Generated class for the RequestsProvider provider.
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
@@ -11,12 +13,13 @@ import firebaseWebApi = require("nativescript-plugin-firebase/app");
 */
 @Injectable()
 export class RequestsProvider {
-   path = "/requests";
+  path = "/requests";
   firereq =  firebaseWebApi.database().ref(this.path);
+  private _allItems: Array<connreq> = [];
   //firereq;
   userdetails;
   user: any;
-  constructor(public userservice: FirebaseService) {
+  constructor(public userservice: FirebaseService,private ngZone: NgZone,) {
     
   }
 
@@ -38,9 +41,18 @@ export class RequestsProvider {
 //.(this.userservice.getUserId())
   getmyrequests(){
     let allmyrequests;
-    var myrequests: Object[] =[];
-    this.firereq.on('value', (snapshot) => {
-      allmyrequests = snapshot.val;
+    var myrequests=[];
+    const onValueEvent = (snapshot: any) => {
+      this.ngZone.run(() => {
+        let results = this.handleSnapshot(snapshot.value);
+        console.log(JSON.stringify(results))
+        allmyrequests = results;
+      });
+    };
+   // this.firereq.on('value', (snapshot: any) => {
+  //    allmyrequests = snapshot.val;
+ // this.firereq.on('value', onValueEvent );
+  firebase.addValueEventListener(onValueEvent, `/requests`);
       myrequests = [];
       for (var i in allmyrequests) {
         myrequests.push(allmyrequests[i].sender);
@@ -56,10 +68,29 @@ export class RequestsProvider {
           }
       //  this.events.publish('gotrequests');
       })
-    })
+    //})
+
+   
+   // 
     return myrequests;
+   
+   
   }  
 
+  handleSnapshot(data: any) {
+    //empty array, then refill and filter
+    this._allItems = [];
+    if (data) {
+      for (let id in data) {        
+        let result = (<any>Object).assign({id: id}, data[id]);
+        if(BackendService.token === result.recipient){
+          this._allItems.push(result);
+        }        
+      }
+   //   this.publishUpdates();
+    }
+    return this._allItems;
+  }
 
 public doWebGetCurrentUser() {
   //const user = userservice.auth().currentUser;

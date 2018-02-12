@@ -43,22 +43,22 @@ export class WorkoutComponent implements OnInit {
 
     add() {
         this.exercise = new Exercise(
-         this.id,
-         this.name,
-         this.description,
-         this.reps,
-         this.sets,
-         this.time,
-         this.imagepath,
+        this.id,
+        this.name,
+        this.description,
+        this.reps,
+        this.sets,
+        this.time,
+        this.imagepath,
         this.UID);
 
         let myExercise:Exercise = this.exercise;
         this.exerciseService.add(myExercise).then((message:any) => {
         this.name = ""
         this.description = "",
-         this.reps = "",
-         this.sets = "",
-         this.time = "",
+        this.reps = "",
+        this.sets = "",
+        this.time = "",
          
          alert(message);
        })   
