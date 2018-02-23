@@ -6,7 +6,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 //import {UtilsService} from './utils.service';
 import 'rxjs/add/operator/share';
 import {Exercise} from "../models/exercises.model";
-
+import {exercise} from "../models/pred-exercises.model";
 @Injectable()
 export class ExerciseService {
   constructor(
@@ -17,7 +17,7 @@ export class ExerciseService {
   //items: BehaviorSubject<Array<Gift>> = new BehaviorSubject([]);
 
  private _allItems: Array<Exercise> = [];
-
+ private _allItems2: Array<exercise> = [];
 
 
 getExerciseList(): Observable<any> {
@@ -41,26 +41,26 @@ getExerciseList(): Observable<any> {
     }).share();
   }
 
-  getMyMessage(): Observable<any>{
-    return new Observable((observer:any) => {
-      firebase.getRemoteConfig({
-      developerMode: false, // play with this boolean to get more frequent updates during development
-      cacheExpirationSeconds: 300, // 10 minutes, default is 12 hours.. set to a lower value during dev
-      properties: [{
-      key: "message",
-      default: "Happy Holidays!"
-    }]
-  }).then(
-        function (result) {
-          console.log("Fetched at " + result.lastFetch + (result.throttled ? " (throttled)" : ""));
-          for (let entry in result.properties) 
-            { 
-              observer.next(result.properties[entry]);
-            }
-        }
-    );
-  }).share();
-}
+//   getMyMessage(): Observable<any>{
+//     return new Observable((observer:any) => {
+//       firebase.getRemoteConfig({
+//       developerMode: false, // play with this boolean to get more frequent updates during development
+//       cacheExpirationSeconds: 300, // 10 minutes, default is 12 hours.. set to a lower value during dev
+//       properties: [{
+//       key: "message",
+//       default: "Happy Holidays!"
+//     }]
+//   }).then(
+//         function (result) {
+//           console.log("Fetched at " + result.lastFetch + (result.throttled ? " (throttled)" : ""));
+//           for (let entry in result.properties) 
+//             { 
+//               observer.next(result.properties[entry]);
+//             }
+//         }
+//     );
+//   }).share();
+// }
 
   
 
@@ -169,5 +169,39 @@ getExerciseList(): Observable<any> {
   handleErrors(error) {
     console.log(JSON.stringify(error));
     return Promise.reject(error.message);
+  }
+
+  getPredExerciseList(): Observable<any> {
+    return new Observable((observer: any) => {
+      let path = 'preexercise';
+      
+        let onValueEvent = (snapshot) => {
+          this.ngZone.run(() => {
+            let results = this.handleSnapshot2(snapshot.value);
+            console.log(JSON.stringify(results))
+             observer.next(results);
+          });
+        };
+        firebase.addValueEventListener(onValueEvent, `/${path}`);
+    }).share();              
+  }
+  getExercise(id: string): Observable<any> {
+    return new Observable((observer: any) => {
+      observer.next(this._allItems2.filter(s => s.title === id)[0]);
+    }).share();
+  }
+  handleSnapshot2(data: any) {
+    //empty array, then refill and filter
+    this._allItems2 = [];
+    if (data) {
+      for (let title in data) {        
+        let result = (<any>Object).assign({id: title}, data[title]);
+        if(result.title != null ){
+          this._allItems2.push(result);
+        }        
+      }
+   //   this.publishUpdates();
+    }
+    return this._allItems2;
   }
 }

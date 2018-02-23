@@ -12,7 +12,9 @@ import { BrowseModule } from "./browse/browse.module";
 import { SharedModule } from "./shared/shared.module";
 import { WorkoutModule } from "./workout/workout.module";
 import { ListDetailModule } from "./list-detail/list-detail.module";
+import { ExerciseDetailModule } from "./exercise-detail/exercise-detail.module";
 import { SearchModule } from "./search/search.module";
+import { ExerciseModule } from "./exercises/exercise.module";
 
 import { BackendService, FirebaseService, RequestsProvider, ExerciseService,} from "./services";
 @NgModule({
@@ -30,7 +32,9 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService,} fr
         SharedModule,
         WorkoutModule,
         ListDetailModule,
-        SearchModule 
+        ExerciseDetailModule,
+        SearchModule,
+        ExerciseModule 
     ],
     declarations: [
         AppComponent

@@ -1,11 +1,7 @@
 <ActionBar class="action-bar">
-    <!-- 
-    Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
-    -->
+   
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!-- 
-    Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
-    -->
+    
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
@@ -15,29 +11,40 @@
     <Label class="action-bar-title" text="Home"></Label>
 </ActionBar>
 
-<!--
-RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
-Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
-http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
-The RadSideDrawer component is designed to be used as a root element and
-it shouldn't have any other siblings other than the <ActionBar> component.
--->
+
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <!--
-    Use the tkDrawerContent directive to display the content of the app drawer on this page.
-    -->
+ 
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]="'Home'"></MyDrawer>
     </StackLayout>
     
-    <!--
-    Use the tkMainContent directive to display the content of the page when you have an app drawer.
-    -->
+  
     <GridLayout class="page page-content" tkMainContent>
         <ScrollView>
-
-            <StackLayout>
-          <!--  <Label class="gold card" textWrap="true" [text]="message$ | async"></Label> -->
+                <TabView selectedIndex="1" selectedColor="#FF0000" iosIconRenderingMode="alwaysOriginal" sdkExampleTitle sdkToggleNavButton>
+                        <StackLayout *tabItem="{title: 'Profile', iconSource: 'res://icon'}" >
+                            <Label text="First tab item"></Label>
+                        </StackLayout>
+                        <StackLayout *tabItem="{title: 'Stats'}">
+                            <Label text="Second tab item"></Label>
+                        </StackLayout>
+                        <StackLayout *tabItem="{title: 'Friend Requests'}">
+                                <ListView row="1" [items]="myrequests" class="list-group" height="400">
+                                        <ng-template let-item="item">
+                                            <GridLayout class="item list-group-item" columns="auto,*,auto">
+                                                <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
+                                                <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
+                                            <StackLayout col="2">
+                                               <Button  class="m-3" class="btn btn-primary btn-active"   id="button" text="Accept" (tap)="accept(item)"></Button>
+                                               <Button  class="m-3" class="btn btn-primary btn-active"  horizontalAlignment="right" id="button" text="Ignore" (tap)="ignore(item)"></Button>
+                                            </StackLayout>
+                                            </GridLayout>
+                                        </ng-template>
+                                    </ListView>
+                        </StackLayout>
+                    </TabView>
+           <!-- <StackLayout>
+            <Label class="gold card" textWrap="true" [text]="message$ | async"></Label>
             <Label class="h2 header" style="text-align: center " text="Friend Requests"></Label>
             <StackLayout class="">
                 <ListView row="1" [items]="myrequests" class="list-group" height="400">
@@ -45,14 +52,16 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                         <GridLayout class="item list-group-item" columns="auto,*,auto">
                             <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
                             <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
-                           <Button  class="m-5" class="btn btn-primary btn-active" col="2" horizontalAlignment="right" id="button" text="Accept" (tap)="accept(item)"></Button>
-                           <Button  class="m-5" class="btn btn-primary btn-active" col="2" horizontalAlignment="right" id="button" text="Ignore" (tap)="ignore(item)"></Button>
+                        <StackLayout col="2">
+                           <Button  class="m-3" class="btn btn-primary btn-active"   id="button" text="Accept" (tap)="accept(item)"></Button>
+                           <Button  class="m-3" class="btn btn-primary btn-active"  horizontalAlignment="right" id="button" text="Ignore" (tap)="ignore(item)"></Button>
+                        </StackLayout>
                         </GridLayout>
                     </ng-template>
                 </ListView>
             </StackLayout>
         
-            </StackLayout>
+            </StackLayout> -->
             </ScrollView>
     </GridLayout>
 </RadSideDrawer>

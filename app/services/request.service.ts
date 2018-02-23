@@ -15,11 +15,13 @@ import {Observable} from 'rxjs/Observable';
 export class RequestsProvider {
   path = "/requests";
   firereq =  firebaseWebApi.database().ref(this.path);
+  firefriends = firebaseWebApi.database().ref('/friends');
+  
   private _allItems: Array<connreq> = [];
-  //firereq;
   userdetails;
   user: any;
-  constructor(public userservice: FirebaseService,private ngZone: NgZone,) {
+  myfriends;
+  constructor(public userservice: FirebaseService,private ngZone: NgZone) {
     
   }
 
@@ -27,7 +29,7 @@ export class RequestsProvider {
     this.firereq =  firebaseWebApi.database().ref(this.path);
     var promise = new Promise((resolve, reject) => {
     firebase.push('/requests',{
-     //this.firereq.set({
+     
       sender: req.sender,
       recipient: req.recipient
       }).then(() => {
@@ -38,47 +40,47 @@ export class RequestsProvider {
     })
     return promise;  
   }
-//.(this.userservice.getUserId())
+
   getmyrequests(){
     let allmyrequests;
     var myrequests=[];
+    this.userdetails = [];
     const onValueEvent = (snapshot: any) => {
       this.ngZone.run(() => {
         let results = this.handleSnapshot(snapshot.value);
         console.log(JSON.stringify(results))
         allmyrequests = results;
+        myrequests = [];
+        for (var i in allmyrequests) {
+          myrequests.push(allmyrequests[i].sender);
+        }
       });
     };
-   // this.firereq.on('value', (snapshot: any) => {
-  //    allmyrequests = snapshot.val;
- // this.firereq.on('value', onValueEvent );
+
   firebase.addValueEventListener(onValueEvent, `/requests`);
-      myrequests = [];
-      for (var i in allmyrequests) {
-        myrequests.push(allmyrequests[i].sender);
-      }
+    
       this.userservice.getallusers().then((res) => {
         var allusers = res;
-        this.userdetails = [];
+       
         for (var j in myrequests)
           for (var key in allusers) {
-            if (myrequests[j] === allusers[key].uid) {
+            if (myrequests[j] === allusers[key].UID) {
               this.userdetails.push(allusers[key]);
             }
           }
-      //  this.events.publish('gotrequests');
+          return this.userdetails;
+   
       })
     //})
 
-   
-   // 
-    return myrequests;
+    return this.userdetails;
    
    
   }  
 
   handleSnapshot(data: any) {
     //empty array, then refill and filter
+    let t = BackendService.token;
     this._allItems = [];
     if (data) {
       for (let id in data) {        
@@ -87,22 +89,15 @@ export class RequestsProvider {
           this._allItems.push(result);
         }        
       }
-   //   this.publishUpdates();
+   
     }
     return this._allItems;
   }
 
 public doWebGetCurrentUser() {
-  //const user = userservice.auth().currentUser;
    this.user = firebase.getCurrentUser();
   if (this.user) {
-   // let holder: any = JSON.stringify(this.user);
-    //this.user = JSON.parse(holder.__zone_symbol__value.uid);
-    // alert({
-    //   title: "Current user",
-    //   message: JSON.stringify(this.user),
-    //   okButtonText: "Nice!"
-    // });
+ 
     return this.user.__zone_symbol__value.uid;
   } else {
     alert({
@@ -110,8 +105,90 @@ public doWebGetCurrentUser() {
       okButtonText: "OK, thanks"
     });
   }
- 
-  
 }
+
+acceptrequest(user) {
+  
+  var promise = new Promise((resolve, reject) => {
+
+    firebase.push("/friends",{
+      "uid1": user.UID,
+      "uid2": this.doWebGetCurrentUser()
+    }).then(() => {
+      
+        this.deleterequest(user).then(() => {
+        resolve(true);
+      })
+      
+      }).catch((err) => {
+        reject(err);
+    })
+  })
+  return promise;
+}
+
+deleterequest(user) {
+  let allmyrequests;
+  let myrequests ;
+  var promise = new Promise((resolve, reject) => {
+    const onValueEvent = (snapshot: any) => {
+      this.ngZone.run(() => {
+        let results = this.handleSnapshot(snapshot.value);
+        console.log(JSON.stringify(results))
+        allmyrequests = results;
+    
+        for (var i in allmyrequests) {
+          if(allmyrequests[i].sender === user.UID){
+          myrequests= allmyrequests[i];
+          }
+        }
+        firebase.remove("/requests"+"/"+ myrequests.id+"").then(() => {
+          console.log("firebase.remove done");
+        },
+        error => {
+          console.log("firebase.remove error: " + error);
+        }
+        );
+      });
+    };
+ 
+  firebase.addValueEventListener(onValueEvent, `/requests`);
+ 
+ 
+   
+   })
+  return promise; 
+}
+
+getmyfriends() {
+  let friendsuid = [];
+  this.firefriends.on('value', (snapshot) => {
+    let allfriends = snapshot.val();
+    this.myfriends = [];
+    let myId = this.doWebGetCurrentUser();
+    for (var i in allfriends){
+      if(myId === allfriends[i].uid1){
+      friendsuid.push(allfriends[i].uid2);
+      }
+      if(myId === allfriends[i].uid2){
+        friendsuid.push(allfriends[i].uid1);
+      }
+    }
+      
+    this.userservice.getallusers().then((users) => {
+      this.myfriends = [];
+      for (var j in friendsuid)
+        for (var key in users) {
+          if (friendsuid[j] === users[key].uid) {
+            this.myfriends.push(users[key]);
+          }
+        }
+     
+    }).catch((err) => {
+      alert(err);
+    })
+  
+  })
+}  
 
 }

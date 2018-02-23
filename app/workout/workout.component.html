@@ -15,27 +15,14 @@
     <Label class="action-bar-title" text="Workout Plan"></Label>
 </ActionBar>
 
-<!--
-RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
-Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
-http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
-The RadSideDrawer component is designed to be used as a root element and
-it shouldn't have any other siblings other than the <ActionBar> component.
--->
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <!--
-    Use the tkDrawerContent directive to display the content of the app drawer on this page.
-    -->
+  
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]="'Workout'"></MyDrawer>
     </StackLayout>
     
-    <!--
-    Use the tkMainContent directive to display the content of the page when you have an app drawer.
-    -->
     <GridLayout class="page page-content" tkMainContent>
-      
-        
+  
 <ScrollView>
 
     <StackLayout>
@@ -62,13 +49,11 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                 <GridLayout columns="auto,*,auto">
                     <Image class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="item.imagepath.length>0 ? item.imagepath : '~/assets/camera.png'"></Image>
                     <Label class="m-5"  (tap)="viewDetail(item.id)" col="1" [text]='item.name'></Label>
-                 
                     <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]="'~/assets/trash.png'"></Image>
                 </GridLayout>                 
             </ng-template>
         </ListView>
     </StackLayout>
-
     </StackLayout>
     </ScrollView>
     </GridLayout>

@@ -30,7 +30,7 @@ export class WorkoutComponent implements OnInit {
                 private exerciseService: ExerciseService,
                 private firebaseService: FirebaseService,
                 private router: Router
-        ) {}S
+        ) {}
 
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
 

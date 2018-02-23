@@ -1,0 +1,24 @@
+<ActionBar class="action-bar" style="text-align: center " title="{{title}}"></ActionBar>
+<ScrollView>
+    <StackLayout #exercise class="card">  
+        <GridLayout columns="*,*" class="form">
+            <Label class="h2" col="0"[text]="title"></Label>
+        </GridLayout> 
+        <GridLayout columns="*" class="form" >
+            <Label class="h2" col="0" [text]="muscle"></Label>
+            <Image style="padding: 100px" [src]="muscleImage" row="2" col="1" stretch="none"  class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
+        </GridLayout>  
+        <GridLayout columns="*,*" class="form" >
+            <Label class="h2" col="0" [text]="equipment"></Label>
+        </GridLayout>  
+        <GridLayout columns="*,*" class="form" >
+                <Image  class="m-5"  row="1" [src]="images" col="0" stretch="none"  class="img-rounded p-l-15 p-r-15 p-t-15" ></Image> 
+        </GridLayout> 
+        <GridLayout columns="*" class="form" style="grid-template-columns: repeat(3, 1fr)">
+            <TextView  row="0" [text]="instructions"  [editable]="false" class="input input-border"></TextView> 
+        </GridLayout>
+        <GridLayout columns="*" class="form">
+            <Label class="h2" col="0" [text]="level" width="200"></Label>
+        </GridLayout> 
+    </StackLayout>
+</ScrollView>
