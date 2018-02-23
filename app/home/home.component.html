@@ -21,7 +21,7 @@
   
     <GridLayout class="page page-content" tkMainContent>
         <ScrollView>
-                <TabView selectedIndex="1" selectedColor="#FF0000" iosIconRenderingMode="alwaysOriginal" sdkExampleTitle sdkToggleNavButton>
+               <!-- <TabView selectedIndex="1" selectedColor="#FF0000" iosIconRenderingMode="alwaysOriginal" sdkExampleTitle sdkToggleNavButton>
                         <StackLayout *tabItem="{title: 'Profile', iconSource: 'res://icon'}" >
                             <Label text="First tab item"></Label>
                         </StackLayout>
@@ -42,8 +42,8 @@
                                         </ng-template>
                                     </ListView>
                         </StackLayout>
-                    </TabView>
-           <!-- <StackLayout>
+                    </TabView>-->
+            <StackLayout>
             <Label class="gold card" textWrap="true" [text]="message$ | async"></Label>
             <Label class="h2 header" style="text-align: center " text="Friend Requests"></Label>
             <StackLayout class="">
@@ -61,7 +61,7 @@
                 </ListView>
             </StackLayout>
         
-            </StackLayout> -->
+            </StackLayout> 
             </ScrollView>
     </GridLayout>
 </RadSideDrawer>

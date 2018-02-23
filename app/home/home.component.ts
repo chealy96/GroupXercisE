@@ -33,17 +33,17 @@ export class HomeComponent implements OnInit {
     accept(item) {
         this.requestservice.acceptrequest(item).then(() => {
             
-            let newalert = alert({
+             alert({
             title: 'Friend added',
             okButtonText: 'Okay'
             });
-            
+            this.myrequests  = this.requestservice.getmyrequests();
         })
         }
         
         ignore(item) {
         this.requestservice.deleterequest(item).then(() => {
-        
+            this.myrequests  = this.requestservice.getmyrequests();
         }).catch((err) => {
             alert("err");
         })
@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
    
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
+       
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
