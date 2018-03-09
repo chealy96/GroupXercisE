@@ -8,6 +8,7 @@ import * as imageSource from 'image-source';
 import { isAndroid } from "platform";
 import { View } from "ui/core/view";
 import { TextView } from "ui/text-view";
+import { topmost } from "ui/frame";
 
 //import * as camera from "nativescript-camera";
 import * as fs from "file-system";
@@ -24,18 +25,21 @@ export class ExerciseDetailComponent implements OnInit {
   
   title: string;
   url: string;
-  instructions: string;
+  instructions:  Array<string> = [];
   details: string;
   level: string;
   muscle: string;
   muscleImage: string;
   equipment : string;
-  images: any;
+  type: string;
+  //images: string[];
+  images: Array<string> = [];
   private sub: any;
   private imagePath: string;
   private uploadedImageName: string;
   private uploadedImagePath: string;
   public gift: Observable<any>;
+  
   
   constructor(
         private route: ActivatedRoute,
@@ -44,6 +48,11 @@ export class ExerciseDetailComponent implements OnInit {
         private exerciseService: ExerciseService,
       //  private utilsService: UtilsService
     ) {}
+
+  navigateBack(){
+  topmost().goBack();
+  }
+
 
  ngOnInit() {
   // camera.requestPermissions();
@@ -71,12 +80,15 @@ export class ExerciseDetailComponent implements OnInit {
             if (prop === "instructions") {
               this.instructions= exercise[prop];
             }    
-            if (prop === "muscleImage") {
+            if (prop === "muscleImagesrc") {
               this.muscleImage = exercise[prop];
             }    
             if (prop === "images") {
               this.images = exercise[prop];
-            }                     
+            }      
+            if (prop === "type") {
+              this.type = exercise[prop];
+            }               
           }
         });
       });

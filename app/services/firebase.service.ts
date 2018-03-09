@@ -1,10 +1,9 @@
 import {Injectable, NgZone} from "@angular/core";
 import {User} from "../models";
-import { BackendService } from "./backend.service";
+import { BackendService } from '../services';
 import firebase = require("nativescript-plugin-firebase");
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-//import {UtilsService} from './utils.service';
 import 'rxjs/add/operator/share';
 import {Exercise} from "../models/exercises.model";
 
@@ -12,10 +11,9 @@ import {Exercise} from "../models/exercises.model";
 export class FirebaseService {
   constructor(
     private ngZone: NgZone,
-  //  private utils: UtilsService
   ){}
     
-
+Users: any;
   register(user: User) {
     return firebase.createUser({
       email: user.email,
@@ -80,7 +78,9 @@ export class FirebaseService {
     );
   }
 
-
+  updateProfile(user){
+    
+  }
   addNewUserData(user) {
     // Sets new user data to firestore on login
    // console.log("update user profile:"  +user.uid);
@@ -160,12 +160,14 @@ export class FirebaseService {
               value: 'UID' // mandatory when type is 'child'
       },
       }).then(((snapshot) => {
-        let userdata = snapshot.value;
+        this.ngZone.run(() => {
+        let userdata = this.handleSnapshot2(snapshot.value);
         let temparr = [];
         for (var key in userdata) {
           temparr.push(userdata[key]);
         }
         resolve(temparr);
+        });
       }),
       function (errorMessage) {
         console.log(errorMessage);
@@ -175,4 +177,24 @@ export class FirebaseService {
     return promise;
   }
 
+  handleSnapshot2(data: any) {
+    //empty array, then refill and filter
+    this.Users = [];
+    if (data) {
+      for (let UID in data) {        
+        let result = (<any>Object).assign({id: UID}, data[UID]);
+        if(result.UID != null ){
+          this.Users.push(result);
+        }        
+      }
+   //   this.publishUpdates();
+    }
+    return this.Users;
+  }
+
+  getUser(id: string): Observable<any> {
+    return new Observable((observer: any) => {
+      observer.next(this.Users.filter(s => s.id === id)[0]);
+    }).share();
+  }
 }

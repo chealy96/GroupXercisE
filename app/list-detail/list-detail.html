@@ -1,4 +1,6 @@
-<ActionBar class="action-bar" title="{{name}}"></ActionBar>
+<ActionBar class="action-bar" title="{{name}}">
+        <NavigationButton ios:visibility="collapsed" android.systemIcon="ic_menu_back" (tap)="navigateBack()"></NavigationButton>
+</ActionBar>
     <ScrollView>
         <StackLayout #exercise class="card">  
             <Label class="h2" [text]="name"></Label>

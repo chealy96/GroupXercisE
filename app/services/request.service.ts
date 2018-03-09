@@ -41,7 +41,8 @@ export class RequestsProvider {
     return promise;  
   }
 
-  getmyrequests(){
+  getmyrequests():  Observable<any> {
+    return new Observable((observer: any) => {
     let allmyrequests;
     var myrequests=[];
     this.userdetails = [];
@@ -68,13 +69,10 @@ export class RequestsProvider {
               this.userdetails.push(allusers[key]);
             }
           }
-          return this.userdetails;
-   
+        observer.next(this.userdetails);
       })
-    //})
-
-    return this.userdetails;
-   
+   // return Promise.resolve(this.userdetails);
+    }).share(); 
    
   }  
 
@@ -96,9 +94,10 @@ export class RequestsProvider {
 
 public doWebGetCurrentUser() {
    this.user = firebase.getCurrentUser();
+   let id: string;
   if (this.user) {
- 
-    return this.user.__zone_symbol__value.uid;
+    id = this.user.__zone_symbol__value.uid
+    return id;
   } else {
     alert({
       title: "No current user",
@@ -117,7 +116,7 @@ acceptrequest(user) {
     }).then(() => {
       
         this.deleterequest(user).then(() => {
-        resolve(true);
+        resolve({ success: true });
       })
       
       }).catch((err) => {
@@ -143,6 +142,7 @@ deleterequest(user) {
           }
         }
         firebase.remove("/requests"+"/"+ myrequests.id+"").then(() => {
+          resolve({ success: true });
           console.log("firebase.remove done");
         },
         error => {
@@ -153,42 +153,8 @@ deleterequest(user) {
     };
  
   firebase.addValueEventListener(onValueEvent, `/requests`);
- 
- 
-   
    })
   return promise; 
 }
-
-getmyfriends() {
-  let friendsuid = [];
-  this.firefriends.on('value', (snapshot) => {
-    let allfriends = snapshot.val();
-    this.myfriends = [];
-    let myId = this.doWebGetCurrentUser();
-    for (var i in allfriends){
-      if(myId === allfriends[i].uid1){
-      friendsuid.push(allfriends[i].uid2);
-      }
-      if(myId === allfriends[i].uid2){
-        friendsuid.push(allfriends[i].uid1);
-      }
-    }
-      
-    this.userservice.getallusers().then((users) => {
-      this.myfriends = [];
-      for (var j in friendsuid)
-        for (var key in users) {
-          if (friendsuid[j] === users[key].uid) {
-            this.myfriends.push(users[key]);
-          }
-        }
-     
-    }).catch((err) => {
-      alert(err);
-    })
-  
-  })
-}  
-
+ 
 }

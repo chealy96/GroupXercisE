@@ -13,10 +13,11 @@ import { SharedModule } from "./shared/shared.module";
 import { WorkoutModule } from "./workout/workout.module";
 import { ListDetailModule } from "./list-detail/list-detail.module";
 import { ExerciseDetailModule } from "./exercise-detail/exercise-detail.module";
+import { FriendDetailsModule } from "./friend-details/friend-details.module";
 import { SearchModule } from "./search/search.module";
 import { ExerciseModule } from "./exercises/exercise.module";
 
-import { BackendService, FirebaseService, RequestsProvider, ExerciseService,} from "./services";
+import { BackendService, FirebaseService, RequestsProvider, ExerciseService, FriendsService} from "./services";
 @NgModule({
     bootstrap: [
         AppComponent
@@ -33,6 +34,7 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService,} fr
         WorkoutModule,
         ListDetailModule,
         ExerciseDetailModule,
+        FriendDetailsModule,
         SearchModule,
         ExerciseModule 
     ],
@@ -46,6 +48,7 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService,} fr
         FirebaseService,
         RequestsProvider,
         ExerciseService,
+        FriendsService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

@@ -69,7 +69,6 @@ export class ExerciseComponent implements OnInit {
         let searchBar = <SearchBar>args.object;
         searchBar.text = "";
         searchBar.hint = "Search for a country and press enter";
-    
         this.filteredexercises = new ObservableArray<exercise>();
         this.arrayItems.forEach(item => {
          this.filteredexercises.push(item);

@@ -185,11 +185,13 @@ getExerciseList(): Observable<any> {
         firebase.addValueEventListener(onValueEvent, `/${path}`);
     }).share();              
   }
+
   getExercise(id: string): Observable<any> {
     return new Observable((observer: any) => {
       observer.next(this._allItems2.filter(s => s.title === id)[0]);
     }).share();
   }
+  
   handleSnapshot2(data: any) {
     //empty array, then refill and filter
     this._allItems2 = [];

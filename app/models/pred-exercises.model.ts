@@ -8,9 +8,9 @@ export class exercise {
         public muscle: string,
         public href: string,
         public details: string,
-        public images: string,
+        public images: any,
         public level: string,
-        public muscleImage: string
+        public muscleImagesrc: string
       )
     {}   
 }
