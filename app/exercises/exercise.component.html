@@ -1,0 +1,48 @@
+<ActionBar class="action-bar">
+    
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+   
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <ActionItem (tap)="logout()">
+        <Button text="Logout" class="action-item"></Button>
+      </ActionItem> 
+    <Label class="action-bar-title" text="Exercises"></Label>
+</ActionBar>
+
+
+<RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
+ 
+    <StackLayout tkDrawerContent>
+        <MyDrawer [selectedPage]="'Exercises'"></MyDrawer>
+    </StackLayout>
+    
+  
+    <GridLayout class="page page-content" tkMainContent>
+        <ScrollView>
+            <StackLayout>
+          <!--  <Label class="gold card" textWrap="true" [text]="message$ | async"></Label> -->
+            <Label class="h2 header" style="text-align: center " text="Search for Exercises"></Label>
+            <StackLayout class="">     
+                <GridLayout  class="form">
+                    <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
+                    <SearchBar row="0" hint="Search"  (textChange)="searchexercise($event)" (clear)="onClear($event)" (submit)="searchexercise($event)"></SearchBar>
+                </GridLayout>    
+            </StackLayout>
+            <Label class="h2 header" text="Exercise List" style="text-align: center "></Label>
+            <StackLayout class="">
+                <ListView row="1" [items]="filteredexercises" class="list-group" height="400">
+                    <ng-template let-item="item">
+                        <GridLayout class="item list-group-item" columns="auto,*,auto">
+                             <Label class="m-5" [text]="item.title"   class="list-group-item-heading" col="1"></Label>
+                            <Button  class="m-5" class="btn btn-primary btn-active" col="2" horizontalAlignment="right" id="button" text="Info" (tap)="viewDetail(item.title)"></Button>
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
+            </StackLayout>
+        
+            </StackLayout>
+            </ScrollView>
+    </GridLayout>
+</RadSideDrawer>

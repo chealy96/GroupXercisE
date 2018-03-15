@@ -1,0 +1,37 @@
+<ActionBar class="action-bar" >
+        <Label class="action-bar-title" text="{{title}}"></Label>
+
+        <NavigationButton ios:visibility="collapsed" android.systemIcon="ic_menu_back" (tap)="navigateBack()"></NavigationButton>
+</ActionBar>
+<ScrollView>
+    <StackLayout #exercise class="card" horizontalAlignment="center" >   
+        <GridLayout columns="*,*" class="form" >
+            <Label class="h2" col="0"  text="Muscle:"></Label>
+            <Label class="h2" col="1"  [text]="muscle"></Label>
+        </GridLayout>
+        <GridLayout columns="*" class="form" >
+                <Image style="padding: 100px" [src]="muscleImage" col="0" stretch="none"  class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
+        </GridLayout>
+        <GridLayout columns="*" class="form" *ngFor="let img of images; let i = index" > 
+            <Image   *ngIf="img" col="0" [src]="img"   horizontalAlignment="center" stretch="none"  class="img-rounded p-l-20 p-r-20 p-t-20"></Image> 
+        </GridLayout>
+        <GridLayout columns="*" class="form">
+            <Label class="h2" col="0" row="0"  horizontalAlignment="center" text="Instructions"></Label>
+        </GridLayout>
+        <GridLayout columns="*" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let ins of instructions; let i = index">
+            <TextView *ngIf="ins" row="1" [text]="ins"  [editable]="false" class="input input-border"></TextView> 
+        </GridLayout>
+        <GridLayout columns="*,*" class="form" >
+            <Label class="h2" col="0"  text="Equipment:"></Label>
+            <Label class="h2" col="1" [text]="equipment"></Label>
+        </GridLayout> 
+        <GridLayout columns="*,*" class="form" >
+            <Label class="h2" col="0"  text="Type:"></Label>
+            <Label class="h2" col="1" [text]="type"></Label>
+        </GridLayout> 
+        <GridLayout columns="*,*" class="form">
+            <Label class="h2" col="0"  text="Level:"></Label>
+            <Label class="h2" col="1" [text]="level"></Label>
+        </GridLayout> 
+    </StackLayout>
+</ScrollView>

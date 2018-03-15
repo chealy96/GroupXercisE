@@ -1,0 +1,37 @@
+<ActionBar class="action-bar" >
+    <Label class="action-bar-title" text="{{displayNmae}}"></Label>
+
+    <NavigationButton ios:visibility="collapsed" android.systemIcon="ic_menu_back" (tap)="navigateBack()"></NavigationButton>
+</ActionBar>
+<ScrollView>
+    <StackLayout #User class="card"> 
+        <GridLayout row="0" col="0" rows="* *" backgroundColor="#adadad" >
+            <StackLayout row="0" rowSpan="2" class="p-t-15">
+                <StackLayout class="m-20 p-l-15 p-r-15">
+                    <Image [src]="photoURL" height="80" width="80" class="img-circle" borderWidth="1" borderColor="white"></Image>
+                    <Label [text]="displayName" class="h2 text-center" textWrap="true"></Label>
+                    <Label text="Cross-platform framework" class="h4 text-center" textWrap="true"></Label>
+                </StackLayout>
+            </StackLayout>
+        </GridLayout>
+        <GridLayout columns="*" class="">
+            <Label class="h2 text-center" col="0" text="Exercise Routine" textWrap="true"></Label>
+        </GridLayout> 
+        <GridLayout columns="*,*,*,*">
+            <Label class="m-5"  col="0" text="Title"></Label>
+            <Label class="m-5"  col="1" text='Reps'></Label>
+            <Label class="m-5"  col="2" text='Sets'></Label>
+            <Label class="m-5"  col="3" text='Time'></Label>
+        </GridLayout>  
+        <ListView [items]="exercises$ | async"  height="300">
+            <ng-template let-item="item">                  
+                <GridLayout columns="*,*,*,*">
+                    <Label class="m-5"  col="0" [text]='item.name'></Label>
+                    <Label class="m-5"  col="1" [text]='item.reps'></Label>
+                    <Label class="m-5"  col="2" [text]='item.sets'></Label>
+                    <Label class="m-5"  col="3" [text]='item.time'></Label>
+                </GridLayout>                 
+            </ng-template>
+        </ListView>
+        </StackLayout>
+</ScrollView>

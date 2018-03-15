@@ -13,14 +13,7 @@ import { AuthGuard } from "../auth-guard.service";
 
 const HomeRoutes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
+  { path: "friend-details", loadChildren: "./friend-details/friend-details.module#FriendDetailsModule" },
 ];
 export const HomeRoutingModule: ModuleWithProviders = RouterModule.forChild(HomeRoutes);
-/*const routes: Routes = [
-    { path: "", component: HomeComponent }
-];
 
-@NgModule({
-    imports: [NativeScriptRouterModule.forChild(routes)],
-    exports: [NativeScriptRouterModule]
-})
-export class HomeRoutingModule { }*/

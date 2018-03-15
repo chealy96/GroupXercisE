@@ -1,11 +1,7 @@
 <ActionBar class="action-bar">
-    <!-- 
-    Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
-    -->
+   
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!-- 
-    Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
-    -->
+    
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
@@ -15,26 +11,115 @@
     <Label class="action-bar-title" text="Home"></Label>
 </ActionBar>
 
-<!--
-RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
-Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
-http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
-The RadSideDrawer component is designed to be used as a root element and
-it shouldn't have any other siblings other than the <ActionBar> component.
--->
+
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <!--
-    Use the tkDrawerContent directive to display the content of the app drawer on this page.
-    -->
+ 
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]="'Home'"></MyDrawer>
     </StackLayout>
     
-    <!--
-    Use the tkMainContent directive to display the content of the page when you have an app drawer.
-    -->
+  
     <GridLayout class="page page-content" tkMainContent>
-        <Label class="page-icon fa" text="&#xf015;"></Label>
-        <Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
+        <TabView [(ngModel)]="tabSelectedIndex" selectedColor="#FF0000" iosIconRenderingMode="alwaysOriginal" sdkExampleTitle sdkToggleNavButton>
+            <StackLayout *tabItem="{title: 'Profile'}">
+                    <StackLayout>
+                        <StackLayout #User class="card"> 
+                                <GridLayout row="0" col="0" rows="* *" backgroundColor="#adadad" >
+                                    <StackLayout row="0" rowSpan="2" class="p-t-15">
+                                        <StackLayout class="m-20 p-l-15 p-r-15">
+                                            <Image [src]="profilePhoto" height="80" width="80" class="img-circle" borderWidth="1" borderColor="white"></Image>
+                                            <Label [text]="name" class="h2 text-center" textWrap="true"></Label>
+                                            <Label [text]="email" class="h4 text-center" textWrap="true"></Label>
+                                            <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                                <Label text="Height" class="field-title h2" ></Label>
+                                                <Label id="height" row="1" [text]="height"   ></Label> 
+                                            </GridLayout>  
+            
+                                            <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                                    <Label text="Weight" class="field-title h2" ></Label>
+                                                    <Label id="weight" row="1" [text]="weight"   ></Label>                                             
+                                            </GridLayout>  
+
+                                            <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                                    <Label text="Age" class="field-title h2" ></Label>
+                                                    <Label id="age" row="1" [text]="age"   ></Label>                                             
+                                            </GridLayout>  
+                                        </StackLayout>
+                                    </StackLayout>
+                                </GridLayout>
+                        </StackLayout>
+                    </StackLayout>
+            </StackLayout>
+            <StackLayout *tabItem="{title: 'Update Proflie'}">
+                    <!--    <StackLayout>
+                        <Label class="h2 header" style="text-align: center " text="Friend Requests"></Label>
+                        <StackLayout class="">
+                            <ListView row="1" [items]="myrequests" class="list-group" height="200">
+                                <ng-template let-item="item">
+                                    <GridLayout class="item list-group-item" columns="auto,*,auto">
+                                        <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
+                                        <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
+                                    <StackLayout col="2">
+                                        <Button  class="m-3" class="btn btn-primary btn-active"   id="button" text="Accept" (tap)="accept(item)"></Button>
+                                        <Button  class="m-3" class="btn btn-primary btn-active"  horizontalAlignment="right" id="button" text="Ignore" (tap)="ignore(item)"></Button>
+                                    </StackLayout>
+                                    </GridLayout>
+                                </ng-template>
+                            </ListView>
+                        </StackLayout>
+                        , iconSource: 'res://icon'
+                    </StackLayout>-->
+                    
+                <StackLayout>
+                        <ScrollView>  
+                    <GridLayout id="form-content" class="form-content" rows="auto,*,auto" loaded="onContentLoaded">
+                            
+                            <StackLayout class="">
+                                <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                        <Label text="Height" class="field-title h2" ></Label>
+                                        <TextView id="height" row="1"  [(ngModel)]="height" class="field" tap="onTextInputTapped"></TextView> 
+                                </GridLayout>  
+
+                                <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                        <Label text="Weight" class="field-title h2" ></Label>
+                                        <TextView id="weight" row="1" [(ngModel)]="weight" class="field" tap="onTextInputTapped"></TextView> 
+                                </GridLayout>  
+
+                                <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                        <Label text="Age" class="field-title h2" ></Label>
+                                        <TextView id="age" row="1" [(ngModel)]="age" class="field" tap="onTextInputTapped"></TextView> 
+                                </GridLayout>  
+
+                                <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                        <Label text="Bio" class="field-title h2" ></Label>
+                                        <TextView id="bio" row="1"  [(ngModel)]="bio"  class="field" tap="onTextInputTapped"></TextView> 
+                                </GridLayout>  
+
+                                <GridLayout  class="form" rows="auto" verticalAlignment="top">
+                                    <Button  class="m-3" class="btn btn-primary btn-active"  horizontalAlignment="stretch" id="button" text="Update" (tap)="updateProfile()"></Button>
+                                </GridLayout>  
+                            </StackLayout>
+                           
+                    </GridLayout>
+                </ScrollView>
+                </StackLayout>
+              
+            </StackLayout>
+                
+                    <!-- <StackLayout>
+                        <Label class="h2 header" style="text-align: center " text="Friends"></Label>
+                        <StackLayout class="">
+                                <ListView row="1" [items]="myfriends" class="list-group" height="200">
+                                    <ng-template let-item="item">
+                                        <GridLayout class="item list-group-item" columns="auto,*,auto">
+                                            <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
+                                            <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
+                                            <Button  class="m-3" class="btn btn-primary btn-active"  col="2" id="button" text="Profile" (tap)="viewProfile(item)"></Button>
+                                        </GridLayout>
+                                    </ng-template>
+                                </ListView>
+                            </StackLayout>
+                    </StackLayout> -->
+        </TabView>
     </GridLayout>
 </RadSideDrawer>

@@ -1,5 +1,11 @@
+<Page 
+xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:ui="nativescript-filterable-listpicker"
+xmlns:IM="nativescript-image-cache-media" loaded="pageLoaded" class="page">
 <ActionBar class="action-bar">
-    <!-- 
+    <!-- <Page 
+xmlns="http://schemas.nativescript.org/tns.xsd" 
+xmlns:FS="nativescript-filter-select" 
+xmlns:IM="nativescript-image-cache-media" loaded="pageLoaded" class="page">
     Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
     -->
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
@@ -12,26 +18,80 @@
     <Label class="action-bar-title" text="Settings"></Label>
 </ActionBar>
 
-<!--
-RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
-Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
-http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
-The RadSideDrawer component is designed to be used as a root element and
-it shouldn't have any other siblings other than the <ActionBar> component.
--->
+
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <!--
-    Use the tkDrawerContent directive to display the content of the app drawer on this page.
-    -->
+  
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]="'Settings'"></MyDrawer>
     </StackLayout>
-    
-    <!--
-    Use the tkMainContent directive to display the content of the page when you have an app drawer.
-    -->
     <GridLayout class="page page-content" tkMainContent>
-        <Label class="page-icon fa" text="&#xf013;"></Label>
-        <Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
+  
+     
+  
     </GridLayout>
 </RadSideDrawer>
+</Page>
+
+ <!--<GridLayout class="page page-content" tkMainContent>
+        <GridLayout rows="auto, auto" sdkExampleTitle sdkToggleNavButton>
+         
+            <StackLayout row="0">
+                    <Label text="Use the slider to change ListPicker's selectedIndex" textWrap="true" class="h3 p-15 text-left"></Label>
+                    <Slider [minValue]="0" [maxValue]="pokemons.length - 1" [(ngModel)]="index" class="slider"></Slider>
+            </StackLayout>
+            <ListPicker row="1" [items]="pokemons" [selectedIndex]="index" (selectedIndexChange)="selectedIndexChanged($event)" class="p-15 picker"></ListPicker>
+          
+        </GridLayout>
+    </GridLayout></Page> -->
+
+              <!--    <GridLayout style="background-color: rgba(0,0,0,0.8);" [visibility]="showingCreateTicket ? 'visible' : 'collapsed'">
+                    <StackLayout row="1" col="1" style="background-color: white; margin: 30 10 -10 10; border-radius: 10;">
+                        // heres where all my ticket fields live. example field to launch the filterable list picker:
+                        <Label [class]="selectedProduct ? 'input hasData' : 'input'" (tap)="showProducts()" [text]="selectedProduct ? selectedProduct : 'Tap to choose...'"></Label>
+                        <StackLayout class="input_group">
+                            <Label class="label" text="Choose your product."></Label>
+                            <Label [class]="selectedProduct ? 'input hasData' : 'input'" (tap)="showProducts()" [text]="selectedProduct ? selectedProduct : 'Tap to choose...'"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                    <ActivityIndicator [visibility]="loadingTicketFields ? 'visible' : 'collapsed'" [busy]="loadingTicketFields"></ActivityIndicator>
+                </GridLayout>
+                
+                <GridLayout [visibility]="showingLongListPicker ? 'visible' : 'collapsed'" rows="*, auto, *" columns="30, *, 30">
+                    <GridLayout style="background-color: rgba(0,0,0,0.8);" rowSpan="3" colSpan="3" #longListPickerDimmer></GridLayout>
+                    <StackLayout row="1" col="1" #longListPickerContainer style="background-color: white; border-radius: 10;">
+                        <StackLayout>
+                            <TextField hint="Edit text to filter..." [(ngModel)]="filterItem" (ngModelChange)="filterLongList($event)" style="font-size: 14;"></TextField>
+                            <ListView [items]="itemsToShow" class="list-group" height="300" (itemTap)="chooseLongList($event)">
+                                <template let-item="item" let-odd="odd" let-even="even">
+                                  <StackLayout>
+                                    <Label [text]="item" class="list-group-item"></Label>
+                
+                                  </StackLayout>
+                                </template>
+                            </ListView>
+                        </StackLayout>
+                        <GridLayout columns="auto, *, auto" style="background-color: #E0E0E0;" paddingTop="5" paddingBottom="5">
+                            <Button class="transBtn sm" text="Cancel" (tap)="closeLongListPicker()"></Button>
+                        </GridLayout>
+                    </StackLayout>    
+                </GridLayout>
+               
+       <StackLayout class="p-20">
+          <Label class="h2" text="label" textWrap="true" ></Label>
+          <StackLayout class="hr-light m-10"></StackLayout>
+        
+          <FilterSelect 
+          height="100%"
+          [items]="countries"
+          (change)="onitemselected($event)"
+          hint="Please select some items" 
+          modal_title="item" search_param="name" 
+          primary_key="id">
+   
+      </FilterSelect>
+          
+          <Label class="h2" text="icon select" textWrap="true" ></Label>
+          <StackLayout class="hr-light m-10" ></StackLayout>
+          <FS:FilterSelect class="drop-down" col="0" render="label"  modal_title="Countries" search_param="name" primary_key="code" change="{{ onSelect }}" ></FS:FilterSelect>
+          
+        </StackLayout> -->
