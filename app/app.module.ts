@@ -3,6 +3,8 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NSModuleFactoryLoader } from "nativescript-angular/router";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
+import {registerElement} from "nativescript-angular/element-registry";
+registerElement("FilterableListpicker", () => require("nativescript-filterable-listpicker").FilterableListpicker);
 
 import { appRoutes,authProviders } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -16,6 +18,8 @@ import { ExerciseDetailModule } from "./exercise-detail/exercise-detail.module";
 import { FriendDetailsModule } from "./friend-details/friend-details.module";
 import { SearchModule } from "./search/search.module";
 import { ExerciseModule } from "./exercises/exercise.module";
+import { SettingsModule } from "./settings/settings.module";
+
 
 import { BackendService, FirebaseService, RequestsProvider, ExerciseService, FriendsService} from "./services";
 @NgModule({
@@ -36,7 +40,8 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService, Fri
         ExerciseDetailModule,
         FriendDetailsModule,
         SearchModule,
-        ExerciseModule 
+        ExerciseModule,
+        SettingsModule
     ],
     declarations: [
         AppComponent

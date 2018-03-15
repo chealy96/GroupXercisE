@@ -55,7 +55,7 @@ export class FriendDetailsComponent implements OnInit {
     
  ngOnInit() {
    this.sub = this.route.params.subscribe((params: any) => {
-      this.id = params['id'];
+      this.id = params['UID'];
     
        this.friendsService.getUser(this.id).subscribe((User) => {
          this.ngZone.run(() => {

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import {FirebaseService} from '../services';
-import { RequestsProvider, FriendsService } from '../services';
+import { RequestsProvider, FriendsService, BackendService } from '../services';
 import {connreq} from '../models/request.model';
 import {Observable} from "rxjs";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
@@ -29,7 +29,11 @@ export class HomeComponent implements OnInit {
     description: string;
     imagepath: string;
     image: any;
-    
+    weight: string;
+    height: string;
+    age: string;
+    bio: string;
+
     profile : any;
     holder: any;
     email: string;
@@ -79,9 +83,21 @@ export class HomeComponent implements OnInit {
     // }
     
     updateProfile(){
-        this.firebaseService.updateProfile(this.user).then((result: any) => {
-          
-          });
+        // this.id,
+        // this.email,
+        // this.password,
+        // this.uid,
+        // this.displayName,
+        // this.photoURL,
+        // this.providerid,
+        // this.height,
+        // this.weight,
+        // this.age,
+        // this.bio,
+
+        this.firebaseService.getUser(BackendService.token).subscribe((user: any) => {
+        this.firebaseService.updateProfile(user,this.bio,this.weight,this.height,this.age);
+        });
     }
     // ignore(item) {
     // this.requestservice.deleterequest(item).then((res: any) => {
@@ -113,8 +129,19 @@ export class HomeComponent implements OnInit {
      this.holder = JSON.parse(this.profile);
      this.profile = this.holder.__zone_symbol__value;
      this.email = this.profile.email;
-     this.profilePhoto =   this.profile.profileImageURL;
-     this.name =   this.profile.name;
+     this.profilePhoto = this.profile.profileImageURL;
+     this.name = this.profile.name;
+     this.height = this.profile.height;
+    // this.age = this.profile.age;
+    // this.weight = this.profile.weight;
+
+     this.firebaseService.getUser(BackendService.token).subscribe((result: any) => {
+        this.age = result.age;
+        this.weight = result.weight;
+        this.height = result.height;
+
+    });
+   
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {

@@ -21,7 +21,7 @@
   
     <GridLayout class="page page-content" tkMainContent>
         <TabView [(ngModel)]="tabSelectedIndex" selectedColor="#FF0000" iosIconRenderingMode="alwaysOriginal" sdkExampleTitle sdkToggleNavButton>
-            <StackLayout *tabItem="{title: 'Profile', iconSource: 'res://icon'}">
+            <StackLayout *tabItem="{title: 'Profile'}">
                     <StackLayout>
                         <StackLayout #User class="card"> 
                                 <GridLayout row="0" col="0" rows="* *" backgroundColor="#adadad" >
@@ -30,6 +30,20 @@
                                             <Image [src]="profilePhoto" height="80" width="80" class="img-circle" borderWidth="1" borderColor="white"></Image>
                                             <Label [text]="name" class="h2 text-center" textWrap="true"></Label>
                                             <Label [text]="email" class="h4 text-center" textWrap="true"></Label>
+                                            <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                                <Label text="Height" class="field-title h2" ></Label>
+                                                <Label id="height" row="1" [text]="height"   ></Label> 
+                                            </GridLayout>  
+            
+                                            <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                                    <Label text="Weight" class="field-title h2" ></Label>
+                                                    <Label id="weight" row="1" [text]="weight"   ></Label>                                             
+                                            </GridLayout>  
+
+                                            <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
+                                                    <Label text="Age" class="field-title h2" ></Label>
+                                                    <Label id="age" row="1" [text]="age"   ></Label>                                             
+                                            </GridLayout>  
                                         </StackLayout>
                                     </StackLayout>
                                 </GridLayout>
@@ -53,6 +67,7 @@
                                 </ng-template>
                             </ListView>
                         </StackLayout>
+                        , iconSource: 'res://icon'
                     </StackLayout>-->
                     
                 <StackLayout>
@@ -62,22 +77,22 @@
                             <StackLayout class="">
                                 <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
                                         <Label text="Height" class="field-title h2" ></Label>
-                                        <TextView id="height" row="1"  [(ngModel)]="user.height" class="field" tap="onTextInputTapped"></TextView> 
+                                        <TextView id="height" row="1"  [(ngModel)]="height" class="field" tap="onTextInputTapped"></TextView> 
                                 </GridLayout>  
 
                                 <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
                                         <Label text="Weight" class="field-title h2" ></Label>
-                                        <TextView id="weight" row="1" [(ngModel)]="user.weight" class="field" tap="onTextInputTapped"></TextView> 
+                                        <TextView id="weight" row="1" [(ngModel)]="weight" class="field" tap="onTextInputTapped"></TextView> 
                                 </GridLayout>  
 
                                 <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
                                         <Label text="Age" class="field-title h2" ></Label>
-                                        <TextView id="age" row="1" [(ngModel)]="user.age" class="field" tap="onTextInputTapped"></TextView> 
+                                        <TextView id="age" row="1" [(ngModel)]="age" class="field" tap="onTextInputTapped"></TextView> 
                                 </GridLayout>  
 
                                 <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
                                         <Label text="Bio" class="field-title h2" ></Label>
-                                        <TextView id="bio" row="1"  [(ngModel)]="user.age"  class="field" tap="onTextInputTapped"></TextView> 
+                                        <TextView id="bio" row="1"  [(ngModel)]="bio"  class="field" tap="onTextInputTapped"></TextView> 
                                 </GridLayout>  
 
                                 <GridLayout  class="form" rows="auto" verticalAlignment="top">

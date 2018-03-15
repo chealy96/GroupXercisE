@@ -4,7 +4,7 @@ export class exercise {
         public id: string,
         public title: string,
         public url: string,
-        public instructions: string,
+        public instructions: any,
         public muscle: string,
         public href: string,
         public details: string,

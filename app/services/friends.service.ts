@@ -97,7 +97,7 @@ getFriendExerciseList(uid: string): Observable<any> {
 
 getUser(id: string): Observable<any> {
   return new Observable((observer: any) => {
-    observer.next(this.myfriends.filter(s => s.id === id)[0]);
+    observer.next(this.myfriends.filter(s => s.UID === id)[0]);
   }).share();
 }
   

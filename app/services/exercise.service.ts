@@ -92,7 +92,7 @@ getExerciseList(): Observable<any> {
   add(exercise: Exercise) {   
     return firebase.push(
         "/exercises",
-        { "name": exercise.name, 
+        { "title": exercise.title, 
           "reps": exercise.reps, 
           "sets": exercise.sets, 
        
@@ -100,7 +100,12 @@ getExerciseList(): Observable<any> {
           "description": exercise.description, 
           "UID": BackendService.token,
           "date": 0 - Date.now(),
-          "imagepath":""
+          "instructions": exercise.instructions,
+          "muscle": exercise.muscle,
+          "type": exercise.type,
+          "images": exercise.images,
+          "level": exercise.level,
+          "muscleImagesrc": exercise.muscleImagesrc
         }
       ).then(
         function (result:any) {
@@ -137,34 +142,12 @@ getExerciseList(): Observable<any> {
         });  
   }
  
-  /*
-  uploadFile(localPath: string, file?: any): Promise<any> {
-      let filename = this.utils.getFilename(localPath);
-      let remotePath = `${filename}`;   
-      return firebase.uploadFile({
-        remoteFullPath: remotePath,
-        localFullPath: localPath,
-        onProgress: function(status) {
-            console.log("Uploaded fraction: " + status.fractionCompleted);
-            console.log("Percentage complete: " + status.percentageCompleted);
-        }
-      });
-  }*/
+
   delete(exercise: Exercise) {
     return firebase.remove("/exercises/"+exercise.id+"")
       .catch(this.handleErrors);
   }
-  getDownloadUrl(remoteFilePath: string): Promise<any> {
-      return firebase.getDownloadUrl({
-        remoteFullPath: remoteFilePath})
-      .then(
-        function (url:string) {
-          return url;
-        },
-        function (errorMessage:any) {
-          console.log(errorMessage);
-        });
-}
+  
 
   handleErrors(error) {
     console.log(JSON.stringify(error));

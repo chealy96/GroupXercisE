@@ -78,7 +78,19 @@ Users: any;
     );
   }
 
-  updateProfile(user){
+  updateProfile(user,bio: string,weight: string,height:string,age: string){
+    firebase.update(
+      '/users/'+user.id,
+      {'bio':bio,
+       "height": height,
+       "age": age,
+       "weight": weight
+      }
+  ).then(
+    function (result:any) {
+      console.log("update user profile: ");
+      return result
+    });
     
   }
   addNewUserData(user) {
@@ -181,8 +193,8 @@ Users: any;
     //empty array, then refill and filter
     this.Users = [];
     if (data) {
-      for (let UID in data) {        
-        let result = (<any>Object).assign({id: UID}, data[UID]);
+      for (let id in data) {        
+        let result = (<any>Object).assign({id: id}, data[id]);
         if(result.UID != null ){
           this.Users.push(result);
         }        
@@ -192,9 +204,14 @@ Users: any;
     return this.Users;
   }
 
-  getUser(id: string): Observable<any> {
+  getUser(UID: string): Observable<any> {
+   
     return new Observable((observer: any) => {
-      observer.next(this.Users.filter(s => s.id === id)[0]);
+      this.getallusers().then((res : any) => {
+        
+        observer.next(this.Users.filter(s => s.UID === UID)[0]);
+      });
     }).share();
   }
+  
 }

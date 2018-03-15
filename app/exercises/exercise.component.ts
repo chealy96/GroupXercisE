@@ -37,14 +37,14 @@ export class ExerciseComponent implements OnInit {
         // this.filteredexercises = <any>this.exerciseService.getExerciseList();
         // this.temparr = this.filteredexercises;
         // this.arrayItems = filteredexercises;
-            this.exerciseService.getPredExerciseList().subscribe((res: any) => {
-                this.arrayItems = res;
-                this.temparr = res;
-                this.filteredexercises = new ObservableArray<exercise>();
-                this.arrayItems.forEach(item => {
-                    this.filteredexercises.push(item);
-                });
-            })
+        this.exerciseService.getPredExerciseList().subscribe((res: any) => {
+            this.arrayItems = res;
+            this.temparr = res;
+            this.filteredexercises = new ObservableArray<exercise>();
+            this.arrayItems.forEach(item => {
+                this.filteredexercises.push(item);
+            });
+        })
     }
     
     viewDetail(id: string){
@@ -65,7 +65,6 @@ export class ExerciseComponent implements OnInit {
         }
     } 
     onClear(args) {
-       
         let searchBar = <SearchBar>args.object;
         searchBar.text = "";
         searchBar.hint = "Search for a country and press enter";

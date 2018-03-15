@@ -25,8 +25,18 @@ export class ListDetailComponent implements OnInit {
   id: string;
   name: string;
   description: string;
-  imagepath: string;
   image: any;
+  title: string;
+  url: string;
+  instructions:  Array<string> = [];
+  details: string;
+  level: string;
+  muscle: string;
+  muscleImage: string;
+  equipment : string;
+  type: string;
+  //images: string[];
+  images: Array<string> = [];
   private sub: any;
   private imagePath: string;
   private uploadedImageName: string;
@@ -42,7 +52,7 @@ export class ListDetailComponent implements OnInit {
     ) {}
 
  ngOnInit() {
-  // camera.requestPermissions();
+  
    this.sub = this.route.params.subscribe((params: any) => {
       this.id = params['id'];
       this.exerciseService.getMyExeercise(this.id).subscribe((exercise) => {
@@ -58,9 +68,30 @@ export class ListDetailComponent implements OnInit {
             if (prop === "description") {
               this.description = exercise[prop];
             }
-            if (prop === "imagepath") {
-              this.imagepath = exercise[prop];
-            }                       
+            if (prop === "url") {
+              this.url = exercise[prop];
+            }
+            if (prop === "equipment") {
+              this.equipment = exercise[prop];
+            }
+            if (prop === "level") {
+              this.level = exercise[prop];
+            }    
+            if (prop === "muscle") {
+              this.muscle = exercise[prop];
+            }    
+            if (prop === "instructions") {
+              this.instructions= exercise[prop];
+            }    
+            if (prop === "muscleImagesrc") {
+              this.muscleImage = exercise[prop];
+            }    
+            if (prop === "images") {
+              this.images = exercise[prop];
+            }      
+            if (prop === "type") {
+              this.type = exercise[prop];
+            }                                      
           }
         });
       });

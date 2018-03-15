@@ -97,8 +97,8 @@ export class BrowseComponent implements OnInit {
     })
     }
 
-    viewProfile(item: User){
-        this.router.navigate(["/friend-details",item.id]);
+    viewProfile(item ){
+        this.router.navigate(["/friend-details",item.UID]);
     }
 
     searchuser(args) {

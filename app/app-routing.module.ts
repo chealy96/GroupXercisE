@@ -14,7 +14,7 @@ export const authProviders = [
     { path: "search", loadChildren: "./search/search.module#SearchModule" },
     { path: "workout", loadChildren: "./workout/workout.module#WorkoutModule" },
     { path: "exercises", loadChildren: "./exercises/exercise.module#ExerciseModule" },
-    //{ path: "settings", loadChildren: "./settings/settings.module#SettingsModule" }
+    { path: "settings", loadChildren: "./settings/settings.module#SettingsModule" }
 ];
 
 
