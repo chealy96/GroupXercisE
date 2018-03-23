@@ -78,13 +78,14 @@ Users: any;
     );
   }
 
-  updateProfile(user,bio: string,weight: string,height:string,age: string){
+  updateProfile(user,bio: string,weight: string,height:string,age: string, goals: string){
     firebase.update(
       '/users/'+user.id,
       {'bio':bio,
        "height": height,
        "age": age,
-       "weight": weight
+       "weight": weight,
+       "goals" : goals
       }
   ).then(
     function (result:any) {

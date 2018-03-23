@@ -11,11 +11,8 @@ import {exercise} from "../models/pred-exercises.model";
 export class ExerciseService {
   constructor(
     private ngZone: NgZone,
-  //  private utils: UtilsService
   ){}
-    
-  //items: BehaviorSubject<Array<Gift>> = new BehaviorSubject([]);
-
+  
  private _allItems: Array<Exercise> = [];
  private _allItems2: Array<exercise> = [];
 
@@ -65,7 +62,6 @@ getExerciseList(): Observable<any> {
   
 
   handleSnapshot(data: any) {
-    //empty array, then refill and filter
     this._allItems = [];
     if (data) {
       for (let id in data) {        
@@ -74,20 +70,11 @@ getExerciseList(): Observable<any> {
           this._allItems.push(result);
         }        
       }
-   //   this.publishUpdates();
     }
     return this._allItems;
   }
 
-  //  publishUpdates() {
-  //   // here, we sort must emit a *new* value (immutability!)
-  //   this._allItems.sort(function(a, b){
-  //       if(a.date < b.date) return -1;
-  //       if(a.date > b.date) return 1;
-  //     return 0;
-  //   })
-  //   this.items.next([...this._allItems]);
-  //  }
+ 
 
   add(exercise: Exercise) {   
     return firebase.push(
@@ -96,7 +83,7 @@ getExerciseList(): Observable<any> {
           "reps": exercise.reps, 
           "sets": exercise.sets, 
        
-          "time": exercise.time,
+          "restTime": exercise.restTime,
           "description": exercise.description, 
           "UID": BackendService.token,
           "date": 0 - Date.now(),
@@ -116,31 +103,31 @@ getExerciseList(): Observable<any> {
         }); 
   }
 
-  editExercise(id:string, description: string, imagepath: string){
-  //  this.publishUpdates();
-    return firebase.update("/exercises/"+id+"",{
-        description: description, 
-        imagepath: imagepath})
-      .then(
-        function (result:any) {
-          return 'You have successfully edited this gift!';
-        },
-        function (errorMessage:any) {
-          console.log(errorMessage);
-        });  
-  }
-  editDescription(id:string, description: string){
-   // this.publishUpdates();
-    return firebase.update("/exercises/"+id+"",{
-        description: description})
-      .then(
-        function (result:any) {
-          return 'You have successfully edited the description!';
-        },
-        function (errorMessage:any) {
-          console.log(errorMessage);
-        });  
-  }
+  // editExercise(id:string, description: string, imagepath: string){
+  // //  this.publishUpdates();
+  //   return firebase.update("/exercises/"+id+"",{
+  //       description: description, 
+  //       imagepath: imagepath})
+  //     .then(
+  //       function (result:any) {
+  //         return 'You have successfully edited this gift!';
+  //       },
+  //       function (errorMessage:any) {
+  //         console.log(errorMessage);
+  //       });  
+  // }
+  // editDescription(id:string, description: string){
+  //  // this.publishUpdates();
+  //   return firebase.update("/exercises/"+id+"",{
+  //       description: description})
+  //     .then(
+  //       function (result:any) {
+  //         return 'You have successfully edited the description!';
+  //       },
+  //       function (errorMessage:any) {
+  //         console.log(errorMessage);
+  //       });  
+  // }
  
 
   delete(exercise: Exercise) {

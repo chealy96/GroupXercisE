@@ -7,6 +7,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 //import {UtilsService} from './utils.service';
 import 'rxjs/add/operator/share';
 import {Exercise} from "../models/exercises.model";
+import {Workout} from "../models/workout.model";
 import {Relationship} from "../models/friend.model";
 import {FirebaseService, RequestsProvider} from '../services';
 
@@ -19,6 +20,7 @@ export class FriendsService {
 
 firefriends = firebaseWebApi.database().ref('/friends');
  private _allItems: Array<Exercise> = [];
+ private _allItems2: Array<Workout> = [];
  myfriends;
  currentFriends = [];
 
@@ -39,11 +41,56 @@ getFriendExerciseList(uid: string): Observable<any> {
     }).share();              
   }
  
-//  getMyExeercise(id: string): Observable<any> {
-//     return new Observable((observer: any) => {
-//       observer.next(this._allItems.filter(s => s.id === id));
-//     }).share();
-//   }
+  getFriendWorkoutList(uid: string): Observable<any> {
+    return new Observable((observer: any) => {
+      let path = 'workouts';
+      
+        let onValueEvent = (snapshot: any) => {
+          this.ngZone.run(() => {
+            let results = this.handleSnapshot2(snapshot.value, uid);
+            console.log(JSON.stringify(results))
+           // results.filter(s => s.UID === uid)[0];
+            observer.next(results);
+          });
+        };
+        firebase.addValueEventListener(onValueEvent, `/${path}`);
+    }).share();              
+  }
+
+  handleSnapshot2(data: any, uid: string) {
+    this._allItems2 = [];
+    if (data) {
+      for (let id in data) {        
+        let result = (<any>Object).assign({id: id}, data[id]);
+        if(uid === result.UID){
+          this._allItems2.push(result);
+        }        
+      }
+    }
+    return this._allItems2;
+  }
+  getFreindsWorkout(id: string): Observable<any> {
+    return new Observable((observer: any) => {
+      observer.next(this._allItems2.filter(s => s.id === id)[0]);
+    }).share();
+  }
+
+  // getFreindsExercise(id: string,exerid: string): Observable<any> {
+  //   return new Observable((observer: any) => {
+  //     this.getFriendWorkoutList(id).subscribe((workouts: any) => {
+  //       workouts.forEach(obj => {
+  //         for(let j in obj.exercises) {
+  //           if(obj.exercises[j].id === exerid){
+  //            observer.next(obj.exercises[j]);
+  //           }
+  //         };
+  //      // observer.next(this._allItems.filter(s => s.exercises.id === id)[0]);
+  //       });
+  //     });
+  //   }).share();
+  // }
+
+
 
   handleSnapshot(data: any, uid: string) {
     this._allItems = [];

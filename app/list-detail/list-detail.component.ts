@@ -1,7 +1,7 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Router, ActivatedRoute} from '@angular/router';
-import { ExerciseService } from "../services";
+import { ExerciseService, WorkoutService, FriendsService } from "../services";
 import {Exercise} from "../models";
 import * as enums from 'ui/enums';
 import * as imageSource from 'image-source';
@@ -22,7 +22,7 @@ var img;
 })
 export class ListDetailComponent implements OnInit {
   
-  id: string;
+  id: any;
   name: string;
   description: string;
   image: any;
@@ -35,6 +35,9 @@ export class ListDetailComponent implements OnInit {
   muscleImage: string;
   equipment : string;
   type: string;
+  reps: string;
+  restTime : string;
+  sets: string;
   //images: string[];
   images: Array<string> = [];
   private sub: any;
@@ -48,53 +51,163 @@ export class ListDetailComponent implements OnInit {
         private router: Router,
         private ngZone: NgZone,
         private exerciseService: ExerciseService,
-      //  private utilsService: UtilsService
+        private workoutService:WorkoutService,
+        private friendService: FriendsService
     ) {}
 
  ngOnInit() {
   
    this.sub = this.route.params.subscribe((params: any) => {
       this.id = params['id'];
-      this.exerciseService.getMyExeercise(this.id).subscribe((exercise) => {
-        this.ngZone.run(() => {
-          for (let prop in exercise) {
-            //props
-            if (prop === "id") {
-              this.id = exercise[prop];
+        this.workoutService.getMyExeercise(this.id).subscribe((exercise) => {
+          this.ngZone.run(() => {
+            for (let prop in exercise) {
+              //props
+              if (prop === "id") {
+                this.id = exercise[prop];
+              }
+              if (prop === "title") {
+                this.title = exercise[prop];
+              }
+              if (prop === "description") {
+                this.description = exercise[prop];
+              }
+              if (prop === "url") {
+                this.url = exercise[prop];
+              }
+              if (prop === "equipment") {
+                this.equipment = exercise[prop];
+              }
+              if (prop === "level") {
+                this.level = exercise[prop];
+              }    
+              if (prop === "muscle") {
+                this.muscle = exercise[prop];
+              }    
+              if (prop === "instructions") {
+                this.instructions= exercise[prop];
+              }    
+              if (prop === "muscleImagesrc") {
+                this.muscleImage = exercise[prop];
+              }    
+              if (prop === "images") {
+                this.images = exercise[prop];
+              }      
+              if (prop === "type") {
+                this.type = exercise[prop];
+              }
+              if (prop === "reps") {
+                this.reps = exercise[prop];
+              }    
+              if (prop === "restTime") {
+                this.restTime = exercise[prop];
+              }      
+              if (prop === "sets") {
+                this.sets = exercise[prop];
+              }                                          
             }
-            if (prop === "name") {
-              this.name = exercise[prop];
-            }
-            if (prop === "description") {
-              this.description = exercise[prop];
-            }
-            if (prop === "url") {
-              this.url = exercise[prop];
-            }
-            if (prop === "equipment") {
-              this.equipment = exercise[prop];
-            }
-            if (prop === "level") {
-              this.level = exercise[prop];
-            }    
-            if (prop === "muscle") {
-              this.muscle = exercise[prop];
-            }    
-            if (prop === "instructions") {
-              this.instructions= exercise[prop];
-            }    
-            if (prop === "muscleImagesrc") {
-              this.muscleImage = exercise[prop];
-            }    
-            if (prop === "images") {
-              this.images = exercise[prop];
-            }      
-            if (prop === "type") {
-              this.type = exercise[prop];
-            }                                      
-          }
+          });
         });
-      });
+
+        this.exerciseService.getMyExeercise(this.id).subscribe((exercise) => {
+          this.ngZone.run(() => {
+            for (let prop in exercise) {
+              //props
+              if (prop === "id") {
+                this.id = exercise[prop];
+              }
+              if (prop === "name") {
+                this.name = exercise[prop];
+              }
+              if (prop === "description") {
+                this.description = exercise[prop];
+              }
+              if (prop === "url") {
+                this.url = exercise[prop];
+              }
+              if (prop === "equipment") {
+                this.equipment = exercise[prop];
+              }
+              if (prop === "level") {
+                this.level = exercise[prop];
+              }    
+              if (prop === "muscle") {
+                this.muscle = exercise[prop];
+              }    
+              if (prop === "instructions") {
+                this.instructions= exercise[prop];
+              }    
+              if (prop === "muscleImagesrc") {
+                this.muscleImage = exercise[prop];
+              }    
+              if (prop === "images") {
+                this.images = exercise[prop];
+              }      
+              if (prop === "type") {
+                this.type = exercise[prop];
+              }
+              if (prop === "reps") {
+                this.reps = exercise[prop];
+              }    
+              if (prop === "restTime") {
+                this.restTime = exercise[prop];
+              }      
+              if (prop === "sets") {
+                this.sets = exercise[prop];
+              }                                          
+            }
+          });
+        });
+      
+        // this.friendService.getFreindsExercise(this.id).subscribe((exercise) => {
+        //   this.ngZone.run(() => {
+        //     for (let prop in exercise) {
+        //       //props
+        //       if (prop === "id") {
+        //         this.id = exercise[prop];
+        //       }
+        //       if (prop === "name") {
+        //         this.name = exercise[prop];
+        //       }
+        //       if (prop === "description") {
+        //         this.description = exercise[prop];
+        //       }
+        //       if (prop === "url") {
+        //         this.url = exercise[prop];
+        //       }
+        //       if (prop === "equipment") {
+        //         this.equipment = exercise[prop];
+        //       }
+        //       if (prop === "level") {
+        //         this.level = exercise[prop];
+        //       }    
+        //       if (prop === "muscle") {
+        //         this.muscle = exercise[prop];
+        //       }    
+        //       if (prop === "instructions") {
+        //         this.instructions= exercise[prop];
+        //       }    
+        //       if (prop === "muscleImagesrc") {
+        //         this.muscleImage = exercise[prop];
+        //       }    
+        //       if (prop === "images") {
+        //         this.images = exercise[prop];
+        //       }      
+        //       if (prop === "type") {
+        //         this.type = exercise[prop];
+        //       }
+        //       if (prop === "reps") {
+        //         this.reps = exercise[prop];
+        //       }    
+        //       if (prop === "restTime") {
+        //         this.restTime = exercise[prop];
+        //       }      
+        //       if (prop === "sets") {
+        //         this.sets = exercise[prop];
+        //       }                                          
+        //     }
+        //   });
+        // });
     });  
   }
 

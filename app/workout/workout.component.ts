@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
-import { ExerciseService, FirebaseService } from '../services';
+import { ExerciseService, FirebaseService, BackendService, WorkoutService } from '../services';
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { Router } from '@angular/router';
 import { Exercise } from "../models/exercises.model";
 import { exercise } from "../models/pred-exercises.model";
+import {Workout} from "../models/workout.model";
 
-//import { Observable } from 'rxjs/Observable';
 
 import { Observable } from 'tns-core-modules/data/observable';
 import { Page } from 'ui/page';
@@ -32,7 +32,7 @@ export class WorkoutComponent  extends Observable implements OnInit {
     UID: string;
     reps: string;
     sets: string;
-    time: string;
+    restTime: string;
     temparr = [];
     instructions: any;
     muscle: string;
@@ -40,6 +40,8 @@ export class WorkoutComponent  extends Observable implements OnInit {
     images: any;
     level: string;
     muscleImagesrc: string;
+    workoutName: string;
+    exes: any;
 
     private arrayItems: Array<exercise> = [];
     public filteredexercises: ObservableArray<exercise> = new ObservableArray<exercise>();
@@ -47,63 +49,20 @@ export class WorkoutComponent  extends Observable implements OnInit {
     public selection: string;
     private filterableListpicker: FilterableListpicker;
     public exercise: Exercise;
+    public workout: Workout;
 
     public exercises$: any;
-    public message$: any;
     constructor(private routerExtensions: RouterExtensions,
         private exerciseService: ExerciseService,
         private firebaseService: FirebaseService,
+        private workoutService: WorkoutService,
         private router: Router    
         ) {
             super();
             MyModel = this;
-            this.exerciseService.getPredExerciseList().subscribe((res: any) => {
-                this.arrayItems = res;
-                this.temparr = res;
-                this.filteredexercises = new ObservableArray<exercise>();
-                this.arrayItems.forEach(item => {
-                    this.filteredexercises.push(item);
-                });
-            })
+            this.loadData();
         }
  
-    // private objArray = [
-    //     {
-    //         "image": "https://lh3.googleusercontent.com/gN6iBKP1b2GTXZZoCxhyXiYIAh8QJ_8xzlhEK6csyDadA4GdkEdIEy9Bc8s5jozt1g=w300",
-    //         "title": "Brown Bear",
-    //         "description": "Brown bear brown bear, what do you see?"
-    //     },
-    //     {
-    //         "image": "http://icons.veryicon.com/png/Flag/Rounded%20World%20Flags/Indonesia%20Flag.png",
-    //         "title": "Red Bird"
-    //     },
-    //     {
-    //         "title": "Purple Cat",
-    //         "description": "Why are we teaching kids there are purple cats?"
-    //     },
-    //     {
-    //         "image": "https://lh3.googleusercontent.com/UMB2HRRRAAzXAEaCM9Gg-baCaDx_1RTXHscW5k2Ge3P4KP4mwTt2m6oyEHBWex3c4SxU=w300",
-    //         "title": "Blue Horse",
-    //         "description": "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it."
-    //     },
-    //     {
-    //         "image": "https://cdn.iconscout.com/public/images/icon/free/png-512/frog-face-animal-aquatic-3272656142b1b3cb-512x512.png",
-    //         "title": "Green Frog",
-    //         "description": "Cortado, cappuccino, espresso."
-    //     },
-    //     {
-    //         "image": "https://marketplace.canva.com/MAB60kWLDdM/1/thumbnail/canva-cute-dog-icon-MAB60kWLDdM.png",
-    //         "title": "White Dog",
-    //     },
-    //     {
-    //         "title": "Yellow Snake",
-    //     },
-    //     {
-    //         "image": "http://icons.iconarchive.com/icons/aha-soft/desktop-halloween/256/Hat-icon.png",
-    //         "title": "Black Witch",
-    //         "description": "Peter piper picked a peck of pickled peppers."
-    //     },
-    // ];
     public listitems = this.arrayItems;
     @ViewChild('myfilter') myfilter: ElementRef;
 
@@ -131,7 +90,16 @@ export class WorkoutComponent  extends Observable implements OnInit {
           }
 
     }
-
+    loadData(){
+        this.exerciseService.getPredExerciseList().subscribe((res: any) => {
+            this.arrayItems = res;
+           // this.temparr = res;
+            // this.filteredexercises = new ObservableArray<exercise>();
+            // this.arrayItems.forEach(item => {
+            //     this.filteredexercises.push(item);
+            // });
+        });
+    }
     showPicker() {
         this.set('listitems',  this.arrayItems);
         this.myfilter.nativeElement.show();
@@ -142,7 +110,13 @@ export class WorkoutComponent  extends Observable implements OnInit {
     private _sideDrawerTransition: DrawerTransitionBase;
 
     ngOnInit(): void {
-        this.exercises$ = <any>this.exerciseService.getExerciseList();
+        this.exercises$ =  <any>this.exerciseService.getExerciseList();
+        this.exerciseService.getExerciseList().subscribe((data: any) => { 
+           // this.exercises$ = data
+            this.exes = data;
+           // this.getCharges(this.username);
+            });
+        
         this._sideDrawerTransition = new SlideInOnTopTransition();
     }
 
@@ -153,7 +127,7 @@ export class WorkoutComponent  extends Observable implements OnInit {
         this.description,
         this.reps,
         this.sets,
-        this.time,
+        this.restTime,
         this.UID,
         this.instructions,
         this.muscle,
@@ -168,7 +142,7 @@ export class WorkoutComponent  extends Observable implements OnInit {
         this.description = "",
         this.reps = "",
         this.sets = "",
-        this.time = "",
+        this.restTime = "",
         this.instructions = "",
         this.muscle = "",
         this.type = "",
@@ -178,17 +152,42 @@ export class WorkoutComponent  extends Observable implements OnInit {
         
          alert(message);
        })   
-       
+
      }
    
+     
      delete(exercise: Exercise) {
        this.exerciseService.delete(exercise)
          .catch(() => {
            alert("An error occurred while deleting an item from your list.");
          });
      }
-   
-      viewDetail(id: string){
+     createWorkoutRoutine() {
+        this.UID = BackendService.token;
+
+        this.workout = new Workout(
+        this.id,
+        this.workoutName,
+        this.UID,
+        this.exes
+        );
+
+        let myWorkout: Workout = this.workout;
+        this.workoutService.createWorkout(myWorkout).then((message:any) => {
+    
+        this.exes.forEach(item => {
+            this.delete(item);
+        });
+        this.id = "",
+        this.workoutName = "",
+        this.exes = "",
+
+        
+         alert(message);
+       })   
+       
+     }
+      viewDetail(id: any){
        this.router.navigate(["/list-detail", id]);
     }
     

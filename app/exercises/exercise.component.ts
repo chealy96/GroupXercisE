@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild,  AfterViewInit  } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import {ExerciseService ,FirebaseService} from '../services';
@@ -21,7 +21,7 @@ import { SearchBar } from "ui/search-bar";
 export class ExerciseComponent implements OnInit {
     myrequests ;
     temparr = [];
-
+    public isBusy = true;
     private arrayItems: Array<exercise> = [];
     public filteredexercises: ObservableArray<exercise> = new ObservableArray<exercise>();
     public exercise: exercise;
@@ -44,6 +44,7 @@ export class ExerciseComponent implements OnInit {
             this.arrayItems.forEach(item => {
                 this.filteredexercises.push(item);
             });
+            this.isBusy = false;
         })
     }
     

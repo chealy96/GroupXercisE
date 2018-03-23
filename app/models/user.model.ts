@@ -10,4 +10,5 @@ export class User {
   weight: string;
   age: string;
   bio: string;
+  goals: string;
 }

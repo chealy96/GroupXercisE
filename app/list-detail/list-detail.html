@@ -1,52 +1,54 @@
 <ActionBar class="action-bar" title="{{name}}">
         <NavigationButton ios:visibility="collapsed" android.systemIcon="ic_menu_back" (tap)="navigateBack()"></NavigationButton>
-        <Label class="action-bar-title" text="Exercise Details"></Label>
-
+        <Label class="action-bar-title" [text]="title"></Label>
 </ActionBar>
 <ScrollView>
     <StackLayout #exercise class="card" horizontalAlignment="center" >  
-            <GridLayout  class="form" rows="auto,auto,auto" verticalAlignment="top">
-                <Label class="h2" col="0" text="name"></Label>
-                <Label class="h2" col="1" text="reps"></Label> 
-                <Label class="h2" col="2" text="sets"></Label>
+            <GridLayout  class="form" columns="*,*,*" >
+                <Label class="h2" col="1" horizontalAlignment="center" text="Reps"></Label> 
+                <Label class="h2" col="2" horizontalAlignment="center" text="Sets"></Label>
+                <Label class="h2" col="0" horizontalAlignment="center" text="Rest Time"></Label>
             </GridLayout> 
-            <GridLayout  class="form" rows="auto,auto,auto" verticalAlignment="top">
-                    <Label class="h2" col="0" [text]="name"></Label>
-                    <Label class="h2" col="1" [text]="reps"></Label> 
-                    <Label class="h2" col="2" [text]="sets"></Label>
+            <GridLayout  class="form" columns="*,*,*" >
+                    <Label class="h3" col="1"  horizontalAlignment="center" [text]="reps"></Label> 
+                    <Label class="h3" col="2" horizontalAlignment="center" [text]="sets"></Label>
+                    <Label class="h3" col="0" horizontalAlignment="center" [text]="restTime"></Label>
             </GridLayout> 
-            <GridLayout  class="form" rows="auto,auto" verticalAlignment="top">
-                    <Label class="h2"  col="0" text="Description"></Label> 
-                    <Label class="h2"  col="1" [text]="description"></Label> 
-            </GridLayout>
-            <GridLayout *ngIf="img" columns="*,*" class="form" >
-                <Label class="h2" col="0"  text="Muscle:"></Label>
-                <Label class="h2" col="1"  [text]="muscle"></Label>
-            </GridLayout>
-            <GridLayout columns="*" class="form" >
-                    <Image style="padding: 10px"  horizontalAlignment="center" [src]="muscleImage" col="0" stretch="none"  class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
-            </GridLayout>
-            <GridLayout columns="*" class="form" *ngFor="let img of images; let i = index" > 
-                <Image   *ngIf="img" col="0" [src]="img"   horizontalAlignment="center" stretch="none"  class="img-rounded p-l-20 p-r-20 p-t-20"></Image> 
+            <GridLayout  class="form" columns="*,*" >
+                    <Label class="h2"  col="0" text="Description:"></Label> 
+                    <Label class="h3"  col="1" [text]="description"></Label> 
             </GridLayout>
             <GridLayout columns="*" class="form">
                 <Label class="h2" col="0" row="0"  horizontalAlignment="center" text="Instructions"></Label>
-            </GridLayout>
-            <GridLayout columns="*" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let ins of instructions; let i = index">
-                <TextView *ngIf="ins" row="1" [text]="ins"  [editable]="false" class="input input-border"></TextView> 
-            </GridLayout>
-            <GridLayout columns="*,*" class="form" >
-                <Label class="h2" col="0"  text="Equipment:"></Label>
-                <Label class="h2" col="1" [text]="equipment"></Label>
-            </GridLayout> 
-            <GridLayout columns="*,*" class="form" >
-                <Label class="h2" col="0"  text="Type:"></Label>
-                <Label class="h2" col="1" [text]="type"></Label>
-            </GridLayout> 
-            <GridLayout columns="*,*" class="form">
-                <Label class="h2" col="0"  text="Level:"></Label>
-                <Label class="h2" col="1" [text]="level"></Label>
-            </GridLayout> 
+        </GridLayout>
+        <GridLayout columns="*" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let ins of instructions; let i = index">
+            <TextView *ngIf="ins" row="1" [text]="ins"  [editable]="false" class="input input-border"></TextView> 
+        </GridLayout>
+        <GridLayout columns="*" class="form">
+                <Label class="h2" col="0" row="0"  horizontalAlignment="center" text="Images"></Label>
+        </GridLayout>
+        <GridLayout columns="*" class="form" *ngFor="let img of images; let i = index" > 
+                <Image   *ngIf="img" col="0" [src]="img"   horizontalAlignment="center" stretch="none"  class="img-rounded p-l-20 p-r-20 p-t-20"></Image> 
+        </GridLayout> 
+        <GridLayout columns="*" class="form" rows="auto,auto" verticalAlignment="top" >
+            <Label class="h2"  horizontalAlignment="center" text="Muscle"></Label>
+            <Label class="h3" row="1" horizontalAlignment="center" [text]="muscle"></Label>
+        </GridLayout>
+        <GridLayout columns="*" class="form" >
+                <Image style="padding: 100px" [src]="muscleImage" horizontalAlignment="center" col="0" stretch="none"  class="img-rounded p-l-20 p-r-20 p-t-20"></Image>
+        </GridLayout>
+        <GridLayout columns="*,*" class="form" >
+            <Label class="h2" col="0"  text="Equipment:"></Label>
+            <Label class="h3" col="1" [text]="equipment"></Label>
+        </GridLayout> 
+        <GridLayout columns="*,*" class="form" >
+            <Label class="h2" col="0"  text="Type:"></Label>
+            <Label class="h3" col="1" [text]="type"></Label>
+        </GridLayout> 
+        <GridLayout columns="*,*" class="form">
+            <Label class="h2" col="0"  text="Level:"></Label>
+            <Label class="h3" col="1" [text]="level"></Label>
+        </GridLayout> 
         </StackLayout>
 </ScrollView>
 <!--  <StackLayout #exercise class="card">  

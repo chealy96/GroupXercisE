@@ -10,28 +10,75 @@
                 <StackLayout class="m-20 p-l-15 p-r-15">
                     <Image [src]="photoURL" height="80" width="80" class="img-circle" borderWidth="1" borderColor="white"></Image>
                     <Label [text]="displayName" class="h2 text-center" textWrap="true"></Label>
-                    <Label text="Cross-platform framework" class="h4 text-center" textWrap="true"></Label>
+                    <Label [text]="email" class="h4 text-center" textWrap="true"></Label>
                 </StackLayout>
             </StackLayout>
+            <!-- <StackLayout class="hr-light"></StackLayout> -->
         </GridLayout>
-        <GridLayout columns="*" class="">
+        <GridLayout columns="*,*,*" rows="*,*,*,*,*,*,*">  
+                <GridLayout  class="form" row="0" col="0" rows="auto,auto" verticalAlignment="top">
+                    <Label text="Height" class="field-title h2" ></Label>
+                    <Label id="height" row="1" [text]="height"   ></Label> 
+                </GridLayout>  
+                
+                <GridLayout  class="form" row="0" col="1" rows="auto,auto" verticalAlignment="top">
+                        <Label text="Weight" class="field-title h2" ></Label>
+                        <Label id="weight" row="1" [text]="weight" class="h3" ></Label>                                             
+                </GridLayout>  
+                <GridLayout  class="form" row="0" col="2" rows="auto,auto" verticalAlignment="top">
+                        <Label text="Age" class="field-title h2" ></Label>
+                        <Label id="age" row="1" [text]="age" class="h3"  ></Label>                                             
+                </GridLayout> 
+                <GridLayout  class="form"  row="1" col="0" colSpan="2" rows="auto,auto" verticalAlignment="top">
+                        <Label text="Bio" class="field-title h2" ></Label>
+                        <Label id="height" row="1" [text]="bio"   ></Label> 
+                </GridLayout>
+                <GridLayout  class="form"  row="2" col="0"  colSpan="2" rows="auto,auto" verticalAlignment="top">
+                        <Label text="Goals" class="field-title h2" ></Label>
+                        <Label id="height" row="1" [text]="goals"   ></Label> 
+                </GridLayout> 
+        </GridLayout>
+        <!-- <GridLayout columns="*" class="">
             <Label class="h2 text-center" col="0" text="Exercise Routine" textWrap="true"></Label>
         </GridLayout> 
-        <GridLayout columns="*,*,*,*">
-            <Label class="m-5"  col="0" text="Title"></Label>
-            <Label class="m-5"  col="1" text='Reps'></Label>
-            <Label class="m-5"  col="2" text='Sets'></Label>
-            <Label class="m-5"  col="3" text='Time'></Label>
-        </GridLayout>  
-        <ListView [items]="exercises$ | async"  height="300">
+        <GridLayout columns="*,*,*,*,*">
+            <Label class="m-5" colSpan="2" col="0" text="Title"></Label>
+            <Label class="m-5"  col="2" text='Reps'></Label>
+            <Label class="m-5"  col="3" text='Sets'></Label>
+            <Label class="m-5"  col="4" text='RestTime'></Label>
+        </GridLayout>   -->
+        <!-- <ListView [items]="exercises$ | async"  height="300">
             <ng-template let-item="item">                  
-                <GridLayout columns="*,*,*,*">
-                    <Label class="m-5"  col="0" [text]='item.name'></Label>
-                    <Label class="m-5"  col="1" [text]='item.reps'></Label>
-                    <Label class="m-5"  col="2" [text]='item.sets'></Label>
-                    <Label class="m-5"  col="3" [text]='item.time'></Label>
+                <GridLayout columns="*,*,*,*,*">
+                    <Label class="m-5" colSpan="2" col="0" [text]='item.title'></Label>
+                    <Label class="m-5"  col="2" [text]='item.reps'></Label>
+                    <Label class="m-5"  col="3" [text]='item.sets'></Label>
+                    <Label class="m-5"  col="4" [text]='item.restTime'></Label>
                 </GridLayout>                 
             </ng-template>
-        </ListView>
+        </ListView> -->
+        <GridLayout  class="form"  row="3" col="0"  colSpan="3" rows="auto,auto" verticalAlignment="top">
+            <Label class="h2" style="text-align: center"  text='Workouts'></Label>
+            <Label class="hr-light" row="1" colSpan="3"></Label>
+        </GridLayout>
+        <GridLayout  class="form"  row="4" rowSpan="3" colSpan="3"   rows="auto,auto" verticalAlignment="top">
+            <ListView [items]="workouts"  height="400">
+                    <ng-template let-item="item "> 
+                        <ScrollView>                 
+                            <StackLayout class="">
+                            <GridLayout  columns="auto,*,auto">
+                                <Image class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]=" "></Image> 
+                                <Label class="h3" style="text-align: center" (tap)="viewWorkout(item.id)" col="0" colspan="3" [text]='item.name'></Label>
+                            </GridLayout> 
+                            <!-- <GridLayout columns="auto,*,auto" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let exer of item.exercises; let i = index">
+                                <Image  class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="exer.images[0] "></Image>
+                                <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="1" [text]='exer.title'></Label>
+                            </GridLayout> -->
+                            <StackLayout class="hr-light"></StackLayout>
+                            </StackLayout>
+                        </ScrollView>                
+                    </ng-template>
+                </ListView>
+        </GridLayout>
         </StackLayout>
 </ScrollView>

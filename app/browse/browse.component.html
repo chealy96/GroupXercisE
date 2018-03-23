@@ -19,32 +19,41 @@
 
     <GridLayout class="page page-content" tkMainContent>
             <TabView [(ngModel)]="tabSelectedIndex" selectedColor="#FF0000" iosIconRenderingMode="alwaysOriginal" sdkExampleTitle sdkToggleNavButton>
-                    <StackLayout *tabItem="{title: 'Search'}">
+                    
+                <StackLayout *tabItem="{title: 'Search'}">
                         <ScrollView>
-                        <StackLayout>
-                        <!--  <Label class="gold card" textWrap="true" [text]="message$ | async"></Label> -->
-                            <Label class="h2 header" style="text-align: center " text="Search for Users"></Label>
-                            <StackLayout class="">     
-                                <GridLayout  class="form">
-                                    <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
-                                    <SearchBar row="0" hint="Search"  (textChange)="searchuser($event)" (clear)="onClear($event)" (submit)="searchuser($event)"></SearchBar>
-                                </GridLayout>    
-                            </StackLayout>
-                            <Label class="h2 header" text="User List" style="text-align: center "></Label>
-                            <StackLayout class="">
-                                <ListView row="1" [items]="filteredusers" class="list-group" height="400">
-                                    <ng-template let-item="item">
-                                        <GridLayout class="item list-group-item" columns="auto,*,auto">
-                                            <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
-                                            <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
-                                            <!-- <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]=""></Image>-->
-                                            <Button  class="m-5" class="btn btn-primary btn-active" col="2" horizontalAlignment="right" id="button" text="Add" (tap)="sendreq(item)"></Button>
-                                        </GridLayout>
-                                    </ng-template>
-                                </ListView>
-                            </StackLayout>
+                            <StackLayout #User > 
+                            <GridLayout rows="*,*,*,*" columns="">
+                            <!-- <StackLayout> -->
+                            <!--  <Label class="gold card" textWrap="true" [text]="message$ | async"></Label> -->
+                                <Label row="0"class="h2 header" style="text-align: center " text="Search for Users"></Label>
+                                <!-- <StackLayout class="">      -->
+                                    <GridLayout row="1" class="form">
+                                        <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
+                                        <SearchBar row="0" hint="Search"  (textChange)="searchuser($event)" (clear)="onClear($event)" (submit)="searchuser($event)"></SearchBar>
+                                    </GridLayout>    
+                                <!-- </StackLayout> -->
+                              
+                                    <Label row="3" class="h2 header" text="User List" style="text-align: center "></Label>
+                                   
+                                    <StackLayout row="4"class="">
+                                        <ListView  [items]="filteredusers" class="list-group" height="400">
+                                            
+                                                <ng-template let-item="item">
+                                                    <GridLayout class="item list-group-item" columns="auto,*,auto">
+                                                        <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
+                                                        <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
+                                                        <!-- <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]=""></Image>-->
+                                                        <Button  class="m-5" class="btn btn-primary btn-active" col="2" horizontalAlignment="right" id="button" text="Add" (tap)="sendreq(item)"></Button>
+                                                    </GridLayout>
+                                                </ng-template>
+                                            
+                                        </ListView>
+                                    </StackLayout>     
+                                <!-- </StackLayout> -->
+                            </GridLayout>
                         </StackLayout>
-                        </ScrollView>
+                    </ScrollView>
                     </StackLayout>
                     <StackLayout *tabItem="{title: 'Friend Requests'}">
                         <StackLayout>

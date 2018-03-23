@@ -1,6 +1,4 @@
-<Page 
-xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:ui="nativescript-filterable-listpicker"
-xmlns:IM="nativescript-image-cache-media" loaded="pageLoaded" class="page">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"  loaded="pageLoaded" class="page">
 <ActionBar class="action-bar">
     <!-- <Page 
 xmlns="http://schemas.nativescript.org/tns.xsd" 
@@ -25,9 +23,52 @@ xmlns:IM="nativescript-image-cache-media" loaded="pageLoaded" class="page">
         <MyDrawer [selectedPage]="'Settings'"></MyDrawer>
     </StackLayout>
     <GridLayout class="page page-content" tkMainContent>
-  
-     
-  
+        <StackLayout>
+            <CheckBox #CB1 text="CheckBox Label" checked="false"></CheckBox>
+            <CheckBox #CB1 text="CheckBox Label" (tap)="getCheckProp()" checked="false"></CheckBox>
+            <Button (tap)="toggleCheck()" text="Toggle it!"></Button>
+            <Button (tap)="getCheckProp()" text="Check Property"></Button>
+        </StackLayout>
+    <!-- <Accordion [items]="items" itemTapped="tapped" headerTextBold="true" headerTextColor="white" headerColor="pink" headerTextColor="blue" allowMultiple="true"  selectedIndex="2">
+    
+        <ng-template accordionHeaderTemplate let-item="item" let-i="index">
+            <GridLayout backgroundColor="blue" columns="auto,*">
+                <Label [text]="item.title"></Label>
+            </GridLayout>
+        </ng-template>
+    
+        <ng-template accordionItemTemplate let-item="item" let-parent="parentIndex" let-even="even" let-child="childIndex">
+            <StackLayout>
+                <Image [src]="item.image"></Image>
+                <Label [text]="item.text"></Label>
+            </StackLayout>
+        </ng-template>
+    
+    </Accordion> -->
+    <!-- <accordion:Accordion items="{{objArray}}" itemTapped="tapped" headerTextBold="true" headerTextColor="white" headerColor="pink"  headerTextColor="blue" allowMultiple="true" id="ac" selectedIndex="1">
+        <accordion:Accordion.headerTemplate>
+            <GridLayout backgroundColor="green" columns="auto,*">
+                <Label text="{{title}}"/>
+                <Label col="1" text="+"/>
+            </GridLayout>tns run s
+        </accordion:Accordion.headerTemplate>
+
+        <accordion:Accordion.itemTemplate>
+            <StackLayout headerText="First">
+                <Image src="{{image}}"/>
+                <Label text="{{text}}"/>
+            </StackLayout>
+        </accordion:Accordion.itemTemplate>
+        
+
+        <accordion:Accordion.footerTemplate>
+            <GridLayout backgroundColor="yellow" columns="auto,*">
+                <Label text="{{footer}}"/>
+                <Label col="1" text="-"/>
+            </GridLayout>
+        </accordion:Accordion.footerTemplate>
+
+    </accordion:Accordion> -->
     </GridLayout>
 </RadSideDrawer>
 </Page>

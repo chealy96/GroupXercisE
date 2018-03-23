@@ -14,14 +14,17 @@ import { BrowseModule } from "./browse/browse.module";
 import { SharedModule } from "./shared/shared.module";
 import { WorkoutModule } from "./workout/workout.module";
 import { ListDetailModule } from "./list-detail/list-detail.module";
+import { WorkoutDetailModule } from "./workoutDetails/workoutDetail.module";
 import { ExerciseDetailModule } from "./exercise-detail/exercise-detail.module";
 import { FriendDetailsModule } from "./friend-details/friend-details.module";
 import { SearchModule } from "./search/search.module";
 import { ExerciseModule } from "./exercises/exercise.module";
 import { SettingsModule } from "./settings/settings.module";
+import { AccordionModule } from "nativescript-accordion/angular";
+import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 
 
-import { BackendService, FirebaseService, RequestsProvider, ExerciseService, FriendsService} from "./services";
+import { BackendService, FirebaseService, RequestsProvider, ExerciseService, FriendsService, WorkoutService} from "./services";
 @NgModule({
     bootstrap: [
         AppComponent
@@ -41,7 +44,10 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService, Fri
         FriendDetailsModule,
         SearchModule,
         ExerciseModule,
-        SettingsModule
+        SettingsModule,
+        AccordionModule,
+        WorkoutDetailModule,
+        TNSCheckBoxModule
     ],
     declarations: [
         AppComponent
@@ -53,7 +59,8 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService, Fri
         FirebaseService,
         RequestsProvider,
         ExerciseService,
-        FriendsService
+        FriendsService,
+        WorkoutService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
