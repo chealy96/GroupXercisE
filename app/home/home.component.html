@@ -24,7 +24,7 @@
             <StackLayout *tabItem="{title: 'Profile'}">
                 <ScrollView> 
                         <StackLayout #User > 
-                                <GridLayout row="0" col="0" rows="* *" style="background-color: rgba(255, 254, 254, 0.705);" >
+                                <GridLayout row="0" col="0" rows="* *" style="background-color: rgba(255, 255, 255, 0.986);" >
                                     <StackLayout row="0" rowSpan="2" class="p-t-15">
                                         <StackLayout class="m-20 p-l-15 p-r-15">
                                             <Image [src]="profilePhoto" height="80" width="80" class="img-circle" borderWidth="1" borderColor="white"></Image>
@@ -32,16 +32,15 @@
                                             <Label [text]="email" class="h4 text-center" textWrap="true"></Label>
                                             <StackLayout class="hr-light"></StackLayout>
                                               <GridLayout columns="*,*,*" rows="*,*,*,*,*,*,*">  
-                                                <GridLayout  class="form" row="0" col="0" rows="auto,auto" verticalAlignment="top">
+                                                <GridLayout  class="form" row="0" col="0" rows="auto,auto"  verticalAlignment="top">
                                                     <Label text="Height" class="field-title h2" ></Label>
                                                     <Label id="height" row="1" [text]="height"   ></Label> 
-                                                </GridLayout>  
-                                                
-                                                <GridLayout  class="form" row="0" col="1" rows="auto,auto" verticalAlignment="top">
+                                                </GridLayout>
+                                                <GridLayout  class="form" row="0" col="1" rows="auto,auto"  horizontalAlignment="center" verticalAlignment="top">
                                                         <Label text="Weight" class="field-title h2" ></Label>
                                                         <Label id="weight" row="1" [text]="weight" class="h3" ></Label>                                             
                                                 </GridLayout>  
-                                                <GridLayout  class="form" row="0" col="2" rows="auto,auto" verticalAlignment="top">
+                                                <GridLayout  class="form" row="0" col="2" rows="auto,auto" horizontalAlignment="center" verticalAlignment="top">
                                                         <Label text="Age" class="field-title h2" ></Label>
                                                         <Label id="age" row="1" [text]="age" class="h3"  ></Label>                                             
                                                 </GridLayout> 
@@ -57,8 +56,8 @@
                                                         <Label class="h2" style="text-align: center"  text='Workouts'></Label>
                                                         <Label class="hr-light" row="1" colSpan="3"></Label>
                                                 </GridLayout> 
-                                                <GridLayout  class="form"  row="4" rowSpan="3" colSpan="3"   rows="auto,auto" verticalAlignment="top">
-                                                        <ListView [items]="workouts"  height="100">
+                                                <GridLayout  class="form"  row="4" rowSpan="3" colSpan="3"  height="" rows="auto,auto" verticalAlignment="top">
+                                                        <ListView [items]="workouts"  height="400">
                                                                 <ng-template let-item="item "> 
                                                                     <ScrollView>                 
                                                                         <StackLayout class="">
@@ -67,11 +66,6 @@
                                                                             <Label class="h3" style="text-align: center" verticalAlignment="center" (tap)="viewWorkout(item.id)" col="1" [text]='item.name'></Label>
                                                                             <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]="'~/assets/trash.png'"></Image>
                                                                         </GridLayout> 
-                                                                        <!-- <GridLayout columns="auto,*,auto" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let exer of item.exercises; let i = index">
-                                                                            <Image  class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="exer.images[0] "></Image>
-                                                                            <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="1" [text]='exer.title'></Label>
-                                                                            <Image  class="m-5" col="2" horizontalAlignment="right" width="40" height="40" [src]="'~/assets/trash.png'"></Image>
-                                                                        </GridLayout> -->
                                                                         <StackLayout class="hr-light"></StackLayout>
                                                                         </StackLayout>
                                                                     </ScrollView>                
@@ -80,8 +74,7 @@
                                                     </GridLayout> 
                                                 </GridLayout>
                                                 <StackLayout class="hr-light"></StackLayout>
-                                                <!-- <StackLayout height="400" class="card">
-                                        </StackLayout> -->
+                                               
                                     </StackLayout>
                                     </StackLayout>
                                 </GridLayout>
@@ -128,63 +121,6 @@
                 </StackLayout>
               
             </StackLayout>
-                
-                    <!-- <StackLayout>
-                        <Label class="h2 header" style="text-align: center " text="Friends"></Label>
-                        <StackLayout class="">
-                                <ListView row="1" [items]="myfriends" class="list-group" height="200">
-                                    <ng-template let-item="item">
-                                        <GridLayout class="item list-group-item" columns="auto,*,auto">
-                                            <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
-                                            <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
-                                            <Button  class="m-3" class="btn btn-primary btn-active"  col="2" id="button" text="Profile" (tap)="viewProfile(item)"></Button>
-                                        </GridLayout>
-                                    </ng-template>
-                                </ListView>
-                            </StackLayout>
-                    </StackLayout> -->
-                      <!--    <StackLayout>
-                        <Label class="h2 header" style="text-align: center " text="Friend Requests"></Label>
-                        <StackLayout class="">
-                            <ListView row="1" [items]="myrequests" class="list-group" height="200">
-                                <ng-template let-item="item">
-                                    <GridLayout class="item list-group-item" columns="auto,*,auto">
-                                        <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
-                                        <Label class="m-5" [text]="item.displayName" class="list-group-item-heading" col="1"></Label>
-                                    <StackLayout col="2">
-                                        <Button  class="m-3" class="btn btn-primary btn-active"   id="button" text="Accept" (tap)="accept(item)"></Button>
-                                        <Button  class="m-3" class="btn btn-primary btn-active"  horizontalAlignment="right" id="button" text="Ignore" (tap)="ignore(item)"></Button>
-                                    </StackLayout>
-                                    </GridLayout>
-                                </ng-template>
-                            </ListView>
-                        </StackLayout>
-                        , iconSource: 'res://icon'
-                    </StackLayout>-->
-                              <!-- <StackLayout height="400" class="card">
-                           
-                                                <ListView [items]="workouts"  height="auto">
-                                                    <ng-template let-item="item"> 
-                                                        <ScrollView>                 
-                                                            <StackLayout class="">
-                                                            <GridLayout columns="auto,*,auto">
-                                                                 <Image class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]=" "></Image> 
-                                                                <Label class="h3" style="text-align: center" (tap)="viewDetail(item.id)" col="0" [text]='item.name'></Label>
-                                                                <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]="'~/assets/trash.png'"></Image>
-                                                                
-                                                            </GridLayout> 
-                                                            <GridLayout columns="auto,*,auto" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let exer of item.exercises; let i = index">
-                                                                <Image  class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="exer.images[0] "></Image>
-                                                                <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="1" [text]='exer.title'></Label>
-                                                                <Image  class="m-5" col="2" horizontalAlignment="right" width="40" height="40" [src]="'~/assets/trash.png'"></Image>
-                                                            </GridLayout>
-                                                            <StackLayout class="hr-light"></StackLayout>
-                                                            </StackLayout>
-                                                        </ScrollView>                
-                                                    </ng-template>
-                                                </ListView>
-                                            
-                                        </StackLayout> -->
         </TabView>
     </GridLayout>
 </RadSideDrawer>

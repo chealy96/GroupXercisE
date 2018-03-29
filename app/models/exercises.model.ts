@@ -7,6 +7,7 @@ export class Exercise {
         public reps: string,
         public sets: string,
         public restTime: string,
+        public done: boolean,
         public UID: string,
         
         public instructions: any,

@@ -4,7 +4,6 @@ import firebase = require("nativescript-plugin-firebase");
 import firebaseWebApi = require("nativescript-plugin-firebase/app");
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-//import {UtilsService} from './utils.service';
 import 'rxjs/add/operator/share';
 import {Exercise} from "../models/exercises.model";
 import {Workout} from "../models/workout.model";
@@ -108,45 +107,55 @@ getFriendExerciseList(uid: string): Observable<any> {
   getmyfriends(): Observable<any> {
     return new Observable((observer: any) => {
     let friendsuid = [];
-      const onValueEvent = (snapshot: any) => {
-        let allfriends = snapshot.value;
-        this.myfriends = []; 
-          let myId = BackendService.token;
-          for (var i in allfriends){
-            if(myId === allfriends[i].uid1){
-            friendsuid.push(allfriends[i].uid2);
-            }
-            if(myId === allfriends[i].uid2){
-              friendsuid.push(allfriends[i].uid1);
-            }
-          } 
-       
+      let onValueEvent = (snapshot: any) => {
+        this.ngZone.run(() => {
+          let allfriends = snapshot.value;
+          this.myfriends = []; 
+              let myId = BackendService.token;
+              for (var i in allfriends){
+                if(myId === allfriends[i].uid1){
+                friendsuid.push(allfriends[i].uid2);
+                }
+                if(myId === allfriends[i].uid2){
+                  friendsuid.push(allfriends[i].uid1);
+                }
+              } 
+        }); 
       };
   
     firebase.addValueEventListener(onValueEvent, `/friends`);
       this.userservice.getallusers().then((users) => {
-        this.myfriends = [];
-        for (var j in friendsuid)
-          for (var key in users) {
-            if (friendsuid[j] === users[key].UID) {
-              this.myfriends.push(users[key]);
-            }
-          }
-          observer.next(this.myfriends);
+         this.ngZone.run(() => {
+            this.myfriends = [];
+            let results = this.handleSnapshot3(users,friendsuid);
+            this.myfriends = results;
+            observer.next(results);
+        });   
       }).catch((err) => {
         alert("err");
       })    
   //  })
+//  observer.next(this.myfriends);
+    }).share();   
+  }
 
-  observer.next(this.myfriends);
-  }).share();   
-}
+  handleSnapshot3(userdata: any, frienddata: any) {
+    this._allItems = [];
+      for (var j in frienddata) {
+        for (var key in userdata) {
+          if (frienddata[j] === userdata[key].UID) {
+            this._allItems.push(userdata[key]);
+          }
+        }
+    }
+    return this._allItems;
+  }
 
-getUser(id: string): Observable<any> {
-  return new Observable((observer: any) => {
-    observer.next(this.myfriends.filter(s => s.UID === id)[0]);
-  }).share();
-}
+  getUser(id: string): Observable<any> {
+    return new Observable((observer: any) => {
+      observer.next(this.myfriends.filter(s => s.UID === id)[0]);
+    }).share();
+  }
   
   friendsCheck(id ) {
     let friend: boolean = false;

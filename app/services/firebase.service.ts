@@ -12,7 +12,7 @@ export class FirebaseService {
   constructor(
     private ngZone: NgZone,
   ){}
-    
+UsersFriends: any;    
 Users: any;
   register(user: User) {
     return firebase.createUser({
@@ -159,11 +159,11 @@ Users: any;
 
   getallusers() {
     let onQueryEvent = function(user) {
-      if (!user.error) {
-          console.log("Event type: " + user.type);
-          console.log("Key: " + user.email);
-          console.log("Value: " + user.uid);
-      }
+      // if (!user.error) {
+      //     console.log("Event type: " + user.type);
+      //     console.log("Key: " + user.email);
+      //     console.log("Value: " + user.uid);
+      // }
     };
     var promise = new Promise((resolve, reject) => {
       firebase.query(onQueryEvent, "/users/",
@@ -200,8 +200,8 @@ Users: any;
           this.Users.push(result);
         }        
       }
-   //   this.publishUpdates();
     }
+    this.UsersFriends = this.Users;
     return this.Users;
   }
 

@@ -13,6 +13,8 @@ import { User } from "../models/user.model";
 import { StackLayout } from "ui/layouts/stack-layout";
 import firebase = require("nativescript-plugin-firebase");
 import {Workout} from "../models/workout.model";
+//import * as platformModule from "tns-core-modules/platform";
+//import { isAndroid, isIOS, device, screen } from "platform";
 @Component({
     selector: "Home", 
     moduleId: module.id,
@@ -21,10 +23,13 @@ import {Workout} from "../models/workout.model";
 
 export class HomeComponent implements OnInit {
     user: User;
-
     workouts: any;
    // myfriends
+
   //  hold;
+    Screen_width: number;
+    Screen_height: number;
+    Screen_scale: number;
     name: string;
     description: string;
     imagepath: string;
@@ -34,7 +39,7 @@ export class HomeComponent implements OnInit {
     age: string;
     bio: string;
     goals: string;
-
+    
     profile : any;
     holder: any;
     email: string;
@@ -48,7 +53,12 @@ export class HomeComponent implements OnInit {
     private router: Router
     ) {
         this.tabSelectedIndex = 0;
+        
         this.user = new User();
+    //     this.Screen_width =  screen.mainScreen.heightPixels,
+    //     this.Screen_height = screen.mainScreen.heightPixels;
+    //     this.Screen_height = screen.mainScreen.heightDIPs,
+    //     this.Screen_scale = screen.mainScreen.scale;
     }
    
     changeTab() {

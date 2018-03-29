@@ -24,6 +24,7 @@ let MyModel;
     templateUrl: "./workout.component.html"
 })
 export class WorkoutComponent  extends Observable implements OnInit {
+    done: boolean = false;
     id: string;
     title: string;
     amount: string;
@@ -128,13 +129,16 @@ export class WorkoutComponent  extends Observable implements OnInit {
         this.reps,
         this.sets,
         this.restTime,
+        this.done,
         this.UID,
+        
         this.instructions,
         this.muscle,
         this.type,
         this.images,
         this.level,
-        this.muscleImagesrc);
+        this.muscleImagesrc
+        );
 
         let myExercise:Exercise = this.exercise;
         this.exerciseService.add(myExercise).then((message:any) => {

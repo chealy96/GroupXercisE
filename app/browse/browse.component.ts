@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild , ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, ViewChild , ChangeDetectionStrategy , NgZone} from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import {FirebaseService, } from '../services';
@@ -23,20 +23,32 @@ export class BrowseComponent implements OnInit {
      id: any;
     newrequest = {} as connreq;
     temparr = [];
-    myrequests ;
-    myfriends
+   
     hold;
     public tabSelectedIndex: number;
-
+    private arrayItems2: Array<User> = [];
     private arrayItems: Array<User> = [];
+    private arrayItems3: Array<User> = [];
     public filteredusers: ObservableArray<User> = new ObservableArray<User>();
+    public myrequests: ObservableArray<User> = new ObservableArray<User>();
+    public myfriends: ObservableArray<User> = new ObservableArray<User>();
 
     constructor(private routerExtensions: RouterExtensions,
         private firebaseService: FirebaseService,
         public requestservice: RequestsProvider,
         private friendservice: FriendsService,
-        private router: Router) {
-
+        private router: Router,
+        private ngZone: NgZone) {
+        this.friendservice.getmyfriends().subscribe((res1: any) => {
+            //this.ngZone.run(() => {
+                this.arrayItems2 = res1;
+                this.myfriends = new ObservableArray<User>();
+                    this.arrayItems2.forEach(item => {
+                    
+                        this.myfriends.push(item);
+                    });
+                //});
+         });
         this.firebaseService.getallusers().then((res: any) => {
             this.temparr = res;
             this.arrayItems = res;
@@ -47,19 +59,24 @@ export class BrowseComponent implements OnInit {
                 //   }
             });
         })
-        this.loadData();
+      
+        this.requestservice.getmyrequests().subscribe((res1: any) => {
+           // this.myrequests =[];
+           // this.ngZone.run(() => {
+            this.arrayItems3= res1;
+            this.myrequests = new ObservableArray<User>();
+                this.arrayItems3.forEach(item => {
+                    this.myrequests.push(item);
+                });
+            //});
+          //  this.myrequests = res;
+           // })
+        })
         this.tabSelectedIndex = 0;
     }
 
     loadData() {
-        this.friendservice.getmyfriends().subscribe((res1: any) => {
-            this.myfriends =[];
-            this.myfriends = res1;
-        })
-         this.requestservice.getmyrequests().subscribe((res: any) => {
-            this.myrequests =[];
-            this.myrequests = res;
-        })
+       
     }
 
     changeTab() {
@@ -157,6 +174,7 @@ export class BrowseComponent implements OnInit {
     
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
+        //this.loadData();   
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {

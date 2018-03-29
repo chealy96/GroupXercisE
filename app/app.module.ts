@@ -15,6 +15,7 @@ import { SharedModule } from "./shared/shared.module";
 import { WorkoutModule } from "./workout/workout.module";
 import { ListDetailModule } from "./list-detail/list-detail.module";
 import { WorkoutDetailModule } from "./workoutDetails/workoutDetail.module";
+import { FriendWorkoutDetailsModule } from "./friendWorkoutDetails/friendWorkoutDetails.module";
 import { ExerciseDetailModule } from "./exercise-detail/exercise-detail.module";
 import { FriendDetailsModule } from "./friend-details/friend-details.module";
 import { SearchModule } from "./search/search.module";
@@ -42,6 +43,7 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService, Fri
         ListDetailModule,
         ExerciseDetailModule,
         FriendDetailsModule,
+        FriendWorkoutDetailsModule,
         SearchModule,
         ExerciseModule,
         SettingsModule,

@@ -5,7 +5,7 @@ import { FriendDetailsComponent } from "./friend-details.component";
 
 const friendDetailsRoutes: Routes = [
   { path: "friend-details/:UID", component: FriendDetailsComponent },
-  { path: "workoutDetail", loadChildren: "./workoutDetails/workoutDetail.module#WorkoutDetailModule" }
+  { path: "friendWorkoutDetails", loadChildren: "./friendWorkoutDetails/friendWorkoutDetails.module#FriendWorkoutDetailsModule" }
 
 ];
 export const friendDetailsRouting: ModuleWithProviders = RouterModule.forChild(friendDetailsRoutes);

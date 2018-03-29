@@ -40,7 +40,32 @@ fireWorkout = firebaseWebApi.database().ref('/workouts');
           console.log(errorMessage);
         }); 
   }
+  
+  updateWorkoutExercise(workoutID, updatedExerciseList){
+    firebase.update(
+      '/workouts/'+workoutID+'/',
+      {
+       "exercises": updatedExerciseList,
+      }
+  ).then(
+    function (result:any) {
+      console.log("update user profile: ");
+      return result
+    });
+  }
 
+  resetWorkoutExercisee(workoutID, resetExercises){
+    firebase.update(
+      '/workouts/'+workoutID+'/',
+      {
+       "exercises": resetExercises,
+      }
+  ).then(
+    function (result:any) {
+      console.log("update user profile: ");
+      return result
+    });
+  }
   delete(workout: Workout) {
     return firebase.remove("/workouts/"+workout.id+"")
       .catch(this.handleErrors);

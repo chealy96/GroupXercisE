@@ -53,7 +53,7 @@ export class FriendDetailsComponent implements OnInit {
   }
   
   viewWorkout(id: string){
-    this.router.navigate(["/workoutDetail", id]);
+    this.router.navigate(["/friendWorkoutDetails", id]);
   }
  ngOnInit() {
    this.sub = this.route.params.subscribe((params: any) => {

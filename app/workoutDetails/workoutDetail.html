@@ -12,25 +12,31 @@
                     <Label class="h3"  colSpan="3" col="0" text="Title"></Label>
                     <Label class="h3"  col="3" text='Reps'></Label>
                     <Label class="h3"  col="4" text='Sets'></Label>
-                    <Label class="h3"  colSpan="2" col="5" text='RestTime'></Label>
-                </GridLayout>
-                <GridLayout class="form" > 
-                <ListView [items]="exercises"  height="500">
-                        <ng-template let-item="item"  class="list-group"> 
-                            <ScrollView>                 
-                                <GridLayout columns="*,*,*,*,*,*,*" rows="*,*"class="item list-group-item">
-                                        <Image class="m-5" horizontalAlignment="left" row ="0" col="0" width="40" height="40" [src]="item.images[0] "></Image>
-                                        <Image class="m-5" horizontalAlignment="left" row ="0" col="1" width="40" height="40" [src]="item.images[1] "></Image>
-                                        <Label  class="h4"  (tap)="viewDetail(item.id)" row ="1" col="0" colspan="2" [text]='item.title'></Label>
-                                        <Label class="h4" col="3" [text]="item.reps"></Label> 
-                                        <Label class="h4" col="4" [text]="item.sets"></Label>
-                                        <Label class="h4" col="5" colspan="2" [text]="item.restTime"></Label>
-                                        <CheckBox #CB1  row ="1" col="6" (tap)="getCheckProp(item)" checked="false"></CheckBox>
-                                </GridLayout> 
-                            </ScrollView>                
-                        </ng-template>
-                    </ListView>
-                </GridLayout>
+                    <Label class="h3"  colSpan="2" col="5" text='Rest Time'></Label>
+            </GridLayout>
+            <GridLayout class="form" rows="auto,auto" > 
+            <ListView [items]="exercises" row="0" height="500">
+                    <ng-template let-item="item"  class="list-group"> 
+                        <ScrollView>                 
+                            <GridLayout columns="*,*,*,*,*,*,*" rows="*,*"class="item list-group-item">
+                                    <Image class="m-5" horizontalAlignment="left" row ="0" col="0" width="40" height="40" [src]="item.images[0] "></Image>
+                                    <Image class="m-5" horizontalAlignment="left" row ="0" col="1" width="40" height="40" [src]="item.images[1] "></Image>
+                                    <Label  class="h4"  (tap)="viewDetail(item.id)" row ="1" col="0" colspan="2" [text]='item.title'></Label>
+                                    <Label class="h4" col="3" [text]="item.reps"></Label> 
+                                    <Label class="h4" col="4" [text]="item.sets"></Label>
+                                    <Label class="h4" col="5" colspan="2" [text]="item.restTime"></Label>
+                                    <CheckBox #modelCheck [checked]="item.done" row ="1" col="6" class="checkbox" boxType="square" (checkedChange)="checkedChange(modelCheck,item)"></CheckBox>
+                                    <!-- <CheckBox #CB1  row ="1" col="6" (tap)="getCheckProp(item)" [checked]="done"></CheckBox> -->
+                                    <!-- <CheckBox #elem [checked]="option.selected" (checkedChange)="elem.checked !== option.selected && changeCheckedRadio(option)" class="checkbox"></CheckBox> -->
+                            </GridLayout> 
+                        </ScrollView>                
+                    </ng-template>
+                </ListView>
+                <Button (tap)="finishedWorkout()" row="1" text="Finished Workout"></Button>
+            </GridLayout>
+            <!-- <GridLayout >
+            <Button (tap)="finishedWorkout()" row="1" text="Finished Workout"></Button>
+            </GridLayout> -->
             <!-- <GridLayout columns="*,*,*,*,*" class="form"  *ngFor="let exer of exercises; let i = index"> -->
                 <!-- <Image  class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="exer.images[0] "></Image> -->
                         <!-- <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="0" colspan="2" [text]='exer.title'></Label>

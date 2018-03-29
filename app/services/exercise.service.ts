@@ -82,7 +82,7 @@ getExerciseList(): Observable<any> {
         { "title": exercise.title, 
           "reps": exercise.reps, 
           "sets": exercise.sets, 
-       
+          "done": exercise.done,
           "restTime": exercise.restTime,
           "description": exercise.description, 
           "UID": BackendService.token,

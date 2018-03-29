@@ -16,10 +16,10 @@ var img;
 
 @Component({
   moduleId: module.id,
-  selector: "gf-workoutDetaildetail",
-  templateUrl: "workoutDetail.html"
+  selector: "gf-friendWorkoutDetails",
+  templateUrl: "friendWorkoutDetails.html"
 })
-export class workoutDetailComponent implements OnInit {
+export class friendWorkoutDetailsComponent implements OnInit {
     
   checkTest: boolean = false;
   exercises: any;
@@ -60,38 +60,29 @@ export class workoutDetailComponent implements OnInit {
 
     @ViewChild("modelCheck") FirstCheckBox: ElementRef;
 
-    public finishedWorkout() {
-      for(let j in this.exercises) {
-       // if(this.exercises[j].id === exer.id){
-          this.exercises[j].done = false;
-       // }
-      };
-      this.workoutService.resetWorkoutExercisee(this.workoutId, this.exercises);
-    }
- 
-    public checkedChange(modelRef ,exer: Exercise) {
-    //  exer.Done = modelRef;
-    
-        for(let j in this.exercises) {
-          if(this.exercises[j].id === exer.id){
-            this.exercises[j].done = modelRef.checked;
-          }
-        };
-      console.log("checkedChange:", modelRef.checked);
-      console.log('checked prop value = ' + this.FirstCheckBox.nativeElement.checked);
-      this.workoutService.updateWorkoutExercise(this.workoutId, this.exercises);
-      
-    }
-  
-    public getCheckProp(exer : any) {
-        console.log('checked prop value = ' + this.FirstCheckBox.nativeElement.checked);
-    }
  ngOnInit() {
   
    this.sub = this.route.params.subscribe((params: any) => {
-      this.workoutId = params['id'];
-       
-      this.workoutService.getMyWorkout(this.workoutId).subscribe((workout) => {
+     // this.workoutId = params['id'];
+     this.id = params['id'];
+      this.workoutService.getMyWorkout(this.id);//.subscribe((workout) => {
+        // this.ngZone.run(() => {
+        //   for (let prop in workout) {
+        //     //props
+        //     if (prop === "uid") {
+        //       this.id = workout[prop];
+        //     }
+        //     if (prop === "name") {
+        //       this.name = workout[prop];
+        //     }
+        //     if (prop === "exercises") {
+        //       this.exercises = workout[prop];
+        //     }
+                                                     
+        //   }
+        // });
+     // });
+      this.freindService.getFreindsWorkout(this.id).subscribe((workout) => {
         this.ngZone.run(() => {
           for (let prop in workout) {
             //props
@@ -103,38 +94,20 @@ export class workoutDetailComponent implements OnInit {
             }
             if (prop === "exercises") {
               this.exercises = workout[prop];
-            }
-                                                     
+            }                                         
           }
         });
       });
-      // this.freindService.getFreindsWorkout(this.id).subscribe((workout) => {
-      //   this.ngZone.run(() => {
-      //     for (let prop in workout) {
-      //       //props
-      //       if (prop === "uid") {
-      //         this.id = workout[prop];
-      //       }
-      //       if (prop === "name") {
-      //         this.name = workout[prop];
-      //       }
-      //       if (prop === "exercises") {
-      //         this.exercises = workout[prop];
-      //       }                                         
-      //     }
-      //   });
-      // });
     });  
   }
 
   viewDetail(id: any){
+  //  this.exerciseService.getExerciseList();
     this.router.navigate(["/list-detail", id]);
   }
 
   navigateBack(){
     topmost().goBack();
   }
-  
-
 
 }

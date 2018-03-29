@@ -62,7 +62,7 @@ export class RequestsProvider {
     
       this.userservice.getallusers().then((res) => {
         var allusers = res;
-       
+        this.ngZone.run(() => {
         for (var j in myrequests)
           for (var key in allusers) {
             if (myrequests[j] === allusers[key].UID) {
@@ -70,7 +70,8 @@ export class RequestsProvider {
             }
           }
         observer.next(this.userdetails);
-      })
+        });
+      });
    // return Promise.resolve(this.userdetails);
     }).share(); 
    
