@@ -2,13 +2,9 @@
 xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:ui="nativescript-filterable-listpicker"
 xmlns:IM="nativescript-image-cache-media" loaded="pageLoaded" class="page">
 <ActionBar class="action-bar">
-    <!-- 
-    Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
-    -->
+
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!-- 
-    Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
-    -->
+   
     <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
@@ -80,15 +76,4 @@ xmlns:IM="nativescript-image-cache-media" loaded="pageLoaded" class="page">
     </GridLayout>
 </RadSideDrawer>
 </Page>
-  <!--     <StackLayout class="card">
-                        <Label text="{{selection ? 'I chose ' + selection : ''}}" textWrap="true" style="font-size: 30; text-align: center; margin-top: 50; font-weight: bold; color: black;" ></Label>
-                         <ListView [items]="exercises$ | async"  height="300">
-                                <ng-template let-item="item">                  
-                                    <GridLayout columns="auto,*,auto">
-                                        <Image class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="item.imagepath.length>0 ? item.imagepath : '~/assets/camera.png'"></Image>
-                                        <Label class="m-5"  (tap)="viewDetail(item.id)" col="1" [text]='item.title'></Label>
-                                        <Image class="m-5" col="2" horizontalAlignment="right" width="40" height="40" (tap)="delete(item)" [src]="'~/assets/trash.png'"></Image>
-                                    </GridLayout>                 
-                                </ng-template>
-                            </ListView>
-                    </StackLayout>-->
+  

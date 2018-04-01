@@ -49,6 +49,18 @@ export class BrowseComponent implements OnInit {
                     });
                 //});
          });
+         this.requestservice.getmyrequests().subscribe((res1: any) => {
+            // this.myrequests =[];
+            // this.ngZone.run(() => {
+             this.arrayItems3= res1;
+             this.myrequests = new ObservableArray<User>();
+                 this.arrayItems3.forEach(item => {
+                     this.myrequests.push(item);
+                 });
+             //});
+           //  this.myrequests = res;
+            // })
+         })
         this.firebaseService.getallusers().then((res: any) => {
             this.temparr = res;
             this.arrayItems = res;
@@ -60,18 +72,7 @@ export class BrowseComponent implements OnInit {
             });
         })
       
-        this.requestservice.getmyrequests().subscribe((res1: any) => {
-           // this.myrequests =[];
-           // this.ngZone.run(() => {
-            this.arrayItems3= res1;
-            this.myrequests = new ObservableArray<User>();
-                this.arrayItems3.forEach(item => {
-                    this.myrequests.push(item);
-                });
-            //});
-          //  this.myrequests = res;
-           // })
-        })
+        
         this.tabSelectedIndex = 0;
     }
 

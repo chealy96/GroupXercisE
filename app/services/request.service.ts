@@ -49,29 +49,30 @@ export class RequestsProvider {
     const onValueEvent = (snapshot: any) => {
       this.ngZone.run(() => {
         let results = this.handleSnapshot(snapshot.value);
-        console.log(JSON.stringify(results))
-        allmyrequests = results;
-        myrequests = [];
-        for (var i in allmyrequests) {
-          myrequests.push(allmyrequests[i].sender);
-        }
+        console.log(JSON.stringify("helloo"+results))
+        // allmyrequests = results;
+        myrequests = results;
+        // for (var i in allmyrequests) {
+        //   myrequests.push(allmyrequests[i].sender);
+        // }
+        this.userservice.getallusers().then((res) => {
+          var allusers = res;
+        //  this.ngZone.run(() => {
+          for (var j in myrequests)
+            for (var key in allusers) {
+              if (myrequests[j] === allusers[key].UID) {
+                this.userdetails.push(allusers[key]);
+              }
+            }
+          observer.next(this.userdetails);
+        //  });
+        });
       });
     };
 
   firebase.addValueEventListener(onValueEvent, `/requests`);
     
-      this.userservice.getallusers().then((res) => {
-        var allusers = res;
-        this.ngZone.run(() => {
-        for (var j in myrequests)
-          for (var key in allusers) {
-            if (myrequests[j] === allusers[key].UID) {
-              this.userdetails.push(allusers[key]);
-            }
-          }
-        observer.next(this.userdetails);
-        });
-      });
+      
    // return Promise.resolve(this.userdetails);
     }).share(); 
    
@@ -85,7 +86,7 @@ export class RequestsProvider {
       for (let id in data) {        
         let result = (<any>Object).assign({id: id}, data[id]);
         if(BackendService.token === result.recipient){
-          this._allItems.push(result);
+          this._allItems.push(result.sender);
         }        
       }
    

@@ -52,10 +52,6 @@
                                     <Button  class="m-5" class="btn btn-primary btn-active" col="0" horizontalAlignment="left" id="button" text="Info" (tap)="viewWorkout(item.id)"></Button>
                                     <Label class="h3" style="text-align: center" verticalAlignment="center" (tap)="viewWorkout(item.id)" col="1"  [text]='item.name'></Label>
                             </GridLayout> 
-                            <!-- <GridLayout columns="auto,*,auto" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let exer of item.exercises; let i = index">
-                                <Image  class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="exer.images[0] "></Image>
-                                <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="1" [text]='exer.title'></Label>
-                            </GridLayout> -->
                             <StackLayout class="hr-light"></StackLayout>
                             </StackLayout>
                         </ScrollView>                

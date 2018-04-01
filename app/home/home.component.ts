@@ -117,8 +117,12 @@ export class HomeComponent implements OnInit {
     this.workoutService.getMyWorkoutsList().subscribe((data: any) => { 
          this.workouts = data;
         });
+        // firebase.getCurrentPushToken().then((token: string) => {
+        //     // may be null if not known yet
+        //     console.log("Current push token: " + token);
+        //   });
     }
-
+// ckXYOPCrEHo:APA91bHlR0vma5XxQmwWIWA049CaKru_272V0NwgMCxcaXqrGgj5xbQUIOv9t5DuT_X8vDqPW-bzLOZbx0XD5XOzxWH2fNMQic4J2ejhJazbAH7CCM6Eka3rrml70_wBd2a4EPKvB4Y5
     get sideDrawerTransition(): DrawerTransitionBase {
         return this._sideDrawerTransition;
     }

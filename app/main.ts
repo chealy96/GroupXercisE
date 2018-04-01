@@ -2,6 +2,7 @@
 import { platformNativeScriptDynamic } from "nativescript-angular/platform";
 import { BackendService } from "./services/backend.service";
 import { AppModule } from "./app.module";
+import * as dialogs from "ui/dialogs";
 //import * as fs from "tns-core-modules/file-system"; 
 
 const firebase = require("nativescript-plugin-firebase");
@@ -16,6 +17,7 @@ firebase.init({
   databaseURL: "https://fitness-b88b2.firebaseio.com/ ",
   storageBucket: 'gs://fitness-b88b2.appspot.com/',
 
+  
   onAuthStateChanged: (data: any) => {
     console.log(JSON.stringify(data))
     if (data.loggedIn) {
@@ -24,6 +26,20 @@ firebase.init({
     else {
       BackendService.token = "";
     }
+  },
+  onPushTokenReceivedCallback: function(token) {
+    console.log("Firebase push token: " + token);
+  },
+  onMessageReceivedCallback: (message) => {
+    console.log(`Title: ${message.title}`);
+    console.log(`Body: ${message.body}`);
+    // if your server passed a custom property called 'foo', then do this:
+    console.log(`Value of 'foo': ${message.data.foo}`);
+    dialogs.alert({
+      title: message.title,
+      message: message.data.foo,
+      okButtonText: "ok"
+  });
   }
 }).then(
   instance => {

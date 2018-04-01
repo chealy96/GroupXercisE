@@ -26,68 +26,12 @@
                                     <Label class="h4" col="4" [text]="item.sets"></Label>
                                     <Label class="h4" col="5" colspan="2" [text]="item.restTime"></Label>
                                     <CheckBox #modelCheck [checked]="item.done" row ="1" col="6" class="checkbox" boxType="square" (checkedChange)="checkedChange(modelCheck,item)"></CheckBox>
-                                    <!-- <CheckBox #CB1  row ="1" col="6" (tap)="getCheckProp(item)" [checked]="done"></CheckBox> -->
-                                    <!-- <CheckBox #elem [checked]="option.selected" (checkedChange)="elem.checked !== option.selected && changeCheckedRadio(option)" class="checkbox"></CheckBox> -->
                             </GridLayout> 
                         </ScrollView>                
                     </ng-template>
                 </ListView>
                 <Button (tap)="finishedWorkout()" row="1" text="Finished Workout"></Button>
             </GridLayout>
-            <!-- <GridLayout >
-            <Button (tap)="finishedWorkout()" row="1" text="Finished Workout"></Button>
-            </GridLayout> -->
-            <!-- <GridLayout columns="*,*,*,*,*" class="form"  *ngFor="let exer of exercises; let i = index"> -->
-                <!-- <Image  class="m-5" horizontalAlignment="left" col="0" width="40" height="40" [src]="exer.images[0] "></Image> -->
-                        <!-- <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="0" colspan="2" [text]='exer.title'></Label>
-                        <Label class="h3" col="2" [text]="exer.reps"></Label> 
-                        <Label class="h3" col="3" [text]="exer.sets"></Label>
-                        <Label class="h3" col="4" [text]="exer.restTime"></Label> -->
-                <!-- <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="1" [text]='exer.title'></Label>
-                <Image  class="m-5" col="2" horizontalAlignment="right" width="40" height="40" [src]="'~/assets/trash.png'"></Image> -->
-            <!-- </GridLayout> -->
-            <!-- <GridLayout  class="form" columns="*,*,*" >
-                <Label class="h2" col="1" text="Reps"></Label> 
-                <Label class="h2" col="2" text="Sets"></Label>
-                <Label class="h2" col="0" text="RestTime"></Label>
-            </GridLayout> 
-            <GridLayout  class="form" columns="*,*,*,*,*" >
-                    <Label  class="h3" style="text-align: center" (tap)="viewDetail(exer.id)" col="0" colspan="2" [text]='exer.title'></Label>
-                    <Label class="h3" col="2" [text]="reps"></Label> 
-                    <Label class="h3" col="3" [text]="sets"></Label>
-                    <Label class="h3" col="4" [text]="restTime"></Label>
-            </GridLayout> 
-            <GridLayout  class="form" columns="*,*" >
-                    <Label class="h2"  col="0" text="Description:"></Label> 
-                    <Label class="h3"  col="1" [text]="description"></Label> 
-            </GridLayout>
-            <GridLayout *ngIf="img" columns="*,*" class="form" >
-                <Label class="h2" col="0"  text="Muscle:"></Label>
-                <Label class="h2" col="1"  [text]="muscle"></Label>
-            </GridLayout>
-            <GridLayout columns="*" class="form" >
-                    <Image style="padding: 10px"  horizontalAlignment="center" [src]="muscleImage" col="0" stretch="none"  class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
-            </GridLayout>
-            <GridLayout columns="*" class="form" *ngFor="let img of images; let i = index" > 
-                <Image   *ngIf="img" col="0" [src]="img"   horizontalAlignment="center" stretch="none"  class="img-rounded p-l-20 p-r-20 p-t-20"></Image> 
-            </GridLayout>
-            <GridLayout columns="*" class="form">
-                <Label class="h2" col="0" row="0"  horizontalAlignment="center" text="Instructions"></Label>
-            </GridLayout>
-            <GridLayout columns="*" class="form" style="grid-template-columns: repeat(3, 1fr)" *ngFor="let ins of instructions; let i = index">
-                <TextView *ngIf="ins" row="1" [text]="ins"  [editable]="false" class="input input-border"></TextView> 
-            </GridLayout>
-            <GridLayout columns="*,*" class="form" >
-                <Label class="h2" col="0"  text="Equipment:"></Label>
-                <Label class="h2" col="1" [text]="equipment"></Label>
-            </GridLayout> 
-            <GridLayout columns="*,*" class="form" >
-                <Label class="h2" col="0"  text="Type:"></Label>
-                <Label class="h2" col="1" [text]="type"></Label>
-            </GridLayout> 
-            <GridLayout columns="*,*" class="form">
-                <Label class="h2" col="0"  text="Level:"></Label>
-                <Label class="h2" col="1" [text]="level"></Label>
-            </GridLayout>  -->
+          
         </StackLayout>
 </ScrollView>
