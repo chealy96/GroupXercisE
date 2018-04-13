@@ -26,7 +26,6 @@ export class RequestsProvider {
   }
 
   sendrequest(req: connreq) {
-    this.firereq =  firebaseWebApi.database().ref(this.path);
     var promise = new Promise((resolve, reject) => {
     firebase.push('/requests',{
      
@@ -50,14 +49,9 @@ export class RequestsProvider {
       this.ngZone.run(() => {
         let results = this.handleSnapshot(snapshot.value);
         console.log(JSON.stringify("helloo"+results))
-        // allmyrequests = results;
         myrequests = results;
-        // for (var i in allmyrequests) {
-        //   myrequests.push(allmyrequests[i].sender);
-        // }
         this.userservice.getallusers().then((res) => {
           var allusers = res;
-        //  this.ngZone.run(() => {
           for (var j in myrequests)
             for (var key in allusers) {
               if (myrequests[j] === allusers[key].UID) {
@@ -65,15 +59,11 @@ export class RequestsProvider {
               }
             }
           observer.next(this.userdetails);
-        //  });
         });
       });
     };
 
   firebase.addValueEventListener(onValueEvent, `/requests`);
-    
-      
-   // return Promise.resolve(this.userdetails);
     }).share(); 
    
   }  
@@ -143,7 +133,7 @@ deleterequest(user) {
           myrequests= allmyrequests[i];
           }
         }
-        firebase.remove("/requests"+"/"+ myrequests.id+"").then(() => {
+        firebase.remove("/requests/"+ myrequests.id+"").then(() => {
           resolve({ success: true });
           console.log("firebase.remove done");
         },

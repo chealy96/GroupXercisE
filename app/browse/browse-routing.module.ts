@@ -13,12 +13,3 @@ const BrowserRoutes: Routes = [
   ];
   export const BrowseRoutingModule: ModuleWithProviders = RouterModule.forChild(BrowserRoutes);
 
-/*  const routes: Routes = [
-    { path: "", component: BrowseComponent }
-];
-
-@NgModule({
-    imports: [NativeScriptRouterModule.forChild(routes)],
-    exports: [NativeScriptRouterModule]
-})
-export class BrowseRoutingModule { }*/

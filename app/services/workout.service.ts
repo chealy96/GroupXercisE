@@ -78,7 +78,6 @@ fireWorkout = firebaseWebApi.database().ref('/workouts');
   getMyWorkoutsList(): Observable<any> {
     return new Observable((observer: any) => {
       let path = 'workouts';
-      
         let onValueEvent = (snapshot: any) => {
           this.ngZone.run(() => {
             let results = this.handleSnapshot(snapshot.value);
@@ -113,7 +112,6 @@ fireWorkout = firebaseWebApi.database().ref('/workouts');
     }).share();
   }
   handleSnapshot(data: any) {
-    //empty array, then refill and filter
     this._allItems = [];
     if (data) {
       for (let id in data) {        
@@ -122,7 +120,6 @@ fireWorkout = firebaseWebApi.database().ref('/workouts');
           this._allItems.push(result);
         }        
       }
-   //   this.publishUpdates();
     }
     return this._allItems;
   }

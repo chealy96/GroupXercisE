@@ -62,16 +62,13 @@ export class workoutDetailComponent implements OnInit {
 
     public finishedWorkout() {
       for(let j in this.exercises) {
-       // if(this.exercises[j].id === exer.id){
           this.exercises[j].done = false;
-       // }
       };
       this.workoutService.resetWorkoutExercisee(this.workoutId, this.exercises);
     }
  
     public checkedChange(modelRef ,exer: Exercise) {
-    //  exer.Done = modelRef;
-    
+
         for(let j in this.exercises) {
           if(this.exercises[j].id === exer.id){
             this.exercises[j].done = modelRef.checked;
@@ -108,22 +105,6 @@ export class workoutDetailComponent implements OnInit {
           }
         });
       });
-      // this.freindService.getFreindsWorkout(this.id).subscribe((workout) => {
-      //   this.ngZone.run(() => {
-      //     for (let prop in workout) {
-      //       //props
-      //       if (prop === "uid") {
-      //         this.id = workout[prop];
-      //       }
-      //       if (prop === "name") {
-      //         this.name = workout[prop];
-      //       }
-      //       if (prop === "exercises") {
-      //         this.exercises = workout[prop];
-      //       }                                         
-      //     }
-      //   });
-      // });
     });  
   }
 

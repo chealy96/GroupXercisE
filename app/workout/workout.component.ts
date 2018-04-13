@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 import { Exercise } from "../models/exercises.model";
 import { exercise } from "../models/pred-exercises.model";
 import {Workout} from "../models/workout.model";
-
+import { confirm } from "ui/dialogs";
+import * as dialogs from "ui/dialogs";
 
 import { Observable } from 'tns-core-modules/data/observable';
 import { Page } from 'ui/page';
@@ -94,11 +95,6 @@ export class WorkoutComponent  extends Observable implements OnInit {
     loadData(){
         this.exerciseService.getPredExerciseList().subscribe((res: any) => {
             this.arrayItems = res;
-           // this.temparr = res;
-            // this.filteredexercises = new ObservableArray<exercise>();
-            // this.arrayItems.forEach(item => {
-            //     this.filteredexercises.push(item);
-            // });
         });
     }
     showPicker() {
@@ -154,18 +150,46 @@ export class WorkoutComponent  extends Observable implements OnInit {
         this.level = "",
         this.muscleImagesrc= ""
         
-         alert(message);
+        dialogs.alert({
+            title: "Exercise",
+            message: "Exercise has been added to Workout list",
+            okButtonText: "OK"
+        }).then(() => {
+            console.log("Dialog closed!");
+        });
+         
        })   
 
      }
    
      
      delete(exercise: Exercise) {
-       this.exerciseService.delete(exercise)
-         .catch(() => {
-           alert("An error occurred while deleting an item from your list.");
-         });
+        let options = {
+            title: "Delete Exercise",
+            message: "Are you sure you want to delete this exercise?",
+            okButtonText: "Confirm",
+            cancelButtonText: "Cancel"
+        };
+
+        confirm(options).then((result: boolean) => {
+            console.log(result);
+            if(result === true){
+                this.exerciseService.delete(exercise)
+                .catch(() => {
+                    alert("An error occurred while deleting an exercise from your list.");
+                });
+            }
+        });
+      
      }
+
+     delete2(exercise: Exercise) {   
+                this.exerciseService.delete(exercise)
+                .catch(() => {
+                  alert("An error occurred while deleting an exercise from your list.");
+                });   
+     }
+
      createWorkoutRoutine() {
         this.UID = BackendService.token;
 
@@ -180,14 +204,21 @@ export class WorkoutComponent  extends Observable implements OnInit {
         this.workoutService.createWorkout(myWorkout).then((message:any) => {
     
         this.exes.forEach(item => {
-            this.delete(item);
+            this.delete2(item);
         });
         this.id = "",
         this.workoutName = "",
         this.exes = "",
 
         
-         alert(message);
+        dialogs.alert({
+            title: "Workout",
+            message: "Your Workout Rouitne has been Created",
+            okButtonText: "OK"
+        }).then(() => {
+            console.log("Dialog closed!");
+        });
+         
        })   
        
      }

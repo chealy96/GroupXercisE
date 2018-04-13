@@ -22,8 +22,6 @@ export class LoginComponent {
               private ngZone: NgZone
             ) {
               this.user = new User();
-           //   this.user.email = "user@nativescript.org";
-            //  this.user.password = "password";
             }
 
  submit() {
@@ -163,7 +161,7 @@ export class LoginComponent {
 
     prompt({
       title: "Forgot Password",
-      message: "Enter the email address you used to register for Giftler to reset your password.",
+      message: "Enter the email address you used to register an account for GroupXercise to reset your password.",
       defaultText: "",
       okButtonText: "Ok",
       cancelButtonText: "Cancel"

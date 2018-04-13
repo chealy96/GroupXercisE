@@ -1,12 +1,11 @@
-// this import should be first in order to load some required settings (like globals and reflect-metadata)
 import { platformNativeScriptDynamic } from "nativescript-angular/platform";
 import { BackendService } from "./services/backend.service";
 import { AppModule } from "./app.module";
 import * as dialogs from "ui/dialogs";
-//import * as fs from "tns-core-modules/file-system"; 
 
 const firebase = require("nativescript-plugin-firebase");
-const  firebaseWebApi = require("nativescript-plugin-firebase/app");
+const utils = require("utils/utils"); 
+;
 
 firebase.init({
   // Optionally pass in properties for database, authentication and cloud messaging,
@@ -28,12 +27,12 @@ firebase.init({
     }
   },
   onPushTokenReceivedCallback: function(token) {
+    //applicationSettings.setString('device_token', token);
     console.log("Firebase push token: " + token);
   },
   onMessageReceivedCallback: (message) => {
     console.log(`Title: ${message.title}`);
     console.log(`Body: ${message.body}`);
-    // if your server passed a custom property called 'foo', then do this:
     console.log(`Value of 'foo': ${message.data.foo}`);
     dialogs.alert({
       title: message.title,
@@ -50,6 +49,6 @@ firebase.init({
   }
 );
 
-firebaseWebApi.initializeApp();
+//firebaseWebApi.initializeApp();
 
 platformNativeScriptDynamic().bootstrapModule(AppModule);

@@ -40,26 +40,20 @@ export class BrowseComponent implements OnInit {
         private router: Router,
         private ngZone: NgZone) {
         this.friendservice.getmyfriends().subscribe((res1: any) => {
-            //this.ngZone.run(() => {
                 this.arrayItems2 = res1;
                 this.myfriends = new ObservableArray<User>();
                     this.arrayItems2.forEach(item => {
                     
                         this.myfriends.push(item);
                     });
-                //});
          });
          this.requestservice.getmyrequests().subscribe((res1: any) => {
-            // this.myrequests =[];
-            // this.ngZone.run(() => {
              this.arrayItems3= res1;
              this.myrequests = new ObservableArray<User>();
                  this.arrayItems3.forEach(item => {
                      this.myrequests.push(item);
                  });
-             //});
-           //  this.myrequests = res;
-            // })
+
          })
         this.firebaseService.getallusers().then((res: any) => {
             this.temparr = res;
@@ -134,7 +128,6 @@ export class BrowseComponent implements OnInit {
     }
     
     sendreq(recipient) {
-          // this.id =  this.firebaseService.getUserId();
         this.newrequest.sender =  this.requestservice.doWebGetCurrentUser();
         this.newrequest.recipient = recipient.UID;
         if (this.newrequest.sender === this.newrequest.recipient)

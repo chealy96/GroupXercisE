@@ -21,9 +21,8 @@ import { FriendDetailsModule } from "./friend-details/friend-details.module";
 import { SearchModule } from "./search/search.module";
 import { ExerciseModule } from "./exercises/exercise.module";
 import { SettingsModule } from "./settings/settings.module";
-import { AccordionModule } from "nativescript-accordion/angular";
 import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
-
+import { scheduleJob } from "./notifications/job-scheduler";
 
 import { BackendService, FirebaseService, RequestsProvider, ExerciseService, FriendsService, WorkoutService} from "./services";
 @NgModule({
@@ -47,9 +46,9 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService, Fri
         SearchModule,
         ExerciseModule,
         SettingsModule,
-        AccordionModule,
         WorkoutDetailModule,
-        TNSCheckBoxModule
+        TNSCheckBoxModule,
+        
     ],
     declarations: [
         AppComponent
@@ -62,7 +61,8 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService, Fri
         RequestsProvider,
         ExerciseService,
         FriendsService,
-        WorkoutService
+        WorkoutService,
+        scheduleJob
     ],
     schemas: [
         NO_ERRORS_SCHEMA

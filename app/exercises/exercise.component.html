@@ -27,7 +27,6 @@
             <Label class="h2 header" style="text-align: center " text="Search for Exercises"></Label>
             <StackLayout class="">     
                 <GridLayout  class="form">
-                    <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
                     <SearchBar row="0" hint="Search"  (textChange)="searchexercise($event)" (clear)="onClear($event)" (submit)="searchexercise($event)"></SearchBar>
                 </GridLayout>    
             </StackLayout>

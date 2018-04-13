@@ -13,6 +13,7 @@ import { User } from "../models/user.model";
 import { StackLayout } from "ui/layouts/stack-layout";
 import firebase = require("nativescript-plugin-firebase");
 import {Workout} from "../models/workout.model";
+import { confirm } from "ui/dialogs";
 //import * as platformModule from "tns-core-modules/platform";
 //import { isAndroid, isIOS, device, screen } from "platform";
 @Component({
@@ -81,11 +82,24 @@ export class HomeComponent implements OnInit {
         this.router.navigate(["/workoutDetail", id]);
     }
     delete(workout: Workout) {
-        this.workoutService.delete(workout)
-          .catch(() => {
-            alert("An error occurred while deleting an item from your list.");
-          });
+        let options = {
+            title: "Delete Workout",
+            message: "Are you sure you want to delete this workout?",
+            okButtonText: "Confirm",
+            cancelButtonText: "Cancel"
+        };
+
+        confirm(options).then((result: boolean) => {
+            console.log(result);
+            if(result === true){
+                this.workoutService.delete(workout)
+                .catch(() => {
+                    alert("An error occurred while deleting an item from your list.");
+                });
+            }
+        });
     }
+
     viewProfile(item: User){
         this.router.navigate(["/friend-details",item.id]);
     }
@@ -94,9 +108,6 @@ export class HomeComponent implements OnInit {
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
     private _sideDrawerTransition: DrawerTransitionBase;
 
-   
-    
-   
     ngOnInit(): void {
     this._sideDrawerTransition = new SlideInOnTopTransition();
     
@@ -106,13 +117,13 @@ export class HomeComponent implements OnInit {
      this.email = this.profile.email;
      this.profilePhoto = this.profile.profileImageURL;
      this.name = this.profile.name;
-     this.height = this.profile.height;
-
 
      this.firebaseService.getUser(BackendService.token).subscribe((result: any) => {
         this.age = result.age;
         this.weight = result.weight;
         this.height = result.height;
+        this.bio = result.bio;
+        this.goals = result.goals;
     });
     this.workoutService.getMyWorkoutsList().subscribe((data: any) => { 
          this.workouts = data;

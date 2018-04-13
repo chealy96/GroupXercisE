@@ -34,9 +34,7 @@ export class ExerciseComponent implements OnInit {
     private router: Router,
     private requestservice: RequestsProvider
     ) {
-        // this.filteredexercises = <any>this.exerciseService.getExerciseList();
-        // this.temparr = this.filteredexercises;
-        // this.arrayItems = filteredexercises;
+       
         this.exerciseService.getPredExerciseList().subscribe((res: any) => {
             this.arrayItems = res;
             this.temparr = res;
@@ -72,8 +70,8 @@ export class ExerciseComponent implements OnInit {
         this.filteredexercises = new ObservableArray<exercise>();
         this.arrayItems.forEach(item => {
          this.filteredexercises.push(item);
-        });
-        }
+        });  
+    }
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
     private _sideDrawerTransition: DrawerTransitionBase;
 

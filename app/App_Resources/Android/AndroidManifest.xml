@@ -51,5 +51,20 @@
             </intent-filter>
         </service>
 		<activity android:name="com.tns.ErrorReportActivity"/>
+		<activity android:name="com.tns.NotificationActivity" />
+		<!-- <service 
+				android:name="com.tns.notifications.MyJobService"
+				android:permission="android.permission.BIND_JOB_SERVICE" 
+				android:enabled="true"
+				android:exported="true" /> -->
+		<service android:name="com.tns.notifications.SomeService"
+		        android:permission="android.permission.BIND_JOB_SERVICE" 
+         		android:exported="false" >
+		</service>
+                
+        <service android:name="com.tns.notifications.NotificationIntentService"
+           android:enabled="true"
+           android:exported="false" >
+		   </service>
 	</application>
 </manifest>

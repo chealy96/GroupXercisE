@@ -55,7 +55,6 @@ export class friendWorkoutDetailsComponent implements OnInit {
         private exerciseService: ExerciseService,
         private workoutService: WorkoutService,
         private freindService: FriendsService
-      //  private utilsService: UtilsService
     ) {}
 
     @ViewChild("modelCheck") FirstCheckBox: ElementRef;
@@ -63,25 +62,8 @@ export class friendWorkoutDetailsComponent implements OnInit {
  ngOnInit() {
   
    this.sub = this.route.params.subscribe((params: any) => {
-     // this.workoutId = params['id'];
      this.id = params['id'];
-      this.workoutService.getMyWorkout(this.id);//.subscribe((workout) => {
-        // this.ngZone.run(() => {
-        //   for (let prop in workout) {
-        //     //props
-        //     if (prop === "uid") {
-        //       this.id = workout[prop];
-        //     }
-        //     if (prop === "name") {
-        //       this.name = workout[prop];
-        //     }
-        //     if (prop === "exercises") {
-        //       this.exercises = workout[prop];
-        //     }
-                                                     
-        //   }
-        // });
-     // });
+      this.workoutService.getMyWorkout(this.id);
       this.freindService.getFreindsWorkout(this.id).subscribe((workout) => {
         this.ngZone.run(() => {
           for (let prop in workout) {

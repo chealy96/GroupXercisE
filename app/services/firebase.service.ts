@@ -14,6 +14,7 @@ export class FirebaseService {
   ){}
 UsersFriends: any;    
 Users: any;
+
   register(user: User) {
     return firebase.createUser({
       email: user.email,
@@ -31,10 +32,9 @@ Users: any;
   login_google(user: User){
     return firebase.login({
       type: firebase.LoginType.GOOGLE,
-      // Optional 
-    //  googleOptions: {
+     googleOptions: {
     //    hostedDomain: "mygsuitedomain.com"
-    //  }
+      }
     }).then(
         function (result:any) {
            console.log(result);
@@ -51,7 +51,6 @@ Users: any;
       type: firebase.LoginType.FACEBOOK,
       // Optional
       facebookOptions: {
-        // defaults to ['public_profile', 'email']
         scope: ['public_profile', 'email']
       }
     }).then(
@@ -95,8 +94,6 @@ Users: any;
     
   }
   addNewUserData(user) {
-    // Sets new user data to firestore on login
-   // console.log("update user profile:"  +user.uid);
     return firebase.push(`/users`,
      {
       UID: user.uid,
@@ -106,7 +103,7 @@ Users: any;
       provideId: user.providerid
     }).then(
       function (result:any) {
-        console.log("update user profile: "+ user.displayName);
+        console.log("Added user profile: "+ user.displayName);
       },
       function (errorMessage) {
         console.log(errorMessage);
