@@ -10,6 +10,7 @@ import { RouterExtensions } from 'nativescript-angular/router/router-extensions'
 import { exercise } from "../models/pred-exercises.model";
 import { ObservableArray } from "data/observable-array";
 import { SearchBar } from "ui/search-bar";
+import { SelectedIndexChangedEventData } from "nativescript-drop-down";
 
 @Component({
     selector: "Exercise",
@@ -21,6 +22,7 @@ import { SearchBar } from "ui/search-bar";
 export class ExerciseComponent implements OnInit {
     myrequests ;
     temparr = [];
+    public items: Array<string> = ["bicep"];
     public isBusy = true;
     private arrayItems: Array<exercise> = [];
     public filteredexercises: ObservableArray<exercise> = new ObservableArray<exercise>();
@@ -44,8 +46,16 @@ export class ExerciseComponent implements OnInit {
             });
             this.isBusy = false;
         })
+       // this.items.push("bicep");
     }
-    
+    onSearchBarLoaded(event) {
+        if (event.object.android) {
+          setTimeout(() => {
+            event.object.dismissSoftInput();
+            event.object.android.clearFocus();
+          }, 0);
+        }
+      }
     viewDetail(id: string){
         this.router.navigate(["/exercise-detail", id]);
      }
@@ -78,6 +88,21 @@ export class ExerciseComponent implements OnInit {
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
     //   this.filteredexercises = <any>this.exerciseService.getExerciseList();
+    }
+
+    public onchange(args: SelectedIndexChangedEventData) {
+        // let searchBar = <SearchBar>args.object;
+        // let searchValue = searchBar.text.toLowerCase();
+
+        // this.filteredexercises = new ObservableArray<exercise>();
+        // if (searchValue !== "") {
+        //     for (let i = 0; i < this.arrayItems.length; i++) {
+        //         if (this.arrayItems[i].muscle.toLowerCase().indexOf(searchValue) !== -1) {
+        //             this.filteredexercises.push(this.arrayItems[i]);
+        //         }
+        //     }
+        // }
+        console.log(`Drop Down selected index changed from ${args.oldIndex} to ${args.newIndex}`);
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {

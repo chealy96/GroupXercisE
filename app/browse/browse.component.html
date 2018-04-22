@@ -26,15 +26,13 @@
                             <GridLayout rows="*,*,*,*" columns="">
                                 <Label row="0"class="h2 header" style="text-align: center " text="Search for Users"></Label>
                                     <GridLayout row="1" class="form">
-                                        <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
-                                        <SearchBar row="0" hint="Search"  (textChange)="searchuser($event)" (clear)="onClear($event)" (submit)="searchuser($event)"></SearchBar>
+                                        <SearchBar row="0" hint="Search" (loaded)="onSearchBarLoaded($event)" (textChange)="searchuser($event)" (clear)="onClear($event)" (submit)="searchuser($event)"></SearchBar>
                                     </GridLayout>    
                               
                                     <Label row="3" class="h2 header" text="User List" style="text-align: center "></Label>
                                    
                                     <StackLayout row="4"class="">
-                                        <ListView  [items]="filteredusers" class="list-group" height="400">
-                                            
+                                        <ListView  [items]="filteredusers" class="list-group" height="400"> 
                                                 <ng-template let-item="item">
                                                     <GridLayout class="item list-group-item" columns="auto,*,auto">
                                                         <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
@@ -42,7 +40,6 @@
                                                         <Button  class="m-5" class="btn btn-primary btn-active" col="2" horizontalAlignment="right" id="button" text="Add" (tap)="sendreq(item)"></Button>
                                                     </GridLayout>
                                                 </ng-template>
-                                            
                                         </ListView>
                                     </StackLayout>     
                             </GridLayout>
@@ -55,7 +52,7 @@
                             <StackLayout #User >
                                 <Label class="h2 header" style="text-align: center " text="Friend Requests"></Label>
                                 <StackLayout class="">
-                                    <ListView row="1" [items]="myrequests" class="list-group" height="200">
+                                    <ListView row="1" [items]="myrequests" class="list-group" height="400">
                                         <ng-template let-item="item">
                                             <GridLayout class="item list-group-item" columns="auto,*,auto">
                                                 <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>
@@ -76,7 +73,7 @@
                             <StackLayout>
                                 <Label class="h2 header" style="text-align: center " text="Friends"></Label>
                                 <StackLayout class="">
-                                        <ListView row="1" [items]="myfriends" class="list-group" height="200">
+                                        <ListView row="1" [items]="myfriends" class="list-group" height="400">
                                             <ng-template let-item="item">
                                                 <GridLayout class="item list-group-item" columns="auto,*,auto">
                                                     <Image  class="m-5" [src]="item.photoURL" horizontalAlignment="left" col="0" stretch="none" class="img-rounded p-l-15 p-r-15 p-t-15"></Image>

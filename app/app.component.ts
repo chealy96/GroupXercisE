@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     console.log("Job Scheduled: " + jobScheduler.schedule(builder.build()));     
    }
     ngOnInit(): void {
-      this.test();
+   //   this.test();
   }
 
  

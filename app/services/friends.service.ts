@@ -157,18 +157,21 @@ getFriendExerciseList(uid: string): Observable<any> {
     }).share();
   }
   
-  friendsCheck(id ) {
-    let friend: boolean = false;
-    this.getmyfriends().subscribe((friends:  any) => {
-       this.currentFriends = friends;
-       for (var j in this.currentFriends){
-        if (this.currentFriends[j].UID === id.UID) {
-          friend = true;
-        }
-      }
-      return Promise.reject(friend);
-    })
+//   friendsCheck(id ) {
+//     return new Observable((observer: any) => {
+//     let friend: boolean = false;
+//     this.getmyfriends().subscribe((friends:  any) => {
+//        this.currentFriends = friends;
+//        for (var j in this.currentFriends){
+//         if (this.currentFriends[j].UID === id.UID) {
+//          // friend = true;
+//           observer.next(true);
+//         }
+//       }
+//      // return Promise.reject(friend);
+//     })
    
-  }
-
+  
+// }).share();   
+//   }
 }

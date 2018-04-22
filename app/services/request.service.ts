@@ -54,7 +54,7 @@ export class RequestsProvider {
           var allusers = res;
           for (var j in myrequests)
             for (var key in allusers) {
-              if (myrequests[j] === allusers[key].UID) {
+              if (myrequests[j].sender === allusers[key].UID) {
                 this.userdetails.push(allusers[key]);
               }
             }
@@ -76,7 +76,7 @@ export class RequestsProvider {
       for (let id in data) {        
         let result = (<any>Object).assign({id: id}, data[id]);
         if(BackendService.token === result.recipient){
-          this._allItems.push(result.sender);
+          this._allItems.push(result);
         }        
       }
    
@@ -133,7 +133,7 @@ deleterequest(user) {
           myrequests= allmyrequests[i];
           }
         }
-        firebase.remove("/requests/"+ myrequests.id+"").then(() => {
+        firebase.remove("/requests/"+ myrequests.id+"/").then(() => {
           resolve({ success: true });
           console.log("firebase.remove done");
         },

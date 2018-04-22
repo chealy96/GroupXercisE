@@ -26,10 +26,19 @@
           <!--  <Label class="gold card" textWrap="true" [text]="message$ | async"></Label> -->
             <Label class="h2 header" style="text-align: center " text="Search for Exercises"></Label>
             <StackLayout class="">     
-                <GridLayout  class="form">
-                    <SearchBar row="0" hint="Search"  (textChange)="searchexercise($event)" (clear)="onClear($event)" (submit)="searchexercise($event)"></SearchBar>
+                <GridLayout  class="form" rows="auto,auto">
+                    <SearchBar row="0" hint="Search"  (textChange)="searchexercise($event)" (loaded)="onSearchBarLoaded($event)" (clear)="onClear($event)" (submit)="searchexercise($event)"></SearchBar>
+                    <!-- <DropDown #dd row="1"
+                    backroundColor="red"
+                    [items]=""
+                    [(ngModel)]="selectedIndex"
+                    (selectedIndexChanged)="onchange($event)"
+                    
+                    
+                    colSpan="2"></DropDown> -->
                 </GridLayout>    
             </StackLayout>
+           
             <Label class="h2 header" text="Exercise List" style="text-align: center "></Label>
             <StackLayout class="">
                 <ListView row="1" [items]="filteredexercises" class="list-group" height="400">

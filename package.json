@@ -24,6 +24,7 @@
     "nativescript-android-utils": "^1.0.2",
     "nativescript-angular": "4.4.1",
     "nativescript-checkbox": "^3.0.3",
+    "nativescript-drop-down": "^3.2.4",
     "nativescript-filterable-listpicker": "^2.0.0",
     "nativescript-permissions": "^1.2.3",
     "nativescript-plugin-firebase": "5.1.4",

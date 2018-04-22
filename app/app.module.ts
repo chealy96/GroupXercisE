@@ -23,6 +23,7 @@ import { ExerciseModule } from "./exercises/exercise.module";
 import { SettingsModule } from "./settings/settings.module";
 import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 import { scheduleJob } from "./notifications/job-scheduler";
+import { DropDownModule } from "nativescript-drop-down/angular";
 
 import { BackendService, FirebaseService, RequestsProvider, ExerciseService, FriendsService, WorkoutService} from "./services";
 @NgModule({
@@ -48,6 +49,7 @@ import { BackendService, FirebaseService, RequestsProvider, ExerciseService, Fri
         SettingsModule,
         WorkoutDetailModule,
         TNSCheckBoxModule,
+        DropDownModule,
         
     ],
     declarations: [

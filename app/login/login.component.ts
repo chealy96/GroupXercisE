@@ -16,12 +16,14 @@ export class LoginComponent {
   isLoggingIn = true;
   isAuthenticating = false;
   res = null;
-  
+  isBusy = false;
+
   constructor(private firebaseService: FirebaseService,
               private routerExtensions: RouterExtensions,
               private ngZone: NgZone
             ) {
               this.user = new User();
+              //this.user.photoURL ="http://blunt.one/images/unisex.jpg";
             }
 
  submit() {
@@ -59,6 +61,8 @@ export class LoginComponent {
   }
   
   login() {
+    this.isBusy = true;
+
      this.firebaseService.login(this.user)
       .then((result: any) => {
         this.hold =  JSON.parse(result);
@@ -73,7 +77,7 @@ export class LoginComponent {
             this.firebaseService.addNewUserData(this.user);
           }
         });
-        
+        this.isBusy = false;
         this.routerExtensions.navigate(["/"], { clearHistory: true } );
 
       })
@@ -83,6 +87,8 @@ export class LoginComponent {
   }
 
   signInWithGoogle() {
+    this.isBusy = true;
+
     this.firebaseService.login_google(this.user)
     .then((result: any) => {
       this.hold =  JSON.parse(result);
@@ -98,7 +104,8 @@ export class LoginComponent {
         this.firebaseService.addNewUserData(this.user);
      }
     });
-      this.routerExtensions.navigate(["/"], { clearHistory: true } );
+    this.isBusy = false;
+    this.routerExtensions.navigate(["/"], { clearHistory: true } );
   
     })
     .catch((message:any) => {

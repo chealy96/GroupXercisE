@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/share';
 import {Exercise} from "../models/exercises.model";
+import { Timestamp } from "rxjs/operators/timestamp";
 
 @Injectable()
 export class FirebaseService {
@@ -89,6 +90,19 @@ Users: any;
   ).then(
     function (result:any) {
       console.log("update user profile: ");
+      return result
+    });
+    
+  }
+  updateLatLogin(user){
+    firebase.update(
+      '/users/'+user.id,
+      {'timestamp':firebase.ServerValue.TIMESTAMP
+       
+      }
+  ).then(
+    function (result:any) {
+      console.log("login time updated ");
       return result
     });
     

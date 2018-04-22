@@ -12,6 +12,8 @@ import firebase = require("nativescript-plugin-firebase");
 import { TabView, SelectedIndexChangedEventData, TabViewItem } from "ui/tab-view";
 import { StackLayout } from "ui/layouts/stack-layout";
 import { Router } from '@angular/router';
+// import * as app from 'application';
+// declare var android: any; //bypass the TS warnings
 
 @Component({
     selector: "Browse",
@@ -60,20 +62,29 @@ export class BrowseComponent implements OnInit {
             this.arrayItems = res;
             this.filteredusers = new ObservableArray<User>();
             this.arrayItems.forEach(item => {
-                //   if(!this.friendservice.friendsCheck(item)){
-                this.filteredusers.push(item);
-                //   }
+             //   this.friendservice.friendsCheck(item).subscribe((res: any) => {
+               //    if(!res){
+                    this.filteredusers.push(item);
+               //    }
+               // });
             });
         })
       
         
         this.tabSelectedIndex = 0;
-    }
-
-    loadData() {
        
     }
 
+    reload(){
+        this.friendservice.getmyfriends().subscribe((res1: any) => {
+            this.arrayItems2 = res1;
+            this.myfriends = new ObservableArray<User>();
+                this.arrayItems2.forEach(item => {
+                
+                    this.myfriends.push(item);
+                });
+     });
+    }
     changeTab() {
         if (this.tabSelectedIndex === 0) {
             this.tabSelectedIndex = 1;
@@ -81,6 +92,15 @@ export class BrowseComponent implements OnInit {
             this.tabSelectedIndex = 2;
         } else if (this.tabSelectedIndex === 2) {
             this.tabSelectedIndex = 0;
+        }
+    }
+
+    onSearchBarLoaded(event) {
+        if (event.object.android) {
+          setTimeout(() => {
+            event.object.dismissSoftInput();
+            event.object.android.clearFocus();
+          }, 0);
         }
     }
 
@@ -94,6 +114,7 @@ export class BrowseComponent implements OnInit {
             let sentuser =  this.myrequests.indexOf(item);
             this.myrequests.splice(sentuser, 1);
             this.tabSelectedIndex = 2;
+            this.reload();
             }    
         })
     }
@@ -168,7 +189,9 @@ export class BrowseComponent implements OnInit {
     
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
-        //this.loadData();   
+        //this.loadData(); 
+  
+    
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
